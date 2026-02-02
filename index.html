@@ -1,0 +1,1961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SidequestFun.com - Random Sidequest Generator</title>
+    
+    <!-- CDNs für Icons und Konfetti -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
+    <!-- Open Graph Tags für WhatsApp-Vorschau -->
+    <meta property="og:title" content="SidequestFun - Beat Boredom">
+    <meta property="og:description" content="Get random micro-adventures instantly.">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            background-color: #f5f5f7;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            -webkit-text-size-adjust: 100%;
+        }
+        
+        body.dark-mode {
+            background-color: #121826;
+            color: #e0e0e0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .logo-placeholder {
+            background-color: white;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            width: 340px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 2.2rem;
+            padding: 0 40px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .logo-placeholder {
+            background-color: #1e293b;
+            color: #e0e0e0;
+            border-color: #334155;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo-placeholder span:first-child {
+            color: #14B3D9;
+        }
+        
+        .logo-placeholder span:last-child {
+            color: #DD467F;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #f0f0f0;
+            border-radius: 50px;
+            padding: 15px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e0e0e0;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            min-height: 56px;
+        }
+        
+        body.dark-mode .theme-toggle {
+            background: #1e293b;
+            border-color: #334155;
+        }
+        
+        .theme-toggle:hover, .theme-toggle:active {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        body.dark-mode .theme-toggle:hover, body.dark-mode .theme-toggle:active {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .theme-toggle i {
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle .fa-sun {
+            color: #f59e0b;
+        }
+        
+        .theme-toggle .fa-moon {
+            color: #94a3b8;
+        }
+        
+        .theme-text {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            color: #333;
+            text-align: center;
+        }
+        
+        body.dark-mode h1 {
+            color: #e0e0e0;
+        }
+        
+        .tagline {
+            font-size: 1.1rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        body.dark-mode .tagline {
+            color: #94a3b8;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid #eee;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .card {
+            background-color: #1e293b;
+            border-color: #334155;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .quest-card {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .quest-display {
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            padding: 25px 20px;
+            border: 2px solid #e9ecef;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .quest-display {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+        
+        #quest-text {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            line-height: 1.5;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        body.dark-mode #quest-text {
+            color: #e0e0e0;
+        }
+        
+        .difficulty-tags {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+            width: 100%;
+        }
+        
+        .difficulty-tag {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+        
+        .difficulty-easy {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        body.dark-mode .difficulty-easy {
+            background-color: #064e3b;
+            color: #a7f3d0;
+            border-color: #065f46;
+        }
+        
+        .difficulty-medium {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        body.dark-mode .difficulty-medium {
+            background-color: #92400e;
+            color: #fde68a;
+            border-color: #b45309;
+        }
+        
+        .difficulty-epic {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        body.dark-mode .difficulty-epic {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+            border-color: #991b1b;
+        }
+        
+        .main-buttons-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        .secondary-buttons-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+        }
+        
+        @media (min-width: 640px) {
+            .main-buttons-container {
+                flex-direction: row;
+            }
+            
+            .secondary-buttons-container {
+                flex-direction: row;
+            }
+        }
+        
+        .btn {
+            padding: 16px 30px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 300px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-height: 56px;
+            -webkit-appearance: none;
+        }
+        
+        body.dark-mode .btn {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (min-width: 640px) {
+            .btn {
+                width: auto;
+                min-width: 220px;
+            }
+        }
+        
+        .generate-btn {
+            background-color: #14B3D9;
+            color: white;
+        }
+        
+        .generate-btn:hover, .generate-btn:active, .generate-btn:focus {
+            background-color: #0fa3c7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(20, 179, 217, 0.2);
+            outline: none;
+        }
+        
+        .complete-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .complete-btn:hover, .complete-btn:active, .complete-btn:focus {
+            background-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(40, 167, 69, 0.2);
+            outline: none;
+        }
+        
+        .icon-btn {
+            background-color: white;
+            color: #666;
+            border: 2px solid #e0e0e0;
+            padding: 12px 20px;
+            min-width: auto;
+            max-width: 120px;
+            font-size: 1rem;
+            min-height: 50px;
+            min-width: 50px;
+            flex: 1;
+        }
+        
+        body.dark-mode .icon-btn {
+            background-color: #1e293b;
+            color: #94a3b8;
+            border-color: #334155;
+        }
+        
+        .icon-btn:hover, .icon-btn:active, .icon-btn:focus {
+            background-color: #f5f5f7;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            outline: none;
+        }
+        
+        body.dark-mode .icon-btn:hover, body.dark-mode .icon-btn:active, body.dark-mode .icon-btn:focus {
+            background-color: #334155;
+        }
+        
+        h2 {
+            color: #14B3D9;
+            margin-bottom: 15px;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #444;
+        }
+        
+        body.dark-mode p {
+            color: #cbd5e1;
+        }
+        
+        .info-card {
+            margin-bottom: 20px;
+        }
+        
+        .donation-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+        
+        .donation-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+        
+        .donation-btn {
+            background-color: #DD467F;
+            color: white;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .donation-btn:hover, .donation-btn:active, .donation-btn:focus {
+            background-color: #d1306d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(221, 70, 127, 0.2);
+            outline: none;
+        }
+        
+        .free-notice {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #666;
+            font-size: 1.1rem;
+            margin: 0;
+            padding: 18px 25px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e9ecef;
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        body.dark-mode .free-notice {
+            background-color: #0f172a;
+            color: #94a3b8;
+            border-color: #334155;
+        }
+        
+        .free-notice i {
+            color: #14B3D9;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+        
+        .free-notice span {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        .icon {
+            font-size: 1.2rem;
+        }
+        
+        .category-filters {
+            display: flex;
+            background-color: #f0f0f0;
+            border-radius: 50px;
+            padding: 8px;
+            margin-bottom: 30px;
+            justify-content: center;
+            gap: 5px;
+            flex-wrap: wrap;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .category-filters {
+            background-color: #1e293b;
+        }
+        
+        .filter-btn {
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: none;
+            background-color: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            color: #666;
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            position: relative;
+            min-height: 44px;
+            -webkit-appearance: none;
+        }
+        
+        body.dark-mode .filter-btn {
+            color: #94a3b8;
+        }
+        
+        .filter-btn:hover, .filter-btn:active, .filter-btn:focus {
+            background-color: #e0e0e0;
+            outline: none;
+        }
+        
+        body.dark-mode .filter-btn:hover, body.dark-mode .filter-btn:active, body.dark-mode .filter-btn:focus {
+            background-color: #334155;
+        }
+        
+        .filter-btn.active {
+            background-color: white;
+            color: #14B3D9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        body.dark-mode .filter-btn.active {
+            background-color: #0f172a;
+            color: #14B3D9;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .filter-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background-color: #14B3D9;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        body.dark-mode .filter-btn.active::after {
+            background-color: #14B3D9;
+        }
+        
+        .filter-btn.active.glow-effect {
+            box-shadow: 0 0 15px rgba(20, 179, 217, 0.3);
+        }
+        
+        body.dark-mode .filter-btn.active.glow-effect {
+            box-shadow: 0 0 20px rgba(20, 179, 217, 0.5);
+        }
+        
+        .history-indicator {
+            display: inline-block;
+            font-size: 0.8rem;
+            background-color: #f0f0f0;
+            color: #666;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            font-weight: normal;
+        }
+        
+        body.dark-mode .history-indicator {
+            background-color: #334155;
+            color: #94a3b8;
+        }
+        
+        @media (max-width: 640px) {
+            .container {
+                padding: 15px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .card {
+                padding: 20px 16px;
+            }
+            
+            .quest-display {
+                padding: 20px 16px;
+                min-height: 160px;
+            }
+            
+            #quest-text {
+                font-size: 1.3rem;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+                min-height: 50px;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            .logo-placeholder {
+                width: 100%;
+                max-width: 300px;
+                font-size: 1.9rem;
+                padding: 0 30px;
+                height: 60px;
+                margin: 0 auto;
+            }
+            
+            .category-filters {
+                gap: 5px;
+                padding: 6px;
+            }
+            
+            .filter-btn {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+                min-width: 90px;
+                min-height: 40px;
+            }
+            
+            .header-section {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .secondary-buttons-container .icon-btn {
+                min-width: 70px;
+                flex: 1;
+                padding: 10px 15px;
+            }
+            
+            .main-buttons-container {
+                gap: 10px;
+            }
+            
+            .secondary-buttons-container {
+                gap: 10px;
+            }
+            
+            p {
+                font-size: 1rem;
+            }
+            
+            .free-notice {
+                padding: 15px 20px;
+                font-size: 1rem;
+                gap: 10px;
+            }
+            
+            .free-notice i {
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            #quest-text {
+                font-size: 1.2rem;
+            }
+            
+            .logo-placeholder {
+                width: 280px;
+                font-size: 1.7rem;
+                padding: 0 25px;
+            }
+            
+            .filter-btn {
+                min-width: 80px;
+                font-size: 0.8rem;
+                padding: 8px 12px;
+            }
+            
+            .btn {
+                padding: 12px 18px;
+                font-size: 0.95rem;
+            }
+            
+            .free-notice {
+                padding: 12px 15px;
+                font-size: 0.95rem;
+                gap: 8px;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .new-quest {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        body.dark-mode .notification {
+            background-color: #065f46;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        .notification.show {
+            display: flex;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        body.dark-mode .modal {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        body.dark-mode .modal-content {
+            background-color: #1e293b;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            color: #14B3D9;
+            font-weight: 700;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #666;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+            -webkit-appearance: none;
+        }
+        
+        body.dark-mode .close-modal {
+            color: #94a3b8;
+        }
+        
+        .close-modal:hover, .close-modal:active, .close-modal:focus {
+            background-color: #f5f5f7;
+            outline: none;
+        }
+        
+        body.dark-mode .close-modal:hover, body.dark-mode .close-modal:active, body.dark-mode .close-modal:focus {
+            background-color: #334155;
+        }
+        
+        .saved-quests-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .saved-quest-item {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 18px;
+            border-left: 5px solid #14B3D9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        body.dark-mode .saved-quest-item {
+            background-color: #0f172a;
+            border-left-color: #14B3D9;
+        }
+        
+        .saved-quest-text {
+            flex-grow: 1;
+            font-size: 1.1rem;
+            color: #333;
+            margin-right: 15px;
+        }
+        
+        body.dark-mode .saved-quest-text {
+            color: #e0e0e0;
+        }
+        
+        .saved-quest-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 40px;
+            -webkit-appearance: none;
+        }
+        
+        .action-btn-complete {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .action-btn-remove {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .action-btn-share {
+            background-color: #1da1f2;
+            color: white;
+        }
+        
+        .empty-saved-quests {
+            text-align: center;
+            padding: 40px 20px;
+            color: #666;
+            font-size: 1.2rem;
+        }
+        
+        body.dark-mode .empty-saved-quests {
+            color: #94a3b8;
+        }
+        
+        .empty-saved-quests i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #ddd;
+        }
+        
+        .quest-info {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .category-tag {
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        body.dark-mode .category-tag {
+            background-color: #334155;
+            color: #cbd5e1;
+        }
+        
+        .modal-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        body.dark-mode .modal-stats {
+            border-bottom-color: #334155;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #14B3D9;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        body.dark-mode .stat-label {
+            color: #94a3b8;
+        }
+        
+        .support-modal, .settings-modal {
+            max-width: 600px;
+        }
+        
+        .support-content, .settings-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .support-content h3, .settings-content h3 {
+            color: #14B3D9;
+            margin: 20px 0 10px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .privacy-modal {
+            max-width: 600px;
+        }
+        
+        .privacy-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .privacy-content h3 {
+            color: #14B3D9;
+            margin: 20px 0 10px 0;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        
+        .privacy-content ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .privacy-content li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        body.dark-mode .privacy-content li {
+            color: #cbd5e1;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 0 20px 0;
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 800px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 20px;
+        }
+        
+        .footer-link {
+            color: #666;
+            font-size: 0.9rem;
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.3s ease;
+            padding: 10px;
+            display: inline-block;
+        }
+        
+        .footer-link:hover, .footer-link:active, .footer-link:focus {
+            color: #14B3D9;
+            text-decoration: underline;
+            outline: none;
+        }
+        
+        body.dark-mode .footer-link {
+            color: #94a3b8;
+        }
+        
+        body.dark-mode .footer-link:hover, body.dark-mode .footer-link:active, body.dark-mode .footer-link:focus {
+            color: #14B3D9;
+        }
+        
+        .footer-center {
+            flex: 1;
+            text-align: center;
+        }
+        
+        @media (max-width: 640px) {
+            .modal-content {
+                padding: 20px;
+            }
+            
+            .saved-quest-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .saved-quest-actions {
+                margin-top: 10px;
+                width: 100%;
+                justify-content: flex-end;
+                flex-wrap: wrap;
+            }
+            
+            .action-btn {
+                min-height: 36px;
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+            
+            .modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .close-modal {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .footer-link {
+                font-size: 1rem;
+                padding: 12px 20px;
+            }
+        }
+        
+        @media (hover: none) and (pointer: coarse) {
+            .btn, .filter-btn, .icon-btn, .action-btn, .close-modal, .footer-link {
+                cursor: default;
+            }
+            
+            .btn:active, .filter-btn:active, .icon-btn:active, .action-btn:active {
+                transform: translateY(0);
+                opacity: 0.8;
+            }
+            
+            .btn:focus, .filter-btn:focus, .icon-btn:focus, .action-btn:focus, 
+            .close-modal:focus, .footer-link:focus {
+                outline: 2px solid #14B3D9;
+                outline-offset: 2px;
+            }
+        }
+        
+        input, textarea, button, select, a {
+            -webkit-tap-highlight-color: rgba(0,0,0,0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section">
+            <div class="logo-placeholder">
+                <span>sidequest</span><span>fun.com</span>
+            </div>
+        </div>
+        
+        <h1>Random Sidequest Generator</h1>
+        <p class="tagline">Beat boredom with spontaneous micro-adventures</p>
+        
+        <div class="category-filters">
+            <button class="filter-btn active" data-category="all">All Quests</button>
+            <button class="filter-btn" data-category="indoor">🏠 Indoor</button>
+            <button class="filter-btn" data-category="outdoor">🌳 Outdoor</button>
+            <button class="filter-btn" data-category="social">🗣️ Social</button>
+        </div>
+        
+        <div class="card quest-card">
+            <div class="quest-display">
+                <div class="difficulty-tags" id="difficulty-tags">
+                    <!-- Difficulty tag will be inserted here -->
+                </div>
+                <div id="quest-text">Your sidequest will appear here. Ready for an adventure?</div>
+            </div>
+            
+            <div class="main-buttons-container">
+                <button class="btn generate-btn" id="generate-btn">
+                    <i class="fas fa-dice icon"></i> Generate Sidequest
+                </button>
+                <button class="btn complete-btn" id="complete-btn">
+                    <i class="fas fa-check-circle icon"></i> Quest Complete!
+                </button>
+            </div>
+            
+            <div class="secondary-buttons-container">
+                <button class="btn icon-btn" id="save-btn">
+                    <i class="fas fa-bookmark"></i>
+                </button>
+                <button class="btn icon-btn" id="my-quests-btn">
+                    <i class="fas fa-tasks"></i>
+                </button>
+                <button class="btn icon-btn" id="share-btn">
+                    <i class="fas fa-share-alt"></i>
+                </button>
+            </div>
+        </div>
+        
+        <div class="card info-card">
+            <h2>How It Works</h2>
+            <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Hit "Save" to keep quests for later and "Complete" to track your total progress.</p>
+            <p>Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
+        </div>
+        
+        <div class="card info-card">
+            <h2>Why Sidequests Beat Boredom</h2>
+            <p>It's time to stop living the same day over and over and start adding new chapters to your story. Do you remember when life felt like a grand adventure? Somewhere along the way, routines took over. Sidequests are here to bring that magic back. By embracing small, unexpected challenges, you disrupt the monotony and trigger new ways of thinking.</p>
+            <p>Every sidequest is a playful micro-adventure that makes your day more vibrant and your personal story more exciting. Step outside your comfort zone and start living a life full of variety.</p>
+        </div>
+        
+        <div class="card">
+            <div class="donation-section">
+                <div class="donation-container">
+                    <div class="free-notice">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Free to use and free of ads. If you love it, share it!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <div class="footer-links">
+            <a class="footer-link" id="support-link">Support Us</a>
+            <div class="footer-center">
+                <a class="footer-link" id="privacy-link">Privacy Policy</a>
+            </div>
+            <a class="footer-link" id="settings-link">Settings</a>
+        </div>
+    </div>
+    
+    <div class="modal" id="my-quests-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">My Saved Quests</h2>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            
+            <div class="modal-stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="saved-count">0</div>
+                    <div class="stat-label">Saved</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="completed-count">0</div>
+                    <div class="stat-label">Completed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="total-count">0</div>
+                    <div class="stat-label">Total Available</div>
+                </div>
+            </div>
+            
+            <div class="saved-quests-list" id="saved-quests-list">
+                <!-- Saved quests will be inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="support-modal">
+        <div class="modal-content support-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Support Us</h2>
+                <button class="close-modal" id="close-support-modal">&times;</button>
+            </div>
+            
+            <div class="support-content">
+                <p>Discover hand-picked professional experiences, guided tours, and hidden gems in your city with GetYourGuide. If you book through our link, we earn a small commission at no extra cost to you. It's a simple way to help us keep this service free for everyone!</p>
+                
+                <button class="btn donation-btn" id="modal-explore-btn" onclick="window.open('https://tinyurl.com/sidequestfun', '_blank')">
+                    <i class="fas fa-compass icon"></i> Explore More Adventures
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="settings-modal">
+        <div class="modal-content settings-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Settings</h2>
+                <button class="close-modal" id="close-settings-modal">&times;</button>
+            </div>
+            
+            <div class="settings-content">
+                <h3>Appearance</h3>
+                <div class="theme-toggle" id="modal-theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <span class="theme-text">Light Mode</span>
+                </div>
+                
+                <h3>Clear Data</h3>
+                <button class="btn icon-btn" id="clear-data-btn" style="width: 100%; max-width: 300px; margin: 0 auto; display: block;">
+                    <i class="fas fa-trash"></i> Clear All Saved Data
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="privacy-modal">
+        <div class="modal-content privacy-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Privacy Policy</h2>
+                <button class="close-modal" id="close-privacy-modal">&times;</button>
+            </div>
+            
+            <div class="privacy-content">
+                <h3>1. General Information</h3>
+                <p>This website is for entertainment purposes only. We do not collect, store, or process any personal data from our visitors. There is no user registration, no tracking of individual behavior, and no analytics tools (such as Google Analytics) are used.</p>
+                
+                <h3>2. Local Storage (Progress Saving)</h3>
+                <p>To provide the functionality to save quests and track your completed "Sidequests," this website utilizes the LocalStorage of your browser.</p>
+                <ul>
+                    <li><strong>Data Residency:</strong> Data (such as your saved progress and counters) is stored exclusively on your own device.</li>
+                    <li><strong>No Transmission:</strong> This data is not transmitted to our servers or any third parties.</li>
+                    <li><strong>Control:</strong> You can delete this data at any time by clearing your browser's cache or website data in your browser settings.</li>
+                </ul>
+                
+                <h3>3. External Services & CDNs</h3>
+                <p>To ensure a smooth experience and provide visual elements (icons, fonts, and effects), this website loads external libraries from Content Delivery Networks (CDNs). These include:</p>
+                <ul>
+                    <li>FontAwesome (Icons)</li>
+                    <li>jsDelivr (Canvas-Confetti effect)</li>
+                </ul>
+                <p><strong>Technical Necessity:</strong> When these resources are loaded, your IP address is technically transmitted to these providers to deliver the files to your browser. This is a technical requirement for the website to function correctly.</p>
+                
+                <h3>4. External Links</h3>
+                <p>If you click on buttons leading to external websites, you will be redirected to a third-party platform. From that moment on, the privacy policy of that respective third party applies. We have no control over the content or data processing of external sites.</p>
+                <p>Some external links are affiliate links, meaning we may receive a small commission if you make a purchase, at no additional cost to you.</p>
+                
+                <h3>5. Your Rights</h3>
+                <p>Since we do not store any personal data on our servers, we cannot provide information on "your data," nor can we delete or port it, as it never reaches us. Your rights regarding the data stored in your LocalStorage can be exercised directly by you through your browser settings.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-text">Quest saved to your browser storage!</span>
+    </div>
+    
+    <script>
+        // Updated sidequests array with objects containing category and difficulty
+        let sidequests = [
+            { text: "Take a photo of the most interesting cloud you can find today.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn to say 'hello' and 'thank you' in a language you don't know.", category: "social", difficulty: "easy" },
+            { text: "Find a local street you've never walked down and explore it for 15 minutes.", category: "outdoor", difficulty: "easy" },
+            { text: "Draw a map of your neighborhood from memory.", category: "indoor", difficulty: "medium" },
+            { text: "Compliment three strangers genuinely today.", category: "social", difficulty: "medium" },
+            { text: "Cook a meal using only ingredients you already have at home.", category: "indoor", difficulty: "medium" },
+            { text: "Write a short poem about the object to your left.", category: "indoor", difficulty: "easy" },
+            { text: "Find and identify five different types of leaves or plants in your area.", category: "outdoor", difficulty: "medium" },
+            { text: "Call a family member you haven't spoken to in a while.", category: "social", difficulty: "easy" },
+            { text: "Spend 30 minutes in a library or bookstore reading about a completely new topic.", category: "indoor", difficulty: "easy" },
+            { text: "Find a public bench and observe the world around you for 10 minutes.", category: "outdoor", difficulty: "easy" },
+            { text: "Create a piece of art using only items from your recycling bin.", category: "indoor", difficulty: "medium" },
+            { text: "Learn a simple magic trick and perform it for someone.", category: "social", difficulty: "medium" },
+            { text: "Visit a local museum or gallery you've never been to before.", category: "outdoor", difficulty: "medium" },
+            { text: "Write a thank you note to someone who has positively impacted your life.", category: "social", difficulty: "easy" },
+            { text: "Try a food you've never eaten before.", category: "social", difficulty: "easy" },
+            { text: "Go stargazing and try to identify at least three constellations.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn the chorus of a song in a different language.", category: "indoor", difficulty: "medium" },
+            { text: "Take a different route to your usual destination today.", category: "outdoor", difficulty: "easy" },
+            { text: "Find a historical marker in your area and learn its story.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn to juggle with three small objects.", category: "indoor", difficulty: "medium" },
+            { text: "Write a letter to your future self one year from now.", category: "indoor", difficulty: "easy" },
+            { text: "Create a time capsule with 5 items that represent your current life.", category: "indoor", difficulty: "medium" },
+            { text: "Learn the basics of origami and make a paper crane.", category: "indoor", difficulty: "easy" },
+            { text: "Visit a farmer's market and buy something you've never tried.", category: "outdoor", difficulty: "easy" },
+            { text: "Find a podcast on a topic you know nothing about and listen to one episode.", category: "indoor", difficulty: "easy" },
+            { text: "Teach yourself a simple dance routine from a YouTube tutorial.", category: "indoor", difficulty: "medium" },
+            { text: "Go to a park and swing on the swings like you did as a child.", category: "outdoor", difficulty: "easy" },
+            { text: "Take a 20-minute walk without your phone or any distractions.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn three interesting facts about the city/town you live in.", category: "indoor", difficulty: "easy" },
+            { text: "Create a playlist of songs that describe your current mood.", category: "indoor", difficulty: "easy" },
+            { text: "Build a fort using blankets and pillows and spend an hour inside.", category: "indoor", difficulty: "easy" },
+            { text: "Write down 10 things you're grateful for today.", category: "indoor", difficulty: "easy" },
+            { text: "Try a new coffee shop or tea house you've never visited.", category: "social", difficulty: "easy" },
+            { text: "Learn how to properly fold a fitted sheet.", category: "indoor", difficulty: "medium" },
+            { text: "Watch the sunrise or sunset from a good vantage point.", category: "outdoor", difficulty: "easy" },
+            { text: "Visit a pet store or animal shelter just to spend time with animals.", category: "outdoor", difficulty: "easy" },
+            { text: "Try to go an entire day without complaining about anything.", category: "social", difficulty: "epic" },
+            { text: "Learn a yo-yo trick.", category: "indoor", difficulty: "medium" },
+            { text: "Take a spontaneous day trip to a nearby town.", category: "outdoor", difficulty: "epic" },
+            { text: "Learn to whistle a new song perfectly.", category: "indoor", difficulty: "medium" },
+            { text: "Take 10 photos of ordinary objects from unusual angles.", category: "outdoor", difficulty: "easy" },
+            { text: "Write a short story that begins with 'The door opened to reveal...'", category: "indoor", difficulty: "medium" },
+            { text: "Learn and perform one card trick flawlessly.", category: "social", difficulty: "medium" },
+            { text: "Visit a place in your city that you've always seen but never entered.", category: "outdoor", difficulty: "easy" },
+            { text: "Try a new form of exercise you've never done before.", category: "outdoor", difficulty: "medium" },
+            { text: "Create a piece of music using only household items as instruments.", category: "indoor", difficulty: "medium" },
+            { text: "Spend an hour people-watching and invent backstories for strangers.", category: "social", difficulty: "easy" },
+            { text: "Learn three jokes and tell them to friends or family.", category: "social", difficulty: "easy" },
+            { text: "Rearrange the furniture in one room of your home.", category: "indoor", difficulty: "medium" },
+            { text: "Write a haiku about your day.", category: "indoor", difficulty: "easy" },
+            { text: "Try to draw a self-portrait without looking in a mirror.", category: "indoor", difficulty: "medium" },
+            { text: "Learn the name and story of one tree in your neighborhood.", category: "outdoor", difficulty: "easy" },
+            { text: "Cook a recipe from a country you've never visited.", category: "indoor", difficulty: "medium" },
+            { text: "Spend 30 minutes watching educational videos on a new topic.", category: "indoor", difficulty: "easy" },
+            { text: "Create a vision board for your goals and dreams.", category: "indoor", difficulty: "medium" },
+            { text: "Write and send a postcard to a friend.", category: "social", difficulty: "easy" },
+            { text: "Try a new hobby for at least one hour.", category: "indoor", difficulty: "medium" },
+            { text: "Learn the basics of a new skill from a YouTube tutorial.", category: "indoor", difficulty: "medium" },
+            { text: "Create a time-lapse video of a sunset or sunrise.", category: "outdoor", difficulty: "medium" },
+            { text: "Spend an hour in complete silence, just observing your thoughts.", category: "indoor", difficulty: "epic" },
+            { text: "Learn to make three different paper airplanes and test which flies farthest.", category: "indoor", difficulty: "easy" },
+            { text: "Visit a local landmark you've never been to.", category: "outdoor", difficulty: "easy" },
+            { text: "Try meditating for 15 minutes.", category: "indoor", difficulty: "easy" },
+            { text: "Learn to say 'I love you' in five different languages.", category: "social", difficulty: "easy" },
+            { text: "Create a homemade gift for someone special.", category: "indoor", difficulty: "medium" },
+            { text: "Spend an afternoon without using any electronic devices.", category: "indoor", difficulty: "epic" },
+            { text: "Learn the history behind your favorite food.", category: "indoor", difficulty: "easy" },
+            { text: "Try a new hairstyle you've never worn before.", category: "indoor", difficulty: "easy" },
+            { text: "Write down 20 things that make you happy.", category: "indoor", difficulty: "easy" },
+            { text: "Learn to tie three different types of knots.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a local park and have a picnic, even if it's just for yourself.", category: "outdoor", difficulty: "easy" },
+            { text: "Try to learn the basics of calligraphy.", category: "indoor", difficulty: "medium" },
+            { text: "Create a mini documentary about your day.", category: "indoor", difficulty: "medium" },
+            { text: "Write a thank-you email to a teacher who influenced you.", category: "social", difficulty: "easy" },
+            { text: "Try a new type of tea or coffee you've never had.", category: "indoor", difficulty: "easy" },
+            { text: "Learn the words to a song in a language you don't speak.", category: "social", difficulty: "medium" },
+            { text: "Create a piece of art using only natural materials.", category: "outdoor", difficulty: "medium" },
+            { text: "Spend an hour learning about a historical figure you admire.", category: "indoor", difficulty: "easy" },
+            { text: "Try to solve a Rubik's cube (or learn the first layer).", category: "indoor", difficulty: "medium" },
+            { text: "Learn to make three different cocktails or mocktails.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a local market and talk to three different vendors.", category: "social", difficulty: "easy" },
+            { text: "Try to write with your non-dominant hand for an entire day.", category: "indoor", difficulty: "epic" },
+            { text: "Learn the basics of sewing on a button.", category: "indoor", difficulty: "easy" },
+            { text: "Create a personalized playlist for a friend.", category: "indoor", difficulty: "easy" },
+            { text: "Spend an hour cloud-watching and finding shapes.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn to do five different yoga poses correctly.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a free local event you wouldn't normally attend.", category: "social", difficulty: "easy" },
+            { text: "Bake cookies and share them with your neighbors.", category: "social", difficulty: "medium" },
+            { text: "Learn the names of all your immediate neighbors.", category: "social", difficulty: "medium" },
+            { text: "Create a family tree going back as far as you can.", category: "indoor", difficulty: "medium" },
+            { text: "Write a review for your favorite local business.", category: "social", difficulty: "easy" },
+            { text: "Try a new genre of book or movie you normally avoid.", category: "indoor", difficulty: "easy" },
+            { text: "Learn basic sign language for 10 common phrases.", category: "social", difficulty: "medium" },
+            { text: "Create a budget for your personal finances.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a botanical garden or arboretum.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn to play a simple song on a musical instrument.", category: "indoor", difficulty: "medium" },
+            { text: "Write down your dream job and three steps to get there.", category: "indoor", difficulty: "easy" },
+            { text: "Try geocaching in your local area.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn the basics of chess or another strategy game.", category: "indoor", difficulty: "medium" },
+            { text: "Create a photo collage of your favorite memories.", category: "indoor", difficulty: "easy" },
+            { text: "Visit a historical site within 50 miles of your home.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn to bake bread from scratch.", category: "indoor", difficulty: "medium" },
+            { text: "Write a positive review for a product you love.", category: "social", difficulty: "easy" },
+            { text: "Try a new type of cuisine you've never experienced.", category: "social", difficulty: "easy" },
+            { text: "Create a scrapbook page about your current life.", category: "indoor", difficulty: "medium" },
+            { text: "Visit three different parks in your city in one day.", category: "outdoor", difficulty: "epic" },
+            { text: "Learn to change a tire or other basic car maintenance.", category: "outdoor", difficulty: "medium" },
+            { text: "Write a short story about your favorite childhood memory.", category: "indoor", difficulty: "easy" },
+            { text: "Try indoor rock climbing or another adventurous activity.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn the basics of a programming language.", category: "indoor", difficulty: "medium" },
+            { text: "Create a mini documentary about your neighborhood.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a planetarium or science museum.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn to make your own natural cleaning products.", category: "indoor", difficulty: "medium" },
+            { text: "Try pottery or another hands-on craft.", category: "indoor", difficulty: "medium" },
+            { text: "Learn basic first aid skills.", category: "indoor", difficulty: "medium" },
+            { text: "Create a time capsule to open in five years.", category: "indoor", difficulty: "medium" },
+            { text: "Visit a local farm or orchard.", category: "outdoor", difficulty: "easy" },
+            { text: "Write a list of 50 things you want to do before you're 50.", category: "indoor", difficulty: "medium" },
+            { text: "Learn the history of your street name or neighborhood.", category: "indoor", difficulty: "easy" },
+            { text: "Create a blog post about something you're passionate about.", category: "indoor", difficulty: "medium" },
+            { text: "Learn to make three different types of soup from scratch.", category: "indoor", difficulty: "medium" },
+            { text: "Write and perform a one-minute stand-up comedy routine.", category: "social", difficulty: "epic" },
+            { text: "Try a digital detox for 24 hours.", category: "indoor", difficulty: "epic" },
+            { text: "Learn the art of storytelling and tell a story to friends.", category: "social", difficulty: "medium" },
+            { text: "Create a gratitude jar and add one note daily for a month.", category: "indoor", difficulty: "epic" },
+            { text: "Assemble a survival kit with chocolate, a playlist and a letter to yourself for bad days.", category: "indoor", difficulty: "easy" },
+            { text: "Try to trade a paperclip with a stranger for something more valuable.", category: "social", difficulty: "medium" },
+            { text: "Write a Google review for the place where you are currently located.", category: "social", difficulty: "easy" },
+            { text: "Give a one-minute speech about your favorite vegetable to your friends.", category: "social", difficulty: "medium" },
+            { text: "Write a positive message for passersby on the sidewalk using chalk.", category: "outdoor", difficulty: "easy" },
+            { text: "Buy and try a snack from an international supermarket with unreadable packaging.", category: "social", difficulty: "easy" },
+            { text: "Buy something very cheap in a luxury store.", category: "social", difficulty: "easy" },
+            { text: "Stick a QR code to your Spotify playlist on a lamppost.", category: "outdoor", difficulty: "medium" },
+            { text: "Buy three completely different products at the supermarket that are all the same color.", category: "social", difficulty: "easy" },
+            { text: "Arrange a cheap ready-made meal at home as aesthetically as possible.", category: "indoor", difficulty: "medium" },
+            { text: "Hide a coin in a place where it won't be found for years.", category: "outdoor", difficulty: "easy" },
+            { text: "Stick a 1-to-5-star rating label on a completely mundane everyday object.", category: "social", difficulty: "easy" },
+            { text: "Hide a nice note inside a book at a public library.", category: "indoor", difficulty: "easy" },
+            { text: "Leave change in a parking meter to brighten someone's day.", category: "outdoor", difficulty: "easy" },
+            { text: "Take a photo of the most unusual street sign you can find nearby.", category: "outdoor", difficulty: "easy" },
+            { text: "Go into a store and buy something that costs exactly one Dollar / Euro.", category: "social", difficulty: "easy" },
+            { text: "Test a new perfume at a department store and rate the scent for yourself.", category: "social", difficulty: "easy" },
+            { text: "Buy unknown drinks and create a ranking based on taste.", category: "social", difficulty: "medium" },
+            { text: "Learn ten words right away in a random foreign language like Icelandic or Korean.", category: "indoor", difficulty: "medium" },
+            { text: "Photograph ten different colors that immediately stand out in your surroundings.", category: "outdoor", difficulty: "easy" },
+            { text: "Try a snack at the supermarket that you've never eaten before.", category: "social", difficulty: "easy" },
+            { text: "Visit a new ice cream shop and order the absolute craziest flavor.", category: "social", difficulty: "easy" },
+            { text: "Buy three different pastries from a local bakery to sample.", category: "social", difficulty: "easy" },
+            { text: "Write to a person you haven't been in contact with for a long time.", category: "social", difficulty: "easy" },
+            { text: "Write a nice letter to a CEO or a current head of government.", category: "social", difficulty: "medium" },
+            { text: "Politely ask a stranger for a selfie together as a memory.", category: "social", difficulty: "medium" },
+            { text: "Sweeten someone's day by spontaneously buying them a coffee.", category: "social", difficulty: "easy" },
+            { text: "Buy something under 5 Bucks in a random store and gift it to friends.", category: "social", difficulty: "easy" },
+            { text: "Ask a stranger for their favorite movie and watch it later.", category: "social", difficulty: "easy" },
+            { text: "Write an especially nice online review for a small local business.", category: "social", difficulty: "easy" },
+            { text: "Print out your favorite photo of the year and hang it up at home.", category: "indoor", difficulty: "easy" },
+            { text: "Go for a one-hour walk specifically at sunrise or sunset.", category: "outdoor", difficulty: "easy" },
+            { text: "Find an elevated point nearby and enjoy the view from there.", category: "outdoor", difficulty: "easy" },
+            { text: "Take a photo of yourself in front of the oldest or tallest building in your city.", category: "outdoor", difficulty: "easy" },
+            { text: "Go to the movies alone and enjoy your popcorn without sharing.", category: "social", difficulty: "epic" },
+            { text: "Let a dice decide how many kilometers you walk right now in one go.", category: "outdoor", difficulty: "medium" },
+            { text: "Take photos of three different animals you encounter outdoors.", category: "outdoor", difficulty: "easy" },
+            { text: "Eat only food of one specific color for an entire day.", category: "indoor", difficulty: "medium" },
+            { text: "Build a tower from as many stones as possible at a riverbank.", category: "outdoor", difficulty: "easy" },
+            { text: "Rent an e-bike or scooter and explore your city without a destination.", category: "outdoor", difficulty: "easy" },
+            { text: "Visit a river or lake where you have never been in your life.", category: "outdoor", difficulty: "easy" },
+            { text: "Spend an afternoon at a trampoline park and really exert yourself.", category: "outdoor", difficulty: "medium" },
+            { text: "Who can create the best dish at the supermarket for only 10 Bucks?", category: "indoor", difficulty: "medium" },
+            { text: "Rent a paddle boat and spend a relaxing afternoon on the water.", category: "outdoor", difficulty: "medium" },
+            { text: "Have a picnic at a place where it is absolutely unexpected.", category: "outdoor", difficulty: "medium" },
+            { text: "Visit a bowling alley and try to get a strike on your first throw.", category: "outdoor", difficulty: "easy" },
+            { text: "Visit an unknown location and navigate using only a paper map.", category: "outdoor", difficulty: "medium" },
+            { text: "Walk or bike through a drive-thru lane.", category: "outdoor", difficulty: "easy" },
+            { text: "Find a new recipe and bake something delicious for your friends.", category: "indoor", difficulty: "medium" },
+            { text: "Use at least three different modes of transportation in one day.", category: "outdoor", difficulty: "medium" },
+            { text: "Roll a dice (1-6) and take the next train from that platform.", category: "outdoor", difficulty: "epic" },
+            { text: "Cover one kilometer using the slowest mode of transportation you can think of.", category: "outdoor", difficulty: "medium" },
+            { text: "Find old childhood photos of yourself and recreate them exactly today.", category: "indoor", difficulty: "medium" },
+            { text: "Cook a dinner with friends where everyone can only use one hand.", category: "indoor", difficulty: "medium" },
+            { text: "Plan and organize a big game night for you and your friends.", category: "indoor", difficulty: "easy" },
+            { text: "Visit the worst and best-rated restaurant in your area.", category: "social", difficulty: "medium" },
+            { text: "Organize a snowball or water balloon fight with your friends.", category: "outdoor", difficulty: "medium" },
+            { text: "Hang up a sign that says 'Send me a selfie by email!' and wait.", category: "social", difficulty: "epic" },
+            { text: "Throw a dart at a map and actually visit that place.", category: "outdoor", difficulty: "epic" },
+            { text: "Visit a village that officially has fewer than 1000 inhabitants.", category: "outdoor", difficulty: "medium" },
+            { text: "Buy one product from every fast-food restaurant in town and rank them.", category: "social", difficulty: "medium" },
+            { text: "Go outside and roast marshmallows over a real campfire.", category: "outdoor", difficulty: "medium" },
+            { text: "Visit a strawberry field in summer and pick your own berries.", category: "outdoor", difficulty: "easy" },
+            { text: "Treat yourself to a meal at a Michelin-star restaurant near you.", category: "social", difficulty: "epic" },
+            // New quests to reach 200 total
+            { text: "Organize your bookshelf by color instead of author or genre.", category: "indoor", difficulty: "easy" },
+            { text: "Go to a thrift store and find the most bizarre item you can for under 5 Bucks.", category: "social", difficulty: "easy" },
+            { text: "Create a mini scavenger hunt in your local park for strangers to find.", category: "outdoor", difficulty: "medium" },
+            { text: "Learn to write your name in a different alphabet (like Cyrillic or Arabic).", category: "indoor", difficulty: "easy" },
+            { text: "Go to a cafe and have a conversation with the barista about their favorite coffee.", category: "social", difficulty: "easy" },
+            { text: "Visit a local tourist attraction that you've never been to as a 'tourist' in your own city.", category: "outdoor", difficulty: "easy" },
+            { text: "Create a playlist specifically for your next road trip or commute.", category: "indoor", difficulty: "easy" },
+            { text: "Learn to identify 5 different types of clouds and what weather they predict.", category: "outdoor", difficulty: "easy" },
+            { text: "Interview an older family member about their teenage years and record it.", category: "social", difficulty: "medium" },
+            { text: "Try to learn the basic steps of a traditional dance from another culture.", category: "indoor", difficulty: "medium" }
+        ];
+        
+        // DOM Elements
+        const questText = document.getElementById('quest-text');
+        const generateBtn = document.getElementById('generate-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const myQuestsBtn = document.getElementById('my-quests-btn');
+        const completeBtn = document.getElementById('complete-btn');
+        const shareBtn = document.getElementById('share-btn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        const myQuestsModal = document.getElementById('my-quests-modal');
+        const supportModal = document.getElementById('support-modal');
+        const settingsModal = document.getElementById('settings-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeSupportModal = document.getElementById('close-support-modal');
+        const closeSettingsModal = document.getElementById('close-settings-modal');
+        const savedQuestsList = document.getElementById('saved-quests-list');
+        const savedCount = document.getElementById('saved-count');
+        const completedCount = document.getElementById('completed-count');
+        const totalCount = document.getElementById('total-count');
+        const difficultyTags = document.getElementById('difficulty-tags');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const modalThemeToggle = document.getElementById('modal-theme-toggle');
+        const themeIcon = modalThemeToggle.querySelector('i');
+        const themeText = modalThemeToggle.querySelector('.theme-text');
+        const privacyLink = document.getElementById('privacy-link');
+        const privacyModal = document.getElementById('privacy-modal');
+        const closePrivacyModal = document.getElementById('close-privacy-modal');
+        const supportLink = document.getElementById('support-link');
+        const settingsLink = document.getElementById('settings-link');
+        const clearDataBtn = document.getElementById('clear-data-btn');
+        
+        // State variables
+        let savedQuests = JSON.parse(localStorage.getItem('sidequestfun_savedQuests')) || [];
+        let completedQuests = JSON.parse(localStorage.getItem('sidequestfun_completedQuests')) || [];
+        let currentQuest = null;
+        let currentCategory = 'all';
+        let questHistory = JSON.parse(localStorage.getItem('sidequestfun_history')) || [];
+        const MAX_HISTORY = 20;
+        let isDarkMode = localStorage.getItem('sidequestfun_darkMode') === 'true';
+        
+        // Initialize the app
+        function init() {
+            totalCount.textContent = sidequests.length;
+            
+            // Initialize dark mode
+            if (isDarkMode) {
+                enableDarkMode();
+            }
+            
+            // Set up filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setActiveFilter(button.dataset.category);
+                });
+            });
+            
+            generateSidequest();
+        }
+        
+        // Set active filter with visual effects
+        function setActiveFilter(category) {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active', 'glow-effect');
+            });
+            
+            const activeButton = document.querySelector(`.filter-btn[data-category="${category}"]`);
+            activeButton.classList.add('active', 'glow-effect');
+            
+            setTimeout(() => {
+                activeButton.classList.remove('glow-effect');
+            }, 1000);
+            
+            currentCategory = category;
+            generateSidequest();
+        }
+        
+        // Generate a random sidequest with history tracking
+        function generateSidequest() {
+            let filteredQuests;
+            
+            if (currentCategory === 'all') {
+                filteredQuests = sidequests;
+            } else {
+                filteredQuests = sidequests.filter(quest => quest.category === currentCategory);
+            }
+            
+            if (filteredQuests.length === 0) {
+                questText.textContent = "No quests found for this category. Try another filter!";
+                difficultyTags.innerHTML = '';
+                currentQuest = null;
+                updateSaveButton();
+                return;
+            }
+            
+            // Filter out recently shown quests AND completed quests
+            const availableQuests = filteredQuests.filter(quest => 
+                !questHistory.includes(quest.text) && 
+                !completedQuests.some(completed => completed.text === quest.text)
+            );
+            
+            // If all quests are in history or completed, reset the history for this category
+            const questsToUse = availableQuests.length > 0 ? availableQuests : 
+                filteredQuests.filter(quest => 
+                    !completedQuests.some(completed => completed.text === quest.text)
+                );
+            
+            if (questsToUse.length === 0) {
+                questText.textContent = "You've completed all quests in this category! Try another filter.";
+                difficultyTags.innerHTML = '';
+                currentQuest = null;
+                updateSaveButton();
+                return;
+            }
+            
+            const randomIndex = Math.floor(Math.random() * questsToUse.length);
+            currentQuest = questsToUse[randomIndex];
+            questText.textContent = currentQuest.text;
+            
+            // Add to history
+            addToHistory(currentQuest.text);
+            
+            // Display difficulty tags only
+            difficultyTags.innerHTML = '';
+            const difficultyTag = document.createElement('div');
+            difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
+            difficultyTag.textContent = currentQuest.difficulty;
+            difficultyTags.appendChild(difficultyTag);
+            
+            questText.classList.remove('new-quest');
+            void questText.offsetWidth;
+            questText.classList.add('new-quest');
+            
+            updateSaveButton();
+        }
+        
+        // Add quest to history stack
+        function addToHistory(questText) {
+            questHistory.unshift(questText);
+            
+            if (questHistory.length > MAX_HISTORY) {
+                questHistory = questHistory.slice(0, MAX_HISTORY);
+            }
+            
+            localStorage.setItem('sidequestfun_history', JSON.stringify(questHistory));
+        }
+        
+        // Update save button state
+        function updateSaveButton() {
+            if (!currentQuest) {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                saveBtn.style.backgroundColor = '#6c757d';
+                return;
+            }
+            
+            const isSaved = savedQuests.some(q => q.text === currentQuest.text);
+            
+            if (isSaved) {
+                saveBtn.innerHTML = '<i class="fas fa-check"></i>';
+                saveBtn.style.backgroundColor = '#28a745';
+                saveBtn.disabled = true;
+            } else {
+                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+                saveBtn.style.backgroundColor = '';
+                saveBtn.disabled = false;
+            }
+        }
+        
+        // Save current quest
+        function saveSidequest() {
+            if (!currentQuest || savedQuests.some(q => q.text === currentQuest.text)) return;
+            
+            savedQuests.push(currentQuest);
+            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
+            
+            showNotification("Quest saved to your browser storage!");
+            updateSaveButton();
+        }
+        
+        // Mark quest as complete
+        function completeQuest() {
+            if (!currentQuest) return;
+            
+            // Check if already completed
+            if (completedQuests.some(q => q.text === currentQuest.text)) {
+                showNotification("You've already completed this quest!");
+                return;
+            }
+            
+            // Add to completed quests
+            completedQuests.push(currentQuest);
+            localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
+            
+            // Launch confetti
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            
+            showNotification("Congratulations! Quest completed!");
+            updateCompletedCounter();
+        }
+        
+        // Share current quest via WhatsApp - KORRIGIERTE VERSION
+        function shareQuest() {
+            if (!currentQuest) return;
+            
+            const text = `I just got this sidequest: "${currentQuest.text}" - Check out SidequestFun.com for more!`;
+            const encodedText = encodeURIComponent(text);
+            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+        }
+        
+        // Update completed counter
+        function updateCompletedCounter() {
+            completedCount.textContent = completedQuests.length;
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Dark mode functions
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            themeIcon.className = 'fas fa-moon';
+            themeText.textContent = 'Dark Mode';
+            isDarkMode = true;
+            localStorage.setItem('sidequestfun_darkMode', 'true');
+        }
+        
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            themeIcon.className = 'fas fa-sun';
+            themeText.textContent = 'Light Mode';
+            isDarkMode = false;
+            localStorage.setItem('sidequestfun_darkMode', 'false');
+        }
+        
+        function toggleDarkMode() {
+            if (isDarkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+        
+        // Open saved quests modal
+        function openSavedQuestsModal() {
+            savedCount.textContent = savedQuests.length;
+            completedCount.textContent = completedQuests.length;
+            totalCount.textContent = sidequests.length;
+            
+            // Clear current list
+            savedQuestsList.innerHTML = '';
+            
+            if (savedQuests.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.className = 'empty-saved-quests';
+                emptyMessage.innerHTML = `
+                    <i class="fas fa-inbox"></i>
+                    <h3>No saved quests yet</h3>
+                    <p>Save quests you like by clicking the bookmark button!</p>
+                `;
+                savedQuestsList.appendChild(emptyMessage);
+            } else {
+                savedQuests.forEach((quest, index) => {
+                    const isCompleted = completedQuests.some(q => q.text === quest.text);
+                    
+                    const questItem = document.createElement('div');
+                    questItem.className = 'saved-quest-item';
+                    questItem.innerHTML = `
+                        <div>
+                            <div class="quest-info">
+                                <div class="difficulty-tag difficulty-${quest.difficulty}">${quest.difficulty}</div>
+                                ${isCompleted ? '<div class="difficulty-tag" style="background-color: #d4edda; color: #155724;">✓ Completed</div>' : ''}
+                            </div>
+                            <div class="saved-quest-text">${quest.text}</div>
+                        </div>
+                        <div class="saved-quest-actions">
+                            <button class="action-btn action-btn-share" data-index="${index}">
+                                <i class="fas fa-share-alt"></i> Share
+                            </button>
+                            ${!isCompleted ? 
+                                `<button class="action-btn action-btn-complete" data-index="${index}">
+                                    <i class="fas fa-check-circle"></i> Complete
+                                </button>` : 
+                                ''
+                            }
+                            <button class="action-btn action-btn-remove" data-index="${index}">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                    `;
+                    savedQuestsList.appendChild(questItem);
+                });
+                
+                // Add event listeners to modal buttons
+                document.querySelectorAll('.action-btn-complete').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        completeSavedQuest(index);
+                    });
+                });
+                
+                document.querySelectorAll('.action-btn-remove').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        removeSavedQuest(index);
+                    });
+                });
+                
+                document.querySelectorAll('.action-btn-share').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        shareSavedQuest(index);
+                    });
+                });
+            }
+            
+            myQuestsModal.style.display = 'flex';
+        }
+        
+        // Complete a saved quest from modal
+        function completeSavedQuest(index) {
+            const quest = savedQuests[index];
+            
+            if (completedQuests.some(q => q.text === quest.text)) {
+                showNotification("You've already completed this quest!");
+                return;
+            }
+            
+            completedQuests.push(quest);
+            localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
+            
+            confetti({
+                particleCount: 100,
+                spread: 60,
+                origin: { y: 0.6 }
+            });
+            
+            showNotification("Quest marked as complete!");
+            updateCompletedCounter();
+            openSavedQuestsModal();
+        }
+        
+        // Remove a saved quest
+        function removeSavedQuest(index) {
+            savedQuests.splice(index, 1);
+            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
+            
+            showNotification("Quest removed from saved list");
+            openSavedQuestsModal();
+            
+            // If current quest was removed, update save button
+            if (currentQuest && savedQuests.every(q => q.text !== currentQuest.text)) {
+                updateSaveButton();
+            }
+        }
+        
+        // Share a saved quest via WhatsApp - KORRIGIERTE VERSION
+        function shareSavedQuest(index) {
+            const quest = savedQuests[index];
+            const text = `Check out this sidequest: "${quest.text}" - Find more at SidequestFun.com!`;
+            const encodedText = encodeURIComponent(text);
+            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+        }
+        
+        // Clear all saved data
+        function clearAllData() {
+            if (confirm("Are you sure you want to clear all saved data? This will delete all your saved and completed quests.")) {
+                savedQuests = [];
+                completedQuests = [];
+                questHistory = [];
+                
+                localStorage.removeItem('sidequestfun_savedQuests');
+                localStorage.removeItem('sidequestfun_completedQuests');
+                localStorage.removeItem('sidequestfun_history');
+                
+                showNotification("All data has been cleared!");
+                closeSettingsModalFunc();
+                
+                // Update UI
+                updateSaveButton();
+                generateSidequest();
+            }
+        }
+        
+        // Open support modal
+        function openSupportModal() {
+            supportModal.style.display = 'flex';
+        }
+        
+        // Open settings modal
+        function openSettingsModal() {
+            settingsModal.style.display = 'flex';
+        }
+        
+        // Open privacy modal
+        function openPrivacyModal() {
+            privacyModal.style.display = 'flex';
+        }
+        
+        // Close modals
+        function closeSavedQuestsModal() {
+            myQuestsModal.style.display = 'none';
+        }
+        
+        function closeSupportModalFunc() {
+            supportModal.style.display = 'none';
+        }
+        
+        function closeSettingsModalFunc() {
+            settingsModal.style.display = 'none';
+        }
+        
+        function closePrivacyPolicyModal() {
+            privacyModal.style.display = 'none';
+        }
+        
+        // Event listeners
+        generateBtn.addEventListener('click', generateSidequest);
+        saveBtn.addEventListener('click', saveSidequest);
+        myQuestsBtn.addEventListener('click', openSavedQuestsModal);
+        completeBtn.addEventListener('click', completeQuest);
+        shareBtn.addEventListener('click', shareQuest);
+        closeModal.addEventListener('click', closeSavedQuestsModal);
+        closeSupportModal.addEventListener('click', closeSupportModalFunc);
+        closeSettingsModal.addEventListener('click', closeSettingsModalFunc);
+        closePrivacyModal.addEventListener('click', closePrivacyPolicyModal);
+        modalThemeToggle.addEventListener('click', toggleDarkMode);
+        privacyLink.addEventListener('click', openPrivacyModal);
+        supportLink.addEventListener('click', openSupportModal);
+        settingsLink.addEventListener('click', openSettingsModal);
+        clearDataBtn.addEventListener('click', clearAllData);
+        
+        // Close modal when clicking outside content
+        window.addEventListener('click', (event) => {
+            if (event.target === myQuestsModal) {
+                closeSavedQuestsModal();
+            }
+            if (event.target === supportModal) {
+                closeSupportModalFunc();
+            }
+            if (event.target === settingsModal) {
+                closeSettingsModalFunc();
+            }
+            if (event.target === privacyModal) {
+                closePrivacyPolicyModal();
+            }
+        });
+        
+        // Initialize on load
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
