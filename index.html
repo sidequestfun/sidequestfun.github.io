@@ -905,6 +905,7 @@
             color: #cbd5e1;
         }
         
+        /* Aktualisierte Statistik-Stile - minimalistischer */
         .modal-stats {
             display: flex;
             justify-content: space-between;
@@ -1485,7 +1486,7 @@
     </div>
     
     <script>
-        // sidequests array with objects containing category and difficulty
+        // Updated sidequests array with objects containing category and difficulty
         let sidequests = [
             { text: "Take a photo of the most interesting cloud you can find today.", category: "outdoor", difficulty: "easy" },
             { text: "Learn to say 'hello' and 'thank you' in a language you don't know.", category: "social", difficulty: "easy" },
@@ -1697,28 +1698,7 @@
             { text: "Ask a stranger at a cafe to pick your drink or snack for you. Eat/drink whatever they choose.", category: "social", difficulty: "medium" },
             { text: "Buy a flower and give it to the first person you see who looks like they are having a rough day.", category: "social", difficulty: "easy" },
             { text: "Complete 100 pushups today. They don't have to be at once, but they must be finished.", category: "indoor", difficulty: "medium" }
-            { text: "Leave a sticky note with compliments in a public place.", category: "social", difficulty: "easy" },
-            { text: "Build a fort and watch your favorite childhood movie.", category: "indoor", difficulty: "easy" },
-            { text: "Have a three-course meal at three different restaurants.", category: "social", difficulty: "epic" },
-            { text: "Take a late-night drive with no destination and a custom playlist.", category: "outdoor", difficulty: "medium" },
-            { text: "Drive to the edge of the county and back, without using any highways.", category: "outdoor", difficulty: "medium" },
-            { text: "Cross a bridge you've never crossed before.", category: "outdoor", difficulty: "easy" },
-            { text: "You can't lie for the next 24 hours. If you mess up, restart again.", category: "social", difficulty: "epic" },
-            { text: "Create a digital collage of your favorite internet memes.", category: "indoor", difficulty: "easy" },
-            { text: "Bake bread completely from scratch without using a machine.", category: "indoor", difficulty: "medium" },
-            { text: "Organize your digital photo collection and create albums for each year.", category: "indoor", difficulty: "epic" },
-            { text: "Learn how to tie five different knots and what they're used for.", category: "indoor", difficulty: "medium" },
-            { text: "Build a miniature model using matches or toothpicks.", category: "indoor", difficulty: "medium" },
-            { text: "Visit three different playgrounds and test the swings at each.", category: "outdoor", difficulty: "easy" },
-            { text: "Find three different bird species in your area and try to identify them.", category: "outdoor", difficulty: "medium" },
-            { text: "Go for a walk in the rain without an umbrella and enjoy the feeling.", category: "outdoor", difficulty: "easy" },
-            { text: "Organize a spontaneous game night with friends or colleagues.", category: "social", difficulty: "easy" },
-            { text: "Host a small 'talent show' event with your friends where everyone performs something.", category: "social", difficulty: "medium" },
-            { text: "Write a thank-you letter to someone who positively influenced your life, even if it was long ago.", category: "social", difficulty: "easy" },
-            { text: "Memorize three jokes and tell them to someone who hasn't heard them.", category: "social", difficulty: "easy" },
-            { text: "Host an 'International Dinner' where everyone brings a dish from a different country.", category: "social", difficulty: "medium" }
         ];
-
         
         // DOM Elements
         const questText = document.getElementById('quest-text');
@@ -2208,7 +2188,7 @@
             myQuestsModal.style.display = 'flex';
         }
         
-        // Update statistics display
+        // Update statistics display - MINIMALISTISCHERE VERSION
         function updateStatistics() {
             // Calculate category statistics
             const categoryCounts = {
@@ -2260,7 +2240,7 @@
                     favoriteDisplayName = 'None';
             }
             
-            // Update stats details
+            // Update stats details - minimalistischer
             statsDetails.innerHTML = `
                 <h3>Your Statistics</h3>
                 <div class="stats-grid">
