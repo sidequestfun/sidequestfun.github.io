@@ -2,32 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>SidequestFun.com - Random Sidequest Generator</title>
 
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Free sidequest generator: Discover spontaneous micro-adventures for indoor, outdoor, and social activities. Beat boredom with 200+ creative challenges and fun tasks!">
+    <meta name="description" content="Free sidequest generator: Discover spontaneous micro-adventures for indoor, outdoor, and social activities. Beat boredom with 250+ creative challenges and fun tasks!">
     <meta name="keywords" content="sidequest, boredom buster, micro adventures, random task generator, fun challenges, indoor activities, outdoor adventures, social challenges, creative tasks">
     <meta name="author" content="SidequestFun">
     <meta name="robots" content="index, follow">
 
-    <!-- Canonical URL -->
     <link rel="canonical" href="https://sidequestfun.com">
-
-    <!-- Open Graph / Social Media -->
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
     <meta property="og:title" content="SidequestFun - Random Sidequest Generator">
-    <meta property="og:description" content="Beat boredom with random micro-adventures.">
+    <meta property="og:description" content="Beat boredom with random micro-adventures. Generate fun sidequests and track your progress!">
     <meta property="og:url" content="https://sidequestfun.com">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="SidequestFun">
     <meta property="og:locale" content="en_US">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:image:alt" content="SidequestFun Logo">
 
-    <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="SidequestFun - Random Sidequest Generator">
     <meta name="twitter:description" content="Beat boredom with random micro-adventures.">
+    <meta name="twitter:image" content="logo.png">
     
-    <!-- CDNs Icons and Confetti -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
@@ -881,7 +882,7 @@
         }
         
         .action-btn-share {
-            background-color: #1da1f2;
+            background-color: #25D366;
             color: white;
         }
         
@@ -923,7 +924,6 @@
             color: #cbd5e1;
         }
         
-        /* Aktualisierte Statistik-Stile - minimalistischer */
         .modal-stats {
             display: flex;
             justify-content: space-between;
@@ -1193,7 +1193,7 @@
             padding: 30px 0 20px 0;
             margin-top: 10px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
             max-width: 800px;
             margin: 0 auto;
@@ -1202,19 +1202,26 @@
         
         .footer-links {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            gap: 30px;
             width: 100%;
             padding: 0 20px;
         }
         
         .footer-link {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-decoration: none;
             cursor: pointer;
             transition: color 0.3s ease;
             padding: 10px;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-link i {
+            font-size: 1.1rem;
         }
         
         .footer-link:hover, .footer-link:active, .footer-link:focus {
@@ -1229,14 +1236,6 @@
         
         body.dark-mode .footer-link:hover, body.dark-mode .footer-link:active, body.dark-mode .footer-link:focus {
             color: #14B3D9;
-        }
-        
-        .footer-left {
-            text-align: left;
-        }
-        
-        .footer-right {
-            text-align: right;
         }
         
         @media (max-width: 640px) {
@@ -1274,7 +1273,8 @@
             
             .footer-links {
                 flex-direction: row;
-                justify-content: space-between;
+                justify-content: center;
+                gap: 25px;
             }
             
             .footer-link {
@@ -1324,6 +1324,65 @@
         input, textarea, button, select, a {
             -webkit-tap-highlight-color: rgba(0,0,0,0);
         }
+        
+        .quest-of-month {
+            background: linear-gradient(135deg, #DD467F 0%, #14B3D9 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+        
+        body.dark-mode .quest-of-month {
+            background: linear-gradient(135deg, #DD467F 0%, #14B3D9 100%);
+        }
+        
+        .qom-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .qom-header i {
+            font-size: 2rem;
+            color: white;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .qom-header h3 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: 1px;
+        }
+        
+        .qom-month-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.2);
+            display: inline-flex;
+            padding: 6px 16px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+        
+        .qom-quest-text {
+            font-size: 1.15rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            color: white;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -1346,9 +1405,7 @@
         
         <div class="card quest-card">
             <div class="quest-display">
-                <div class="difficulty-tags" id="difficulty-tags">
-                    <!-- Difficulty tag will be inserted here -->
-                </div>
+                <div class="difficulty-tags" id="difficulty-tags"></div>
                 <div id="quest-text">Your sidequest will appear here. Ready for an adventure?</div>
             </div>
             
@@ -1369,7 +1426,7 @@
                     <i class="fas fa-tasks"></i>
                 </button>
                 <button class="btn icon-btn" id="share-btn">
-                    <i class="fas fa-share-alt"></i>
+                    <i class="fab fa-whatsapp"></i>
                 </button>
             </div>
         </div>
@@ -1386,6 +1443,15 @@
             <p>Every sidequest is a playful micro-adventure that makes your day more vibrant and your personal story more exciting. Step outside your comfort zone and start living a life full of variety.</p>
         </div>
         
+        <div class="quest-of-month" id="quest-of-month-container">
+            <div class="qom-header">
+                <i class="fas fa-trophy"></i>
+                <h3>QUEST OF THE MONTH</h3>
+            </div>
+            <div class="qom-month-name" id="qom-month-name">✨ MONTH</div>
+            <div class="qom-quest-text" id="qom-quest-text">Loading quest of the month...</div>
+        </div>
+        
         <div class="card">
             <div class="donation-section">
                 <div class="donation-container">
@@ -1400,12 +1466,8 @@
     
     <div class="footer">
         <div class="footer-links">
-            <div class="footer-left">
-                <a class="footer-link" id="settings-link">Settings</a>
-            </div>
-            <div class="footer-right">
-                <a class="footer-link" id="privacy-link">Privacy Policy</a>
-            </div>
+            <a class="footer-link" id="settings-link"><i class="fas fa-cog"></i> Settings</a>
+            <a class="footer-link" id="privacy-link"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
         </div>
     </div>
     
@@ -1431,13 +1493,9 @@
                 </div>
             </div>
             
-            <div class="stats-details" id="stats-details">
-                <!-- Statistics details will be inserted here -->
-            </div>
+            <div class="stats-details" id="stats-details"></div>
             
-            <div class="saved-quests-list" id="saved-quests-list">
-                <!-- Saved quests will be inserted here -->
-            </div>
+            <div class="saved-quests-list" id="saved-quests-list"></div>
         </div>
     </div>
     
@@ -1504,7 +1562,6 @@
     </div>
     
     <script>
-        // Updated sidequests array with objects containing category and difficulty
         let sidequests = [
             { text: "Take a photo of the most interesting cloud you can find today.", category: "outdoor", difficulty: "easy" },
             { text: "Learn to say 'hello' and 'thank you' in a language you don't know.", category: "social", difficulty: "easy" },
@@ -1625,7 +1682,7 @@
             { text: "Create a time capsule to open in five years.", category: "indoor", difficulty: "medium" },
             { text: "Visit a local farm or orchard.", category: "outdoor", difficulty: "easy" },
             { text: "Write a list of 50 things you want to do before you're 50.", category: "indoor", difficulty: "medium" },
-            { text: "Learn the history of your street name or neighborhood.", category: "indoor", difficulty: "easy" },
+            { text: "Learn the history of your street name or neighborhood.", category: "social", difficulty: "easy" },
             { text: "Create a blog post about something you're passionate about.", category: "indoor", difficulty: "medium" },
             { text: "Learn to make three different types of soup from scratch.", category: "indoor", difficulty: "medium" },
             { text: "Write and perform a one-minute stand-up comedy routine.", category: "social", difficulty: "epic" },
@@ -1673,7 +1730,7 @@
             { text: "Build a tower from as many stones as possible at a riverbank.", category: "outdoor", difficulty: "easy" },
             { text: "Rent an e-bike or scooter and explore your city without a destination.", category: "outdoor", difficulty: "easy" },
             { text: "Visit a river or lake where you have never been in your life.", category: "outdoor", difficulty: "easy" },
-            { text: "Spend an afternoon at a trampoline park and really exert yourself.", category: "outdoor", difficulty: "medium" },
+            { text: "Spend an afternoon at a trampoline park and really exert yourself.", category: "indoor", difficulty: "medium" },
             { text: "Who can create the best dish at the supermarket for only 10 Bucks?", category: "indoor", difficulty: "medium" },
             { text: "Rent a paddle boat and spend a relaxing afternoon on the water.", category: "outdoor", difficulty: "medium" },
             { text: "Have a picnic at a place where it is absolutely unexpected.", category: "outdoor", difficulty: "medium" },
@@ -1738,7 +1795,55 @@
             { text: "Host an 'International Dinner' where everyone brings a dish from a different country.", category: "social", difficulty: "medium" }
         ];
         
-        // DOM Elements
+        const newQuests = [
+            { text: "Find out where the nearest waterfall is and visit it.", category: "outdoor", difficulty: "medium" },
+            { text: "Go to a candy shop and only buy one color of candy.", category: "social", difficulty: "easy" },
+            { text: "Visit a grocery store and build a meal where every item starts with the same letter.", category: "social", difficulty: "medium" },
+            { text: "Walk into a bakery and ask for the least popular item.", category: "social", difficulty: "easy" },
+            { text: "Go to a diner and order dessert first, no explanations.", category: "social", difficulty: "easy" },
+            { text: "Go to a pizza place order a topping you've never tried.", category: "social", difficulty: "easy" },
+            { text: "Go to a bowling alley and try to get a strike using your non-dominant hand.", category: "outdoor", difficulty: "medium" },
+            { text: "Write 3 handwritten letters to people you love - not just romantic, also to friends and family.", category: "indoor", difficulty: "medium" },
+            { text: "Plan an entire day just for you: do things you love without feeling guilty.", category: "indoor", difficulty: "easy" },
+            { text: "Sign up for a free online course (language, programming, drawing).", category: "indoor", difficulty: "medium" },
+            { text: "Create a time capsule with things from this year - open in 5 years.", category: "indoor", difficulty: "medium" },
+            { text: "Take a photo of the same spot in your neighborhood at 3 different times of day.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn to juggle with 3 objects. Film your progress.", category: "indoor", difficulty: "medium" },
+            { text: "Write a list of 100 things that make you happy. Don't stop until you reach 100.", category: "indoor", difficulty: "epic" },
+            { text: "Rent a stand-up paddleboard or surfboard and get out on the water.", category: "outdoor", difficulty: "medium" },
+            { text: "Play a round of tennis or padel with a friend.", category: "outdoor", difficulty: "easy" },
+            { text: "Learn as many decimal places of Pi as you can in one hour.", category: "indoor", difficulty: "medium" },
+            { text: "Go wash your car and take cool photos of it.", category: "outdoor", difficulty: "easy" },
+            { text: "Visit a zoo or aquarium and take photos of 10 different animals.", category: "outdoor", difficulty: "easy" },
+            { text: "Visit a street food festival near you.", category: "social", difficulty: "easy" },
+            { text: "Learn one skateboard or inline skates trick.", category: "outdoor", difficulty: "medium" },
+            { text: "Visit an escape room or play an escape game at home.", category: "social", difficulty: "medium" },
+            { text: "Host a mini Olympics against a friend — 5 categories, 5 mini games.", category: "social", difficulty: "epic" },
+            { text: "Visit a random bus or train stop and take the first connection that arrives — no destination planned.", category: "outdoor", difficulty: "epic" },
+            { text: "Try the highest-rated restaurant near you.", category: "social", difficulty: "easy" },
+            { text: "Host an outdoor barbecue evening.", category: "social", difficulty: "easy" },
+            { text: "Go to a drive-in and order the same thing as the person in front of you.", category: "social", difficulty: "easy" },
+            { text: "Visit a climbing gym or trampoline park.", category: "outdoor", difficulty: "medium" },
+            { text: "Visit an amusement park or water park near you.", category: "outdoor", difficulty: "medium" },
+            { text: "Buy a cheap inflatable boat and go to the nearest lake.", category: "outdoor", difficulty: "medium" }
+        ];
+        sidequests.push(...newQuests);
+        
+        const monthlyQuests = [
+            { month: 0, name: "❄️ JANUARY", text: "Have a day of outdoor fun: Go sledding, build a small snowman, or make snow angels. Embrace the cold and let your inner child play." },
+            { month: 1, name: "🐦 FEBRUARY", text: "Build a bird feeder from recycled materials and observe for a week which birds come to visit. Keep a journal of your feathered guests." },
+            { month: 2, name: "🌷 MARCH", text: "Find the first 10 signs of spring in your area — blossoms, buds, returning birds — and photograph them. Celebrate nature's comeback." },
+            { month: 3, name: "🥚 APRIL", text: "Decorate 5 Easter eggs using unusual techniques: leaf stenciling, wax crayon resist, or natural dyes from onion skins, turmeric, and beetroot." },
+            { month: 4, name: "🍅 MAY", text: "Visit a farmers market and cook a meal using only regional, seasonal ingredients — fresh tomatoes, zucchini, berries, and herbs. Taste the season." },
+            { month: 5, name: "🍓 JUNE", text: "Pick strawberries yourself at a local farm and make at least 3 different things from them: jam, cake, fresh lemonade, or savory salad." },
+            { month: 6, name: "🍉 JULY", text: "Grill something unexpected: watermelon slices, peaches, halloumi cheese, or bananas with chocolate. Host a blind tasting with friends and rate the results." },
+            { month: 7, name: "✨ AUGUST", text: "Find the darkest spot near you, lay out a blanket, and watch for shooting stars. Better yet, camp overnight under the open sky." },
+            { month: 8, name: "🚗 SEPTEMBER", text: "Take a 24-hour road trip with a budget of maximum 50 Euros. Choose a direction, explore small towns, document everything, and embrace the adventure." },
+            { month: 9, name: "🎃 OCTOBER", text: "Carve a pumpkin with an unusual motif — a celebrity, a meme, or your favorite character. Or cook different pumpkin dishes: soup, bread, roasted seeds." },
+            { month: 10, name: "🏮 NOVEMBER", text: "Build a lantern from recycled materials — glass jars, paper, twigs — and go for an evening walk. Light the way and enjoy the quiet autumn atmosphere." },
+            { month: 11, name: "🎄 DECEMBER", text: "Bake Christmas cookies and gift them to neighbors or colleagues. Spread warmth, kindness, and homemade joy during the festive season." }
+        ];
+        
         const questText = document.getElementById('quest-text');
         const generateBtn = document.getElementById('generate-btn');
         const saveBtn = document.getElementById('save-btn');
@@ -1758,8 +1863,6 @@
         const difficultyTags = document.getElementById('difficulty-tags');
         const filterButtons = document.querySelectorAll('.filter-btn');
         const modalThemeToggle = document.getElementById('modal-theme-toggle');
-        const themeIcon = modalThemeToggle.querySelector('i');
-        const themeText = modalThemeToggle.querySelector('.theme-text');
         const privacyLink = document.getElementById('privacy-link');
         const privacyModal = document.getElementById('privacy-modal');
         const closePrivacyModal = document.getElementById('close-privacy-modal');
@@ -1770,7 +1873,6 @@
         const statCompleted = document.getElementById('stat-completed');
         const statTotal = document.getElementById('stat-total');
         
-        // State variables
         let savedQuests = JSON.parse(localStorage.getItem('sidequestfun_savedQuests')) || [];
         let completedQuests = JSON.parse(localStorage.getItem('sidequestfun_completedQuests')) || [];
         let currentQuest = null;
@@ -1778,18 +1880,15 @@
         let questHistory = JSON.parse(localStorage.getItem('sidequestfun_history')) || [];
         const MAX_HISTORY = 20;
         let isDarkMode = localStorage.getItem('sidequestfun_darkMode') === 'true';
-        let currentView = 'saved'; // 'saved', 'completed', or 'total'
+        let currentView = 'saved';
         
-        // Initialize the app
         function init() {
             totalCount.textContent = sidequests.length;
             
-            // Initialize dark mode
             if (isDarkMode) {
                 enableDarkMode();
             }
             
-            // Set up filter buttons
             filterButtons.forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1797,16 +1896,15 @@
                 });
             });
             
-            // Set up stat item click listeners
             statSaved.addEventListener('click', () => showQuestsByType('saved'));
             statCompleted.addEventListener('click', () => showQuestsByType('completed'));
             statTotal.addEventListener('click', () => showQuestsByType('total'));
             
             generateSidequest();
             updateCompletedCounter();
+            initQuestOfMonth();
         }
         
-        // Set active filter with visual effects
         function setActiveFilter(category) {
             filterButtons.forEach(btn => {
                 btn.classList.remove('active', 'glow-effect');
@@ -1823,7 +1921,6 @@
             generateSidequest();
         }
         
-        // Generate a random sidequest with history tracking
         function generateSidequest() {
             let filteredQuests;
             
@@ -1841,13 +1938,11 @@
                 return;
             }
             
-            // Filter out recently shown quests AND completed quests
             const availableQuests = filteredQuests.filter(quest => 
                 !questHistory.includes(quest.text) && 
                 !completedQuests.some(completed => completed.text === quest.text)
             );
             
-            // If all quests are in history or completed, reset the history for this category
             const questsToUse = availableQuests.length > 0 ? availableQuests : 
                 filteredQuests.filter(quest => 
                     !completedQuests.some(completed => completed.text === quest.text)
@@ -1865,10 +1960,8 @@
             currentQuest = questsToUse[randomIndex];
             questText.textContent = currentQuest.text;
             
-            // Add to history
             addToHistory(currentQuest.text);
             
-            // Display difficulty tags only
             difficultyTags.innerHTML = '';
             const difficultyTag = document.createElement('div');
             difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
@@ -1882,18 +1975,14 @@
             updateSaveButton();
         }
         
-        // Add quest to history stack
         function addToHistory(questText) {
             questHistory.unshift(questText);
-            
             if (questHistory.length > MAX_HISTORY) {
                 questHistory = questHistory.slice(0, MAX_HISTORY);
             }
-            
             localStorage.setItem('sidequestfun_history', JSON.stringify(questHistory));
         }
         
-        // Update save button state
         function updateSaveButton() {
             if (!currentQuest) {
                 saveBtn.disabled = true;
@@ -1915,79 +2004,56 @@
             }
         }
         
-        // Save current quest
         function saveSidequest() {
             if (!currentQuest || savedQuests.some(q => q.text === currentQuest.text)) return;
-            
             savedQuests.push(currentQuest);
             localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-            
             showNotification("Quest saved to your browser storage!");
             updateSaveButton();
         }
         
-        // Mark quest as complete
         function completeQuest() {
             if (!currentQuest) return;
-            
-            // Check if already completed
             if (completedQuests.some(q => q.text === currentQuest.text)) {
                 showNotification("You've already completed this quest!");
                 return;
             }
-            
-            // Add to completed quests
             completedQuests.push(currentQuest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
-            
-            // Launch confetti
-            confetti({
-                particleCount: 150,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-            
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             showNotification("Congratulations! Quest completed!");
             updateCompletedCounter();
         }
         
-        // Share current quest via WhatsApp
         function shareQuest() {
             if (!currentQuest) return;
-            
             const text = `I just got this sidequest: "${currentQuest.text}" - Check out SidequestFun.com for more!`;
             const encodedText = encodeURIComponent(text);
             window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
         }
         
-        // Update completed counter
         function updateCompletedCounter() {
             completedCount.textContent = completedQuests.length;
         }
         
-        // Show notification
         function showNotification(message) {
             notificationText.textContent = message;
             notification.classList.add('show');
-            
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
         }
         
-        // Dark mode functions
         function enableDarkMode() {
             document.body.classList.add('dark-mode');
-            themeIcon.className = 'fas fa-moon';
-            themeText.textContent = 'Dark Mode';
+            modalThemeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
             isDarkMode = true;
             localStorage.setItem('sidequestfun_darkMode', 'true');
         }
         
         function disableDarkMode() {
             document.body.classList.remove('dark-mode');
-            themeIcon.className = 'fas fa-sun';
-            themeText.textContent = 'Light Mode';
+            modalThemeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
             isDarkMode = false;
             localStorage.setItem('sidequestfun_darkMode', 'false');
         }
@@ -2000,51 +2066,30 @@
             }
         }
         
-        // Show quests by type (saved, completed, total)
         function showQuestsByType(type) {
             currentView = type;
             
-            // Update active stat item
             [statSaved, statCompleted, statTotal].forEach(stat => stat.classList.remove('active'));
             document.getElementById(`stat-${type}`).classList.add('active');
             
-            // Clear current list
             savedQuestsList.innerHTML = '';
-            
             let questsToShow = [];
-            let title = '';
             
             switch(type) {
-                case 'saved':
-                    questsToShow = savedQuests;
-                    title = 'Saved Quests';
-                    break;
-                case 'completed':
-                    questsToShow = completedQuests;
-                    title = 'Completed Quests';
-                    break;
-                case 'total':
-                    questsToShow = sidequests;
-                    title = 'All Available Quests';
-                    break;
+                case 'saved': questsToShow = savedQuests; break;
+                case 'completed': questsToShow = completedQuests; break;
+                case 'total': questsToShow = sidequests; break;
             }
             
             if (questsToShow.length === 0) {
                 const emptyMessage = document.createElement('div');
                 emptyMessage.className = 'empty-saved-quests';
-                emptyMessage.innerHTML = `
-                    <i class="fas fa-inbox"></i>
-                    <h3>No ${type} quests yet</h3>
-                    <p>${type === 'saved' ? 'Save quests you like by clicking the bookmark button!' : 
-                       type === 'completed' ? 'Complete quests by clicking the "Quest Complete!" button!' : 
-                       'Generate quests to see them here!'}</p>
-                `;
+                emptyMessage.innerHTML = `<i class="fas fa-inbox"></i><h3>No ${type} quests yet</h3><p>${type === 'saved' ? 'Save quests you like by clicking the bookmark button!' : type === 'completed' ? 'Complete quests by clicking the "Quest Complete!" button!' : 'Generate quests to see them here!'}</p>`;
                 savedQuestsList.appendChild(emptyMessage);
             } else {
                 questsToShow.forEach((quest, index) => {
                     const isCompleted = completedQuests.some(q => q.text === quest.text);
                     const isSaved = savedQuests.some(q => q.text === quest.text);
-                    
                     const questItem = document.createElement('div');
                     questItem.className = 'saved-quest-item';
                     questItem.innerHTML = `
@@ -2057,326 +2102,113 @@
                             <div class="saved-quest-text">${quest.text}</div>
                         </div>
                         <div class="saved-quest-actions">
-                            <button class="action-btn action-btn-share" data-index="${index}" data-type="${type}">
-                                <i class="fas fa-share-alt"></i> Share
-                            </button>
-                            ${!isCompleted && type !== 'completed' ? 
-                                `<button class="action-btn action-btn-complete" data-index="${index}" data-type="${type}">
-                                    <i class="fas fa-check-circle"></i> Complete
-                                </button>` : 
-                                ''
-                            }
-                            ${isSaved && type === 'saved' ? 
-                                `<button class="action-btn action-btn-remove" data-index="${index}" data-type="${type}">
-                                    <i class="fas fa-trash"></i> Remove
-                                </button>` : 
-                                !isSaved && type !== 'saved' ?
-                                `<button class="action-btn" data-index="${index}" data-type="${type}" style="background-color: #6c757d; color: white;">
-                                    <i class="fas fa-bookmark"></i> Save
-                                </button>` : ''
-                            }
+                            <button class="action-btn action-btn-share" data-index="${index}" data-type="${type}"><i class="fab fa-whatsapp"></i> Share</button>
+                            ${!isCompleted && type !== 'completed' ? `<button class="action-btn action-btn-complete" data-index="${index}" data-type="${type}"><i class="fas fa-check-circle"></i> Complete</button>` : ''}
+                            ${isSaved && type === 'saved' ? `<button class="action-btn action-btn-remove" data-index="${index}" data-type="${type}"><i class="fas fa-trash"></i> Remove</button>` : !isSaved && type !== 'saved' ? `<button class="action-btn" data-index="${index}" data-type="${type}" style="background-color: #6c757d; color: white;"><i class="fas fa-bookmark"></i> Save</button>` : ''}
                         </div>
                     `;
                     savedQuestsList.appendChild(questItem);
                 });
                 
-                // Add event listeners to modal buttons
-                document.querySelectorAll('.action-btn-complete').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        const type = this.dataset.type;
-                        completeQuestFromList(index, type);
-                    });
-                });
-                
-                document.querySelectorAll('.action-btn-remove').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        const type = this.dataset.type;
-                        removeSavedQuest(index);
-                    });
-                });
-                
-                document.querySelectorAll('.action-btn-share').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        const type = this.dataset.type;
-                        shareQuestFromList(index, type);
-                    });
-                });
-                
-                document.querySelectorAll('.action-btn[style*="background-color: #6c757d"]').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const index = parseInt(this.dataset.index);
-                        const type = this.dataset.type;
-                        saveQuestFromList(index, type);
-                    });
-                });
+                document.querySelectorAll('.action-btn-complete').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.index); const tp = btn.dataset.type; completeQuestFromList(idx, tp); }));
+                document.querySelectorAll('.action-btn-remove').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.index); removeSavedQuest(idx); }));
+                document.querySelectorAll('.action-btn-share').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.index); const tp = btn.dataset.type; shareQuestFromList(idx, tp); }));
+                document.querySelectorAll('.action-btn[style*="background-color: #6c757d"]').forEach(btn => btn.addEventListener('click', (e) => { const idx = parseInt(btn.dataset.index); const tp = btn.dataset.type; saveQuestFromList(idx, tp); }));
             }
             
-            // Update statistics
             updateStatistics();
         }
         
-        // Complete a quest from the list
         function completeQuestFromList(index, type) {
             let quest;
-            
-            switch(type) {
-                case 'saved':
-                    quest = savedQuests[index];
-                    break;
-                case 'completed':
-                    return; // Already completed
-                case 'total':
-                    quest = sidequests[index];
-                    break;
-            }
-            
-            if (completedQuests.some(q => q.text === quest.text)) {
-                showNotification("You've already completed this quest!");
-                return;
-            }
-            
+            if (type === 'saved') quest = savedQuests[index];
+            else if (type === 'total') quest = sidequests[index];
+            else return;
+            if (completedQuests.some(q => q.text === quest.text)) { showNotification("Already completed!"); return; }
             completedQuests.push(quest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
-            
-            // Also add to saved if not already there
-            if (!savedQuests.some(q => q.text === quest.text)) {
-                savedQuests.push(quest);
-                localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-            }
-            
-            confetti({
-                particleCount: 100,
-                spread: 60,
-                origin: { y: 0.6 }
-            });
-            
+            if (!savedQuests.some(q => q.text === quest.text)) { savedQuests.push(quest); localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests)); }
+            confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
             showNotification("Quest marked as complete!");
             updateCompletedCounter();
             showQuestsByType(currentView);
         }
         
-        // Save a quest from the list
         function saveQuestFromList(index, type) {
             let quest;
-            
-            switch(type) {
-                case 'saved':
-                    return; // Already saved
-                case 'completed':
-                    quest = completedQuests[index];
-                    break;
-                case 'total':
-                    quest = sidequests[index];
-                    break;
-            }
-            
-            if (savedQuests.some(q => q.text === quest.text)) {
-                showNotification("Quest already saved!");
-                return;
-            }
-            
+            if (type === 'completed') quest = completedQuests[index];
+            else if (type === 'total') quest = sidequests[index];
+            else return;
+            if (savedQuests.some(q => q.text === quest.text)) { showNotification("Quest already saved!"); return; }
             savedQuests.push(quest);
             localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-            
             showNotification("Quest saved!");
             showQuestsByType(currentView);
-            
-            // If current quest was saved, update save button
-            if (currentQuest && currentQuest.text === quest.text) {
-                updateSaveButton();
-            }
+            if (currentQuest && currentQuest.text === quest.text) updateSaveButton();
         }
         
-        // Share a quest from the list
         function shareQuestFromList(index, type) {
             let quest;
-            
-            switch(type) {
-                case 'saved':
-                    quest = savedQuests[index];
-                    break;
-                case 'completed':
-                    quest = completedQuests[index];
-                    break;
-                case 'total':
-                    quest = sidequests[index];
-                    break;
-            }
-            
+            if (type === 'saved') quest = savedQuests[index];
+            else if (type === 'completed') quest = completedQuests[index];
+            else quest = sidequests[index];
             const text = `Check out this sidequest: "${quest.text}" - Find more at SidequestFun.com!`;
-            const encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
         }
         
-        // Open saved quests modal
+        function removeSavedQuest(index) {
+            savedQuests.splice(index, 1);
+            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
+            showNotification("Quest removed from saved list");
+            showQuestsByType(currentView);
+            if (currentQuest && savedQuests.every(q => q.text !== currentQuest.text)) updateSaveButton();
+        }
+        
         function openSavedQuestsModal() {
             savedCount.textContent = savedQuests.length;
             completedCount.textContent = completedQuests.length;
             totalCount.textContent = sidequests.length;
-            
-            // Show saved quests by default
             showQuestsByType('saved');
-            
-            // Update statistics
             updateStatistics();
-            
             myQuestsModal.style.display = 'flex';
         }
         
-        // Update statistics display - MINIMALISTISCHERE VERSION
         function updateStatistics() {
-            // Calculate category statistics
-            const categoryCounts = {
-                indoor: { total: 0, completed: 0 },
-                outdoor: { total: 0, completed: 0 },
-                social: { total: 0, completed: 0 }
-            };
-            
-            sidequests.forEach(quest => {
-                categoryCounts[quest.category].total++;
-                if (completedQuests.some(q => q.text === quest.text)) {
-                    categoryCounts[quest.category].completed++;
-                }
-            });
-            
-            // Calculate completion percentage
+            const categoryCounts = { indoor: { total: 0, completed: 0 }, outdoor: { total: 0, completed: 0 }, social: { total: 0, completed: 0 } };
+            sidequests.forEach(quest => { categoryCounts[quest.category].total++; if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category].completed++; });
             const completionPercentage = Math.round((completedQuests.length / sidequests.length) * 100);
-            
-            // Find most popular category (by completion)
-            let mostPopularCategory = 'None';
-            let mostCompleted = 0;
-            
-            Object.entries(categoryCounts).forEach(([category, data]) => {
-                if (data.completed > mostCompleted) {
-                    mostCompleted = data.completed;
-                    mostPopularCategory = category;
-                }
-            });
-            
-            // Get icon for favorite category
-            let favoriteIcon = '';
-            let favoriteDisplayName = '';
-            
-            switch(mostPopularCategory) {
-                case 'indoor':
-                    favoriteIcon = '🏠';
-                    favoriteDisplayName = 'Indoor';
-                    break;
-                case 'outdoor':
-                    favoriteIcon = '🌳';
-                    favoriteDisplayName = 'Outdoor';
-                    break;
-                case 'social':
-                    favoriteIcon = '🗣️';
-                    favoriteDisplayName = 'Social';
-                    break;
-                default:
-                    favoriteIcon = '📊';
-                    favoriteDisplayName = 'None';
-            }
-            
-            // Update stats details - minimalistischer
-            statsDetails.innerHTML = `
-                <h3>Your Statistics</h3>
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🏠</div>
-                        <div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div>
-                        <div class="stat-card-label">Indoor</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🌳</div>
-                        <div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div>
-                        <div class="stat-card-label">Outdoor</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-card-icon">🗣️</div>
-                        <div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div>
-                        <div class="stat-card-label">Social</div>
-                    </div>
-                </div>
-                
-                <div class="favorite-category">
-                    <div class="category-icon">${favoriteIcon}</div>
-                    <div class="favorite-category-text">
-                        Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)
-                    </div>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${completionPercentage}%"></div>
-                    </div>
-                    <div class="progress-text">${completionPercentage}% of all quests completed</div>
-                </div>
-            `;
-            
-            // Show stats details
+            let mostPopularCategory = 'None', mostCompleted = 0;
+            Object.entries(categoryCounts).forEach(([cat, data]) => { if (data.completed > mostCompleted) { mostCompleted = data.completed; mostPopularCategory = cat; } });
+            let favoriteIcon = '', favoriteDisplayName = '';
+            switch(mostPopularCategory) { case 'indoor': favoriteIcon = '🏠'; favoriteDisplayName = 'Indoor'; break; case 'outdoor': favoriteIcon = '🌳'; favoriteDisplayName = 'Outdoor'; break; case 'social': favoriteIcon = '🗣️'; favoriteDisplayName = 'Social'; break; default: favoriteIcon = '📊'; favoriteDisplayName = 'None'; }
+            statsDetails.innerHTML = `<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
             statsDetails.classList.add('show');
         }
         
-        // Remove a saved quest
-        function removeSavedQuest(index) {
-            savedQuests.splice(index, 1);
-            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-            
-            showNotification("Quest removed from saved list");
-            showQuestsByType(currentView);
-            
-            // If current quest was removed, update save button
-            if (currentQuest && savedQuests.every(q => q.text !== currentQuest.text)) {
-                updateSaveButton();
-            }
-        }
-        
-        // Clear all saved data
         function clearAllData() {
             if (confirm("Are you sure you want to clear all saved data? This will delete all your saved and completed quests.")) {
-                savedQuests = [];
-                completedQuests = [];
-                questHistory = [];
-                
-                localStorage.removeItem('sidequestfun_savedQuests');
-                localStorage.removeItem('sidequestfun_completedQuests');
-                localStorage.removeItem('sidequestfun_history');
-                
+                savedQuests = []; completedQuests = []; questHistory = [];
+                localStorage.removeItem('sidequestfun_savedQuests'); localStorage.removeItem('sidequestfun_completedQuests'); localStorage.removeItem('sidequestfun_history');
                 showNotification("All data has been cleared!");
                 closeSettingsModalFunc();
-                
-                // Update UI
-                updateSaveButton();
-                generateSidequest();
-                updateCompletedCounter();
+                updateSaveButton(); generateSidequest(); updateCompletedCounter(); initQuestOfMonth();
             }
         }
         
-        // Open settings modal
-        function openSettingsModal() {
-            settingsModal.style.display = 'flex';
+        function openSettingsModal() { settingsModal.style.display = 'flex'; }
+        function openPrivacyModal() { privacyModal.style.display = 'flex'; }
+        function closeSavedQuestsModal() { myQuestsModal.style.display = 'none'; }
+        function closeSettingsModalFunc() { settingsModal.style.display = 'none'; }
+        function closePrivacyPolicyModal() { privacyModal.style.display = 'none'; }
+        
+        function initQuestOfMonth() {
+            const now = new Date();
+            const currentMonth = now.getMonth();
+            const qom = monthlyQuests[currentMonth];
+            document.getElementById('qom-month-name').innerHTML = qom.name;
+            document.getElementById('qom-quest-text').innerHTML = qom.text;
         }
         
-        // Open privacy modal
-        function openPrivacyModal() {
-            privacyModal.style.display = 'flex';
-        }
-        
-        // Close modals
-        function closeSavedQuestsModal() {
-            myQuestsModal.style.display = 'none';
-        }
-        
-        function closeSettingsModalFunc() {
-            settingsModal.style.display = 'none';
-        }
-        
-        function closePrivacyPolicyModal() {
-            privacyModal.style.display = 'none';
-        }
-        
-        // Event listeners
         generateBtn.addEventListener('click', generateSidequest);
         saveBtn.addEventListener('click', saveSidequest);
         myQuestsBtn.addEventListener('click', openSavedQuestsModal);
@@ -2390,20 +2222,12 @@
         settingsLink.addEventListener('click', openSettingsModal);
         clearDataBtn.addEventListener('click', clearAllData);
         
-        // Close modal when clicking outside content
         window.addEventListener('click', (event) => {
-            if (event.target === myQuestsModal) {
-                closeSavedQuestsModal();
-            }
-            if (event.target === settingsModal) {
-                closeSettingsModalFunc();
-            }
-            if (event.target === privacyModal) {
-                closePrivacyPolicyModal();
-            }
+            if (event.target === myQuestsModal) closeSavedQuestsModal();
+            if (event.target === settingsModal) closeSettingsModalFunc();
+            if (event.target === privacyModal) closePrivacyPolicyModal();
         });
         
-        // Initialize on load
         window.addEventListener('load', init);
     </script>
 </body>
