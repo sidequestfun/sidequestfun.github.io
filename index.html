@@ -1793,9 +1793,6 @@
             { text: "Host a small 'talent show' event with your friends where everyone performs something.", category: "social", difficulty: "medium" },
             { text: "Write a thank-you letter to someone who positively influenced your life, even if it was long ago.", category: "social", difficulty: "easy" },
             { text: "Host an 'International Dinner' where everyone brings a dish from a different country.", category: "social", difficulty: "medium" }
-        ];
-        
-        const newQuests = [
             { text: "Find out where the nearest waterfall is and visit it.", category: "outdoor", difficulty: "medium" },
             { text: "Go to a candy shop and only buy one color of candy.", category: "social", difficulty: "easy" },
             { text: "Visit a grocery store and build a meal where every item starts with the same letter.", category: "social", difficulty: "medium" },
@@ -1878,7 +1875,7 @@
         let currentQuest = null;
         let currentCategory = 'all';
         let questHistory = JSON.parse(localStorage.getItem('sidequestfun_history')) || [];
-        const MAX_HISTORY = 20;
+        const MAX_HISTORY = 50;
         let isDarkMode = localStorage.getItem('sidequestfun_darkMode') === 'true';
         let currentView = 'saved';
         
