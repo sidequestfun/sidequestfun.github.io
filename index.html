@@ -882,7 +882,7 @@
         }
         
         .action-btn-share {
-            background-color: #25D366;
+            background-color: #14B3D9;
             color: white;
         }
         
@@ -1158,6 +1158,93 @@
             font-weight: 700;
         }
         
+        .difficulty-filter-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .difficulty-filter-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 30px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        body.dark-mode .difficulty-filter-btn {
+            background: #1e293b;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .difficulty-filter-btn[data-diff-filter="easy"] {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+        
+        .difficulty-filter-btn[data-diff-filter="medium"] {
+            background-color: #fff3cd;
+            color: #856404;
+            border-color: #ffeaa7;
+        }
+        
+        .difficulty-filter-btn[data-diff-filter="epic"] {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        
+        .difficulty-filter-btn[data-diff-filter="all"] {
+            background-color: #e9ecef;
+            color: #495057;
+            border-color: #dee2e6;
+        }
+        
+        body.dark-mode .difficulty-filter-btn[data-diff-filter="easy"] {
+            background-color: #064e3b;
+            color: #a7f3d0;
+            border-color: #065f46;
+        }
+        
+        body.dark-mode .difficulty-filter-btn[data-diff-filter="medium"] {
+            background-color: #92400e;
+            color: #fde68a;
+            border-color: #b45309;
+        }
+        
+        body.dark-mode .difficulty-filter-btn[data-diff-filter="epic"] {
+            background-color: #7f1d1d;
+            color: #fca5a5;
+            border-color: #991b1b;
+        }
+        
+        body.dark-mode .difficulty-filter-btn[data-diff-filter="all"] {
+            background-color: #334155;
+            color: #94a3b8;
+            border-color: #475569;
+        }
+        
+        .difficulty-filter-btn.active {
+            border-color: #14B3D9;
+            background: #14B3D9;
+            color: white;
+            box-shadow: 0 0 12px rgba(20, 179, 217, 0.4);
+        }
+        
+        body.dark-mode .difficulty-filter-btn.active {
+            border-color: #14B3D9;
+            background: #14B3D9;
+            color: white;
+        }
+        
         .privacy-modal {
             max-width: 600px;
         }
@@ -1298,6 +1385,15 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
+            
+            .difficulty-filter-group {
+                gap: 8px;
+            }
+            
+            .difficulty-filter-btn {
+                padding: 10px 12px;
+                font-size: 0.85rem;
+            }
         }
         
         @media (hover: none) and (pointer: coarse) {
@@ -1383,6 +1479,18 @@
             font-weight: 500;
             text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
+        
+        .streak-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #f59e0b, #f97316);
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
@@ -1419,14 +1527,14 @@
             </div>
             
             <div class="secondary-buttons-container">
-                <button class="btn icon-btn" id="save-btn">
+                <button class="btn icon-btn" id="save-btn" aria-label="Save this quest">
                     <i class="fas fa-bookmark"></i>
                 </button>
-                <button class="btn icon-btn" id="my-quests-btn">
+                <button class="btn icon-btn" id="my-quests-btn" aria-label="View my saved quests">
                     <i class="fas fa-tasks"></i>
                 </button>
-                <button class="btn icon-btn" id="share-btn">
-                    <i class="fab fa-whatsapp"></i>
+                <button class="btn icon-btn" id="share-btn" aria-label="Share this quest">
+                    <i class="fas fa-share-alt"></i>
                 </button>
             </div>
         </div>
@@ -1511,6 +1619,14 @@
                 <div class="theme-toggle" id="modal-theme-toggle">
                     <i class="fas fa-sun"></i>
                     <span class="theme-text">Light Mode</span>
+                </div>
+                
+                <h3>Quest Difficulty Filter</h3>
+                <div class="difficulty-filter-group">
+                    <button class="difficulty-filter-btn" data-diff-filter="all">All</button>
+                    <button class="difficulty-filter-btn" data-diff-filter="easy">Easy</button>
+                    <button class="difficulty-filter-btn" data-diff-filter="medium">Medium</button>
+                    <button class="difficulty-filter-btn" data-diff-filter="epic">Epic</button>
                 </div>
                 
                 <h3>Clear Data</h3>
@@ -1881,9 +1997,76 @@
         const MAX_HISTORY = 50;
         let isDarkMode = localStorage.getItem('sidequestfun_darkMode') === 'true';
         let currentView = 'saved';
+        let difficultyFilter = localStorage.getItem('sidequestfun_difficultyFilter') || 'all';
+        let lastCompletedDate = localStorage.getItem('sidequestfun_lastCompletedDate') || '';
+        let currentStreak = parseInt(localStorage.getItem('sidequestfun_streak')) || 0;
+        
+        function getAllQuests() {
+            return [...sidequests];
+        }
+        
+        function updateStreakOnLoad() {
+            const today = new Date().toDateString();
+            if (completedQuests.length > 0) {
+                const lastCompleted = localStorage.getItem('sidequestfun_lastCompletedTimestamp');
+                if (lastCompleted) {
+                    const lastDate = new Date(parseInt(lastCompleted));
+                    const todayDate = new Date();
+                    const yesterday = new Date(todayDate);
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    
+                    if (lastDate.toDateString() === todayDate.toDateString()) {
+                        return;
+                    } else if (lastDate.toDateString() === yesterday.toDateString()) {
+                        return;
+                    } else {
+                        if (lastCompletedDate !== today) {
+                            currentStreak = 0;
+                            localStorage.setItem('sidequestfun_streak', '0');
+                        }
+                    }
+                }
+            }
+        }
+        
+        function updateStreakAfterComplete() {
+            const today = new Date().toDateString();
+            const todayTimestamp = new Date().getTime();
+            const lastCompleted = localStorage.getItem('sidequestfun_lastCompletedTimestamp');
+            
+            if (!lastCompleted) {
+                currentStreak = 1;
+            } else {
+                const lastDate = new Date(parseInt(lastCompleted));
+                const todayDate = new Date();
+                const yesterday = new Date(todayDate);
+                yesterday.setDate(yesterday.getDate() - 1);
+                
+                if (lastDate.toDateString() === todayDate.toDateString()) {
+                    return;
+                } else if (lastDate.toDateString() === yesterday.toDateString()) {
+                    currentStreak++;
+                } else {
+                    currentStreak = 1;
+                }
+            }
+            
+            localStorage.setItem('sidequestfun_streak', currentStreak.toString());
+            localStorage.setItem('sidequestfun_lastCompletedTimestamp', todayTimestamp.toString());
+            localStorage.setItem('sidequestfun_lastCompletedDate', today);
+        }
+        
+        function getStreakDisplay() {
+            if (currentStreak > 0) {
+                return `<div class="streak-badge"><i class="fas fa-fire"></i> ${currentStreak}-Day Streak! 🔥</div>`;
+            }
+            return '';
+        }
         
         function init() {
-            totalCount.textContent = sidequests.length;
+            const allQuestsCount = getAllQuests().length;
+            totalCount.textContent = allQuestsCount;
+            updateStreakOnLoad();
             
             if (isDarkMode) {
                 enableDarkMode();
@@ -1899,6 +2082,18 @@
             statSaved.addEventListener('click', () => showQuestsByType('saved'));
             statCompleted.addEventListener('click', () => showQuestsByType('completed'));
             statTotal.addEventListener('click', () => showQuestsByType('total'));
+            
+            document.querySelectorAll('.difficulty-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.dataset.diffFilter;
+                    difficultyFilter = filter;
+                    localStorage.setItem('sidequestfun_difficultyFilter', filter);
+                    document.querySelectorAll('.difficulty-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    generateSidequest();
+                });
+                if (btn.dataset.diffFilter === difficultyFilter) btn.classList.add('active');
+            });
             
             generateSidequest();
             updateCompletedCounter();
@@ -1922,16 +2117,18 @@
         }
         
         function generateSidequest() {
-            let filteredQuests;
+            let filteredQuests = getAllQuests();
             
-            if (currentCategory === 'all') {
-                filteredQuests = sidequests;
-            } else {
-                filteredQuests = sidequests.filter(quest => quest.category === currentCategory);
+            if (currentCategory !== 'all') {
+                filteredQuests = filteredQuests.filter(quest => quest.category === currentCategory);
+            }
+            
+            if (difficultyFilter !== 'all') {
+                filteredQuests = filteredQuests.filter(quest => quest.difficulty === difficultyFilter);
             }
             
             if (filteredQuests.length === 0) {
-                questText.textContent = "No quests found for this category. Try another filter!";
+                questText.textContent = "No quests found for this filter. Try different settings!";
                 difficultyTags.innerHTML = '';
                 currentQuest = null;
                 updateSaveButton();
@@ -1949,7 +2146,7 @@
                 );
             
             if (questsToUse.length === 0) {
-                questText.textContent = "You've completed all quests in this category! Try another filter.";
+                questText.textContent = "You've completed all quests with these filters! Try another filter.";
                 difficultyTags.innerHTML = '';
                 currentQuest = null;
                 updateSaveButton();
@@ -2020,16 +2217,31 @@
             }
             completedQuests.push(currentQuest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
+            updateStreakAfterComplete();
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             showNotification("Congratulations! Quest completed!");
             updateCompletedCounter();
         }
         
-        function shareQuest() {
+        async function shareQuest() {
             if (!currentQuest) return;
             const text = `I just got this sidequest: "${currentQuest.text}" - Check out SidequestFun.com for more!`;
-            const encodedText = encodeURIComponent(text);
-            window.open(`https://api.whatsapp.com/send?text=${encodedText}`, '_blank');
+            
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'SidequestFun',
+                        text: text,
+                        url: 'https://sidequestfun.com'
+                    });
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+                    }
+                }
+            } else {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            }
         }
         
         function updateCompletedCounter() {
@@ -2078,7 +2290,7 @@
             switch(type) {
                 case 'saved': questsToShow = savedQuests; break;
                 case 'completed': questsToShow = completedQuests; break;
-                case 'total': questsToShow = sidequests; break;
+                case 'total': questsToShow = getAllQuests(); break;
             }
             
             if (questsToShow.length === 0) {
@@ -2102,7 +2314,7 @@
                             <div class="saved-quest-text">${quest.text}</div>
                         </div>
                         <div class="saved-quest-actions">
-                            <button class="action-btn action-btn-share" data-index="${index}" data-type="${type}"><i class="fab fa-whatsapp"></i> Share</button>
+                            <button class="action-btn action-btn-share" data-index="${index}" data-type="${type}"><i class="fas fa-share-alt"></i> Share</button>
                             ${!isCompleted && type !== 'completed' ? `<button class="action-btn action-btn-complete" data-index="${index}" data-type="${type}"><i class="fas fa-check-circle"></i> Complete</button>` : ''}
                             ${isSaved && type === 'saved' ? `<button class="action-btn action-btn-remove" data-index="${index}" data-type="${type}"><i class="fas fa-trash"></i> Remove</button>` : !isSaved && type !== 'saved' ? `<button class="action-btn" data-index="${index}" data-type="${type}" style="background-color: #6c757d; color: white;"><i class="fas fa-bookmark"></i> Save</button>` : ''}
                         </div>
@@ -2122,12 +2334,13 @@
         function completeQuestFromList(index, type) {
             let quest;
             if (type === 'saved') quest = savedQuests[index];
-            else if (type === 'total') quest = sidequests[index];
+            else if (type === 'total') quest = getAllQuests()[index];
             else return;
             if (completedQuests.some(q => q.text === quest.text)) { showNotification("Already completed!"); return; }
             completedQuests.push(quest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
             if (!savedQuests.some(q => q.text === quest.text)) { savedQuests.push(quest); localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests)); }
+            updateStreakAfterComplete();
             confetti({ particleCount: 100, spread: 60, origin: { y: 0.6 } });
             showNotification("Quest marked as complete!");
             updateCompletedCounter();
@@ -2137,7 +2350,7 @@
         function saveQuestFromList(index, type) {
             let quest;
             if (type === 'completed') quest = completedQuests[index];
-            else if (type === 'total') quest = sidequests[index];
+            else if (type === 'total') quest = getAllQuests()[index];
             else return;
             if (savedQuests.some(q => q.text === quest.text)) { showNotification("Quest already saved!"); return; }
             savedQuests.push(quest);
@@ -2151,9 +2364,13 @@
             let quest;
             if (type === 'saved') quest = savedQuests[index];
             else if (type === 'completed') quest = completedQuests[index];
-            else quest = sidequests[index];
+            else quest = getAllQuests()[index];
             const text = `Check out this sidequest: "${quest.text}" - Find more at SidequestFun.com!`;
-            window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            if (navigator.share) {
+                navigator.share({ title: 'SidequestFun', text: text, url: 'https://sidequestfun.com' }).catch(() => {});
+            } else {
+                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            }
         }
         
         function removeSavedQuest(index) {
@@ -2167,31 +2384,36 @@
         function openSavedQuestsModal() {
             savedCount.textContent = savedQuests.length;
             completedCount.textContent = completedQuests.length;
-            totalCount.textContent = sidequests.length;
+            totalCount.textContent = getAllQuests().length;
             showQuestsByType('saved');
             updateStatistics();
             myQuestsModal.style.display = 'flex';
         }
         
         function updateStatistics() {
+            const allQuestsArray = getAllQuests();
             const categoryCounts = { indoor: { total: 0, completed: 0 }, outdoor: { total: 0, completed: 0 }, social: { total: 0, completed: 0 } };
-            sidequests.forEach(quest => { categoryCounts[quest.category].total++; if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category].completed++; });
-            const completionPercentage = Math.round((completedQuests.length / sidequests.length) * 100);
+            allQuestsArray.forEach(quest => { categoryCounts[quest.category].total++; if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category].completed++; });
+            const completionPercentage = Math.round((completedQuests.length / allQuestsArray.length) * 100);
             let mostPopularCategory = 'None', mostCompleted = 0;
             Object.entries(categoryCounts).forEach(([cat, data]) => { if (data.completed > mostCompleted) { mostCompleted = data.completed; mostPopularCategory = cat; } });
             let favoriteIcon = '', favoriteDisplayName = '';
             switch(mostPopularCategory) { case 'indoor': favoriteIcon = '🏠'; favoriteDisplayName = 'Indoor'; break; case 'outdoor': favoriteIcon = '🌳'; favoriteDisplayName = 'Outdoor'; break; case 'social': favoriteIcon = '🗣️'; favoriteDisplayName = 'Social'; break; default: favoriteIcon = '📊'; favoriteDisplayName = 'None'; }
-            statsDetails.innerHTML = `<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
+            statsDetails.innerHTML = `${getStreakDisplay()}<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
             statsDetails.classList.add('show');
         }
         
         function clearAllData() {
             if (confirm("Are you sure you want to clear all saved data? This will delete all your saved and completed quests.")) {
                 savedQuests = []; completedQuests = []; questHistory = [];
-                localStorage.removeItem('sidequestfun_savedQuests'); localStorage.removeItem('sidequestfun_completedQuests'); localStorage.removeItem('sidequestfun_history');
+                localStorage.removeItem('sidequestfun_savedQuests'); localStorage.removeItem('sidequestfun_completedQuests'); 
+                localStorage.removeItem('sidequestfun_history');
+                localStorage.removeItem('sidequestfun_streak'); localStorage.removeItem('sidequestfun_lastCompletedTimestamp');
+                currentStreak = 0;
                 showNotification("All data has been cleared!");
                 closeSettingsModalFunc();
                 updateSaveButton(); generateSidequest(); updateCompletedCounter(); initQuestOfMonth();
+                totalCount.textContent = getAllQuests().length;
             }
         }
         
