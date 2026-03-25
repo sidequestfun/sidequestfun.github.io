@@ -71,13 +71,46 @@
             flex-wrap: wrap;
         }
         
-        .logo-placeholder {
+        /* Logo container with oval frame - larger height for image, black in dark mode */
+        .logo-container {
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 85px;
+            width: 340px;
+            border-radius: 50px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 2px solid #eee;
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        body.dark-mode .logo-container {
+            background-color: #000000;
+            border-color: #2a2a2a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+        
+        /* Image logo styling */
+        .logo-img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+        
+        /* Fallback text logo - exactly as original design, also with black background in dark mode */
+        .logo-text-fallback {
             background-color: white;
             color: #333;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 70px;
+            height: 85px;
             width: 340px;
             border-radius: 50px;
             font-weight: bold;
@@ -88,19 +121,65 @@
             transition: all 0.3s ease;
         }
         
-        body.dark-mode .logo-placeholder {
-            background-color: #1e293b;
+        body.dark-mode .logo-text-fallback {
+            background-color: #000000;
             color: #e0e0e0;
-            border-color: #334155;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            border-color: #2a2a2a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
         
-        .logo-placeholder span:first-child {
+        .logo-text-fallback span:first-child {
             color: #14B3D9;
         }
         
-        .logo-placeholder span:last-child {
+        .logo-text-fallback span:last-child {
             color: #DD467F;
+        }
+        
+        /* Hide fallback by default, show image container */
+        .logo-img-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-text-fallback {
+            display: none;
+        }
+        
+        /* When image fails, show fallback */
+        .logo-container.fallback-mode .logo-img-container {
+            display: none;
+        }
+        
+        .logo-container.fallback-mode .logo-text-fallback {
+            display: flex;
+        }
+        
+        /* Responsive adjustments for logo */
+        @media (max-width: 640px) {
+            .logo-container, .logo-text-fallback {
+                width: 100%;
+                max-width: 300px;
+                height: 75px;
+            }
+            .logo-text-fallback {
+                font-size: 1.9rem;
+                padding: 0 30px;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .logo-container, .logo-text-fallback {
+                max-width: 280px;
+                height: 70px;
+            }
+            .logo-text-fallback {
+                font-size: 1.7rem;
+                padding: 0 25px;
+            }
         }
         
         .theme-toggle {
@@ -554,10 +633,6 @@
             transition: all 0.3s ease;
         }
         
-        body.dark-mode .filter-btn.active::after {
-            background-color: #14B3D9;
-        }
-        
         .filter-btn.active.glow-effect {
             box-shadow: 0 0 15px rgba(20, 179, 217, 0.3);
         }
@@ -612,15 +687,6 @@
             
             h2 {
                 font-size: 1.4rem;
-            }
-            
-            .logo-placeholder {
-                width: 100%;
-                max-width: 300px;
-                font-size: 1.9rem;
-                padding: 0 30px;
-                height: 60px;
-                margin: 0 auto;
             }
             
             .category-filters {
@@ -681,12 +747,6 @@
             
             #quest-text {
                 font-size: 1.2rem;
-            }
-            
-            .logo-placeholder {
-                width: 280px;
-                font-size: 1.7rem;
-                padding: 0 25px;
             }
             
             .filter-btn {
@@ -836,6 +896,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
         body.dark-mode .saved-quest-item {
@@ -857,6 +919,7 @@
         .saved-quest-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
         
         .action-btn {
@@ -1496,8 +1559,13 @@
 <body>
     <div class="container">
         <div class="header-section">
-            <div class="logo-placeholder">
-                <span>sidequest</span><span>fun.com</span>
+            <div class="logo-container" id="logoContainer">
+                <div class="logo-img-container">
+                    <img class="logo-img" id="dynamicLogo" alt="SidequestFun.com Logo" src="" onerror="handleLogoError()">
+                </div>
+                <div class="logo-text-fallback">
+                    <span>sidequest</span><span>fun.com</span>
+                </div>
             </div>
         </div>
         
@@ -1678,6 +1746,7 @@
     </div>
     
     <script>
+        // Complete sidequests array - all quests from original
         let sidequests = [
             { text: "Take a photo of the most interesting cloud you can find today.", category: "outdoor", difficulty: "easy" },
             { text: "Learn to say 'hello' and 'thank you' in a language you don't know.", category: "social", difficulty: "easy" },
@@ -2001,6 +2070,29 @@
         let lastCompletedDate = localStorage.getItem('sidequestfun_lastCompletedDate') || '';
         let currentStreak = parseInt(localStorage.getItem('sidequestfun_streak')) || 0;
         
+        // Logo handling
+        const logoImg = document.getElementById('dynamicLogo');
+        const logoContainerElem = document.getElementById('logoContainer');
+        
+        function updateLogo() {
+            const mode = isDarkMode ? 'dark' : 'light';
+            const logoUrl = mode === 'light' ? 'white.png' : 'black.png';
+            logoImg.src = logoUrl;
+        }
+        
+        window.handleLogoError = function() {
+            logoContainerElem.classList.add('fallback-mode');
+        };
+        
+        function resetLogoFallback() {
+            logoContainerElem.classList.remove('fallback-mode');
+        }
+        
+        function applyLogoByMode() {
+            resetLogoFallback();
+            updateLogo();
+        }
+        
         function getAllQuests() {
             return [...sidequests];
         }
@@ -2070,6 +2162,8 @@
             
             if (isDarkMode) {
                 enableDarkMode();
+            } else {
+                disableDarkMode();
             }
             
             filterButtons.forEach(button => {
@@ -2261,6 +2355,7 @@
             modalThemeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
             isDarkMode = true;
             localStorage.setItem('sidequestfun_darkMode', 'true');
+            applyLogoByMode();
         }
         
         function disableDarkMode() {
@@ -2268,6 +2363,7 @@
             modalThemeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
             isDarkMode = false;
             localStorage.setItem('sidequestfun_darkMode', 'false');
+            applyLogoByMode();
         }
         
         function toggleDarkMode() {
@@ -2311,7 +2407,7 @@
                                 ${isCompleted ? '<div class="difficulty-tag" style="background-color: #d4edda; color: #155724;">✓ Completed</div>' : ''}
                                 ${isSaved && type !== 'saved' ? '<div class="difficulty-tag" style="background-color: #cfe2ff; color: #084298;">Bookmarked</div>' : ''}
                             </div>
-                            <div class="saved-quest-text">${quest.text}</div>
+                            <div class="saved-quest-text">${escapeHtml(quest.text)}</div>
                         </div>
                         <div class="saved-quest-actions">
                             <button class="action-btn action-btn-share" data-index="${index}" data-type="${type}"><i class="fas fa-share-alt"></i> Share</button>
@@ -2329,6 +2425,12 @@
             }
             
             updateStatistics();
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
         
         function completeQuestFromList(index, type) {
