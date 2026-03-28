@@ -1653,6 +1653,23 @@
             gap: 8px;
         }
         
+        /* Mobile optimization: hide text on small screens, show only icon */
+        @media (max-width: 640px) {
+            .btn-add .btn-text {
+                display: none;
+            }
+            .btn-add {
+                padding: 12px 16px;
+            }
+        }
+        
+        /* Desktop: show text */
+        @media (min-width: 641px) {
+            .btn-add .btn-text {
+                display: inline;
+            }
+        }
+        
         .btn-add:hover {
             background-color: #0fa3c7;
             transform: translateY(-2px);
@@ -1805,11 +1822,11 @@
                 <i class="fas fa-info-circle"></i> Your custom quests are saved locally. Share them with friends via link or file!
             </div>
             
-            <!-- Form to add new quests -->
+            <!-- Form to add new quests - optimized for mobile -->
             <div style="margin-bottom: 25px;">
                 <h3 style="margin-bottom: 12px; color: #14B3D9;">➕ Add New Quest</h3>
-                <div class="input-group" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                    <input type="text" id="new-quest-text" placeholder="Your quest description..." style="flex: 2; padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
+                <div class="input-group" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                    <input type="text" id="new-quest-text" placeholder="Your quest description..." style="flex: 2; min-width: 150px; padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
                     <select id="new-quest-category" style="padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
                         <option value="indoor">🏠 Indoor</option>
                         <option value="outdoor">🌳 Outdoor</option>
@@ -1821,7 +1838,7 @@
                         <option value="epic">Epic</option>
                     </select>
                     <button id="add-custom-quest-btn" class="btn-add">
-                        <i class="fas fa-plus"></i> Add
+                        <i class="fas fa-plus"></i><span class="btn-text"> Add</span>
                     </button>
                 </div>
             </div>
@@ -2918,6 +2935,20 @@
             if (questTextElem) questTextElem.innerHTML = qom.text;
         }
         
+        // ==================== CLICK OUTSIDE MODAL TO CLOSE ====================
+        function setupModalClickOutside() {
+            const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal];
+            
+            modals.forEach(modal => {
+                if (!modal) return;
+                modal.addEventListener('click', (event) => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+        }
+        
         // ==================== EVENT LISTENERS ====================
         function init() {
             const allQuestsCount = getAllQuests().length;
@@ -2981,12 +3012,8 @@
                 });
             }
             
-            window.addEventListener('click', (event) => {
-                if (event.target === myQuestsModal) closeSavedQuestsModal();
-                if (event.target === customQuestsModal) closeCustomQuestsModal();
-                if (event.target === settingsModal) closeSettingsModalFunc();
-                if (event.target === privacyModal) closePrivacyPolicyModal();
-            });
+            // Setup click outside to close modals
+            setupModalClickOutside();
             
             generateSidequest();
             updateCompletedCounter();
