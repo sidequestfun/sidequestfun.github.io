@@ -6,7 +6,7 @@
     <title>SidequestFun.com - Random Sidequest Generator</title>
 
     <meta name="description" content="Free sidequest generator: Discover spontaneous micro-adventures for indoor, outdoor, and social activities. Beat boredom with 250+ creative challenges and fun tasks!">
-    <meta name="keywords" content="sidequest, sidequest ideas, sidequest ideen, boredom buster, micro adventures, random task generator, fun challenges, indoor activities, outdoor adventures, social challenges, creative tasks">
+    <meta name="keywords" content="sidequest, sidequest idears, sidequest ideen, boredom buster, micro adventures, random task generator, fun challenges, indoor activities, outdoor adventures, social challenges, creative tasks">
     <meta name="author" content="SidequestFun">
     <meta name="robots" content="index, follow">
 
@@ -31,6 +31,8 @@
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!-- LZ-String for compact URL links -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
 
     <style>
         * {
@@ -71,7 +73,6 @@
             flex-wrap: wrap;
         }
         
-        /* Logo container with oval frame - larger height for image, black in dark mode */
         .logo-container {
             background-color: white;
             display: flex;
@@ -93,7 +94,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
         }
         
-        /* Image logo styling */
         .logo-img {
             max-width: 100%;
             max-height: 100%;
@@ -103,7 +103,6 @@
             display: block;
         }
         
-        /* Fallback text logo - exactly as original design, also with black background in dark mode */
         .logo-text-fallback {
             background-color: white;
             color: #333;
@@ -136,7 +135,6 @@
             color: #DD467F;
         }
         
-        /* Hide fallback by default, show image container */
         .logo-img-container {
             display: flex;
             align-items: center;
@@ -149,7 +147,6 @@
             display: none;
         }
         
-        /* When image fails, show fallback */
         .logo-container.fallback-mode .logo-img-container {
             display: none;
         }
@@ -158,7 +155,6 @@
             display: flex;
         }
         
-        /* Responsive adjustments for logo */
         @media (max-width: 640px) {
             .logo-container, .logo-text-fallback {
                 width: 100%;
@@ -1554,6 +1550,128 @@
             font-weight: bold;
             margin-bottom: 15px;
         }
+        
+        /* Custom Quest Modal Styles */
+        .storage-hint {
+            background-color: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #666;
+            border: 1px solid #e9ecef;
+        }
+        
+        body.dark-mode .storage-hint {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #94a3b8;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .input-group input, .input-group select {
+            padding: 12px 16px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            background: white;
+        }
+        
+        body.dark-mode .input-group input, body.dark-mode .input-group select {
+            background: #1e293b;
+            border-color: #334155;
+            color: #e0e0e0;
+        }
+        
+        .custom-quest-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        body.dark-mode .custom-quest-item {
+            background: #0f172a;
+        }
+        
+        .import-export-bar {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        body.dark-mode .import-export-bar {
+            border-top-color: #334155;
+        }
+        
+        .share-link-btn {
+            background-color: #DD467F;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .share-link-btn:hover {
+            background-color: #c43b6e;
+            transform: translateY(-2px);
+        }
+        
+        .btn-add {
+            background-color: #14B3D9;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-add:hover {
+            background-color: #0fa3c7;
+            transform: translateY(-2px);
+        }
+        
+        .delete-custom-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+        
+        .delete-custom-btn:hover {
+            background: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -1601,8 +1719,8 @@
                 <button class="btn icon-btn" id="my-quests-btn" aria-label="View my saved quests">
                     <i class="fas fa-tasks"></i>
                 </button>
-                <button class="btn icon-btn" id="share-btn" aria-label="Share this quest">
-                    <i class="fas fa-share-alt"></i>
+                <button class="btn icon-btn" id="custom-quests-btn" aria-label="Add custom quests">
+                    <i class="fas fa-plus-circle"></i>
                 </button>
             </div>
         </div>
@@ -1675,6 +1793,59 @@
         </div>
     </div>
     
+    <!-- Custom Quests Modal -->
+    <div class="modal" id="custom-quests-modal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h2 class="modal-title"><i class="fas fa-plus-circle"></i> My Custom Quests</h2>
+                <button class="close-modal" id="close-custom-modal">&times;</button>
+            </div>
+            
+            <div class="storage-hint">
+                <i class="fas fa-info-circle"></i> Your custom quests are saved locally. Share them with friends via link or file!
+            </div>
+            
+            <!-- Form to add new quests -->
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 12px; color: #14B3D9;">➕ Add New Quest</h3>
+                <div class="input-group" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="new-quest-text" placeholder="Your quest description..." style="flex: 2; padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
+                    <select id="new-quest-category" style="padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
+                        <option value="indoor">🏠 Indoor</option>
+                        <option value="outdoor">🌳 Outdoor</option>
+                        <option value="social">🗣️ Social</option>
+                    </select>
+                    <select id="new-quest-difficulty" style="padding: 12px; border-radius: 25px; border: 1px solid #ddd;">
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="epic">Epic</option>
+                    </select>
+                    <button id="add-custom-quest-btn" class="btn-add">
+                        <i class="fas fa-plus"></i> Add
+                    </button>
+                </div>
+            </div>
+            
+            <!-- List of custom quests -->
+            <h3 style="margin-bottom: 12px;">📋 Your Custom Quests</h3>
+            <div id="custom-quests-list" style="max-height: 300px; overflow-y: auto;"></div>
+            
+            <!-- Import/Export Bar -->
+            <div class="import-export-bar">
+                <button id="share-deck-btn" class="share-link-btn">
+                    <i class="fas fa-share-alt"></i> Share via Link
+                </button>
+                <button id="export-quests-btn" class="share-link-btn" style="background-color: #28a745;">
+                    <i class="fas fa-download"></i> Export as File
+                </button>
+                <label for="import-quests-file" class="share-link-btn" style="background-color: #6c757d; cursor: pointer;">
+                    <i class="fas fa-upload"></i> Import File
+                </label>
+                <input type="file" id="import-quests-file" accept=".json" style="display: none;">
+            </div>
+        </div>
+    </div>
+    
     <div class="modal" id="settings-modal">
         <div class="modal-content settings-modal">
             <div class="modal-header">
@@ -1731,6 +1902,7 @@
                 <ul>
                     <li>FontAwesome (Icons)</li>
                     <li>jsDelivr (Canvas-Confetti effect)</li>
+                    <li>LZ-String (for share links)</li>
                 </ul>
                 <p><strong>Technical Necessity:</strong> When these resources are loaded, your IP address is technically transmitted to these providers to deliver the files to your browser. This is a technical requirement for the website to function correctly.</p>
                 
@@ -1746,7 +1918,7 @@
     </div>
     
     <script>
-        // Complete sidequests array - all quests from original
+        // ==================== SIDEQUESTS DATABASE ====================
         let sidequests = [
             { text: "Take a photo of the most interesting cloud you can find today.", category: "outdoor", difficulty: "easy" },
             { text: "Learn to say 'hello' and 'thank you' in a language you don't know.", category: "social", difficulty: "easy" },
@@ -2029,34 +2201,9 @@
             { month: 11, name: "🎄 DECEMBER", text: "Bake Christmas cookies and gift them to neighbors or colleagues. Spread warmth, kindness, and homemade joy during the festive season." }
         ];
         
-        const questText = document.getElementById('quest-text');
-        const generateBtn = document.getElementById('generate-btn');
-        const saveBtn = document.getElementById('save-btn');
-        const myQuestsBtn = document.getElementById('my-quests-btn');
-        const completeBtn = document.getElementById('complete-btn');
-        const shareBtn = document.getElementById('share-btn');
-        const notification = document.getElementById('notification');
-        const notificationText = document.getElementById('notification-text');
-        const myQuestsModal = document.getElementById('my-quests-modal');
-        const settingsModal = document.getElementById('settings-modal');
-        const closeModal = document.getElementById('close-modal');
-        const closeSettingsModal = document.getElementById('close-settings-modal');
-        const savedQuestsList = document.getElementById('saved-quests-list');
-        const savedCount = document.getElementById('saved-count');
-        const completedCount = document.getElementById('completed-count');
-        const totalCount = document.getElementById('total-count');
-        const difficultyTags = document.getElementById('difficulty-tags');
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const modalThemeToggle = document.getElementById('modal-theme-toggle');
-        const privacyLink = document.getElementById('privacy-link');
-        const privacyModal = document.getElementById('privacy-modal');
-        const closePrivacyModal = document.getElementById('close-privacy-modal');
-        const settingsLink = document.getElementById('settings-link');
-        const clearDataBtn = document.getElementById('clear-data-btn');
-        const statsDetails = document.getElementById('stats-details');
-        const statSaved = document.getElementById('stat-saved');
-        const statCompleted = document.getElementById('stat-completed');
-        const statTotal = document.getElementById('stat-total');
+        // ==================== GLOBAL VARIABLES ====================
+        // Custom Quests Storage
+        let customQuests = JSON.parse(localStorage.getItem('sidequestfun_customQuests')) || [];
         
         let savedQuests = JSON.parse(localStorage.getItem('sidequestfun_savedQuests')) || [];
         let completedQuests = JSON.parse(localStorage.getItem('sidequestfun_completedQuests')) || [];
@@ -2069,6 +2216,39 @@
         let difficultyFilter = localStorage.getItem('sidequestfun_difficultyFilter') || 'all';
         let lastCompletedDate = localStorage.getItem('sidequestfun_lastCompletedDate') || '';
         let currentStreak = parseInt(localStorage.getItem('sidequestfun_streak')) || 0;
+        
+        // DOM Elements
+        const questText = document.getElementById('quest-text');
+        const generateBtn = document.getElementById('generate-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const myQuestsBtn = document.getElementById('my-quests-btn');
+        const customQuestsBtn = document.getElementById('custom-quests-btn');
+        const completeBtn = document.getElementById('complete-btn');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notification-text');
+        const myQuestsModal = document.getElementById('my-quests-modal');
+        const customQuestsModal = document.getElementById('custom-quests-modal');
+        const settingsModal = document.getElementById('settings-modal');
+        const privacyModal = document.getElementById('privacy-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeCustomModal = document.getElementById('close-custom-modal');
+        const closeSettingsModal = document.getElementById('close-settings-modal');
+        const closePrivacyModal = document.getElementById('close-privacy-modal');
+        const savedQuestsList = document.getElementById('saved-quests-list');
+        const customQuestsList = document.getElementById('custom-quests-list');
+        const savedCount = document.getElementById('saved-count');
+        const completedCount = document.getElementById('completed-count');
+        const totalCount = document.getElementById('total-count');
+        const difficultyTags = document.getElementById('difficulty-tags');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const modalThemeToggle = document.getElementById('modal-theme-toggle');
+        const privacyLink = document.getElementById('privacy-link');
+        const settingsLink = document.getElementById('settings-link');
+        const clearDataBtn = document.getElementById('clear-data-btn');
+        const statsDetails = document.getElementById('stats-details');
+        const statSaved = document.getElementById('stat-saved');
+        const statCompleted = document.getElementById('stat-completed');
+        const statTotal = document.getElementById('stat-total');
         
         // Logo handling
         const logoImg = document.getElementById('dynamicLogo');
@@ -2093,8 +2273,30 @@
             updateLogo();
         }
         
+        // ==================== CORE FUNCTIONS ====================
         function getAllQuests() {
-            return [...sidequests];
+            return [...sidequests, ...customQuests];
+        }
+        
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        function showNotification(message, isError = false) {
+            notificationText.textContent = message;
+            notification.style.backgroundColor = isError ? '#dc3545' : '#28a745';
+            if (document.body.classList.contains('dark-mode') && !isError) {
+                notification.style.backgroundColor = '#065f46';
+            } else if (isError) {
+                notification.style.backgroundColor = '#dc3545';
+            }
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
         }
         
         function updateStreakOnLoad() {
@@ -2155,59 +2357,37 @@
             return '';
         }
         
-        function init() {
-            const allQuestsCount = getAllQuests().length;
-            totalCount.textContent = allQuestsCount;
-            updateStreakOnLoad();
-            
-            if (isDarkMode) {
-                enableDarkMode();
-            } else {
-                disableDarkMode();
+        function addToHistory(questText) {
+            questHistory.unshift(questText);
+            if (questHistory.length > MAX_HISTORY) {
+                questHistory = questHistory.slice(0, MAX_HISTORY);
             }
-            
-            filterButtons.forEach(button => {
-                button.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    setActiveFilter(button.dataset.category);
-                });
-            });
-            
-            statSaved.addEventListener('click', () => showQuestsByType('saved'));
-            statCompleted.addEventListener('click', () => showQuestsByType('completed'));
-            statTotal.addEventListener('click', () => showQuestsByType('total'));
-            
-            document.querySelectorAll('.difficulty-filter-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const filter = btn.dataset.diffFilter;
-                    difficultyFilter = filter;
-                    localStorage.setItem('sidequestfun_difficultyFilter', filter);
-                    document.querySelectorAll('.difficulty-filter-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    generateSidequest();
-                });
-                if (btn.dataset.diffFilter === difficultyFilter) btn.classList.add('active');
-            });
-            
-            generateSidequest();
-            updateCompletedCounter();
-            initQuestOfMonth();
+            localStorage.setItem('sidequestfun_history', JSON.stringify(questHistory));
         }
         
-        function setActiveFilter(category) {
-            filterButtons.forEach(btn => {
-                btn.classList.remove('active', 'glow-effect');
-            });
+        function updateSaveButton() {
+            if (!currentQuest) {
+                saveBtn.disabled = true;
+                saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+                saveBtn.style.backgroundColor = '#6c757d';
+                return;
+            }
             
-            const activeButton = document.querySelector(`.filter-btn[data-category="${category}"]`);
-            activeButton.classList.add('active', 'glow-effect');
+            const isSaved = savedQuests.some(q => q.text === currentQuest.text);
             
-            setTimeout(() => {
-                activeButton.classList.remove('glow-effect');
-            }, 1000);
-            
-            currentCategory = category;
-            generateSidequest();
+            if (isSaved) {
+                saveBtn.innerHTML = '<i class="fas fa-check"></i>';
+                saveBtn.style.backgroundColor = '#28a745';
+                saveBtn.disabled = true;
+            } else {
+                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
+                saveBtn.style.backgroundColor = '';
+                saveBtn.disabled = false;
+            }
+        }
+        
+        function updateCompletedCounter() {
+            completedCount.textContent = completedQuests.length;
         }
         
         function generateSidequest() {
@@ -2266,33 +2446,21 @@
             updateSaveButton();
         }
         
-        function addToHistory(questText) {
-            questHistory.unshift(questText);
-            if (questHistory.length > MAX_HISTORY) {
-                questHistory = questHistory.slice(0, MAX_HISTORY);
-            }
-            localStorage.setItem('sidequestfun_history', JSON.stringify(questHistory));
-        }
-        
-        function updateSaveButton() {
-            if (!currentQuest) {
-                saveBtn.disabled = true;
-                saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-                saveBtn.style.backgroundColor = '#6c757d';
-                return;
+        function setActiveFilter(category) {
+            filterButtons.forEach(btn => {
+                btn.classList.remove('active', 'glow-effect');
+            });
+            
+            const activeButton = document.querySelector(`.filter-btn[data-category="${category}"]`);
+            if (activeButton) {
+                activeButton.classList.add('active', 'glow-effect');
+                setTimeout(() => {
+                    activeButton.classList.remove('glow-effect');
+                }, 1000);
             }
             
-            const isSaved = savedQuests.some(q => q.text === currentQuest.text);
-            
-            if (isSaved) {
-                saveBtn.innerHTML = '<i class="fas fa-check"></i>';
-                saveBtn.style.backgroundColor = '#28a745';
-                saveBtn.disabled = true;
-            } else {
-                saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
-                saveBtn.style.backgroundColor = '';
-                saveBtn.disabled = false;
-            }
+            currentCategory = category;
+            generateSidequest();
         }
         
         function saveSidequest() {
@@ -2317,69 +2485,254 @@
             updateCompletedCounter();
         }
         
-        async function shareQuest() {
-            if (!currentQuest) return;
-            const text = `I just got this sidequest: "${currentQuest.text}" - Check out SidequestFun for more!`;
+        // ==================== CUSTOM QUESTS FUNCTIONS ====================
+        function renderCustomQuestsList() {
+            if (!customQuestsList) return;
+            
+            if (customQuests.length === 0) {
+                customQuestsList.innerHTML = '<div style="text-align: center; padding: 40px; color: #666;"><i class="fas fa-plus-circle"></i> No custom quests yet. Add your first adventure!</div>';
+                return;
+            }
+            
+            customQuestsList.innerHTML = customQuests.map((quest, index) => `
+                <div class="custom-quest-item">
+                    <div style="flex: 1;">
+                        <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                            <span class="difficulty-tag difficulty-${quest.difficulty}">${quest.difficulty}</span>
+                            <span class="category-tag">${getCategoryIcon(quest.category)} ${quest.category}</span>
+                        </div>
+                        <div style="font-weight: 500;">${escapeHtml(quest.text)}</div>
+                    </div>
+                    <button class="delete-custom-btn" data-index="${index}">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            `).join('');
+            
+            document.querySelectorAll('.delete-custom-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const index = parseInt(btn.dataset.index);
+                    customQuests.splice(index, 1);
+                    localStorage.setItem('sidequestfun_customQuests', JSON.stringify(customQuests));
+                    renderCustomQuestsList();
+                    generateSidequest();
+                    const totalCountElem = document.getElementById('total-count');
+                    if (totalCountElem) totalCountElem.textContent = getAllQuests().length;
+                    showNotification("Custom quest deleted!");
+                });
+            });
+        }
+        
+        function getCategoryIcon(category) {
+            switch(category) {
+                case 'indoor': return '🏠';
+                case 'outdoor': return '🌳';
+                case 'social': return '🗣️';
+                default: return '📌';
+            }
+        }
+        
+        function addCustomQuest() {
+            const textInput = document.getElementById('new-quest-text');
+            const text = textInput ? textInput.value.trim() : '';
+            const categorySelect = document.getElementById('new-quest-category');
+            const difficultySelect = document.getElementById('new-quest-difficulty');
+            const category = categorySelect ? categorySelect.value : 'indoor';
+            const difficulty = difficultySelect ? difficultySelect.value : 'easy';
+            
+            if (!text) {
+                showNotification("Please enter a quest description!", true);
+                return;
+            }
+            
+            const allQuests = getAllQuests();
+            if (allQuests.some(q => q.text === text)) {
+                showNotification("This quest already exists!", true);
+                return;
+            }
+            
+            customQuests.push({ text, category, difficulty });
+            localStorage.setItem('sidequestfun_customQuests', JSON.stringify(customQuests));
+            
+            if (textInput) textInput.value = '';
+            renderCustomQuestsList();
+            generateSidequest();
+            const totalCountElem = document.getElementById('total-count');
+            if (totalCountElem) totalCountElem.textContent = getAllQuests().length;
+            showNotification("Custom quest added!");
+        }
+        
+        // Share Link Function with LZ-String compression
+        function generateShareLink() {
+            const deckData = { customQuests: customQuests };
+            
+            if (customQuests.length === 0) {
+                showNotification("No custom quests to share! Add some first.", true);
+                return null;
+            }
+            
+            try {
+                const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(deckData));
+                const url = new URL(window.location.href);
+                url.searchParams.set('data', compressed);
+                let packName = `${customQuests.length} Custom Quests`;
+                url.searchParams.set('name', packName);
+                return url.toString();
+            } catch (e) {
+                console.error("Compression error:", e);
+                showNotification("Error creating share link", true);
+                return null;
+            }
+        }
+        
+        function shareDeckLink() {
+            const link = generateShareLink();
+            if (!link) return;
             
             if (navigator.share) {
+                navigator.share({
+                    title: 'SidequestFun - Custom Quests',
+                    text: `Check out my custom quest pack! ${customQuests.length} adventures ready to play.`,
+                    url: link
+                }).catch(err => {
+                    if (err.name !== 'AbortError') fallbackCopyLink(link);
+                });
+            } else {
+                fallbackCopyLink(link);
+            }
+        }
+        
+        function fallbackCopyLink(link) {
+            navigator.clipboard.writeText(link).then(() => {
+                showNotification("Link copied! Share it with friends.");
+            }).catch(() => {
+                showNotification("Could not copy link", true);
+            });
+        }
+        
+        function exportQuests() {
+            if (customQuests.length === 0) {
+                showNotification("No custom quests to export!", true);
+                return;
+            }
+            
+            const data = { 
+                customQuests: customQuests,
+                version: "1.0",
+                exportDate: new Date().toISOString()
+            };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `sidequestfun_custom_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(a.href);
+            showNotification("Quests exported successfully!");
+        }
+        
+        function importQuests(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
                 try {
-                    await navigator.share({
-                        title: 'SidequestFun',
-                        text: text,
-                        url: 'https://sidequestfun.com'
-                    });
-                } catch (err) {
-                    if (err.name !== 'AbortError') {
-                        window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+                    const json = JSON.parse(e.target.result);
+                    let importedQuests = [];
+                    if (json.customQuests && Array.isArray(json.customQuests)) {
+                        importedQuests = json.customQuests;
+                    } else if (Array.isArray(json)) {
+                        importedQuests = json;
+                    } else {
+                        showNotification("Invalid file format", true);
+                        return;
                     }
+                    
+                    const existingTexts = new Set(getAllQuests().map(q => q.text));
+                    const newQuests = importedQuests.filter(q => q.text && !existingTexts.has(q.text));
+                    
+                    if (newQuests.length === 0) {
+                        showNotification("No new quests to import", false);
+                        return;
+                    }
+                    
+                    if (confirm(`Import ${newQuests.length} new quests?`)) {
+                        customQuests.push(...newQuests);
+                        localStorage.setItem('sidequestfun_customQuests', JSON.stringify(customQuests));
+                        renderCustomQuestsList();
+                        generateSidequest();
+                        const totalCountElem = document.getElementById('total-count');
+                        if (totalCountElem) totalCountElem.textContent = getAllQuests().length;
+                        showNotification(`${newQuests.length} quests imported!`);
+                    }
+                } catch(ex) {
+                    console.error("Import error:", ex);
+                    showNotification("Error importing file", true);
                 }
-            } else {
-                window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+            };
+            reader.readAsText(file);
+        }
+        
+        async function handleUrlImport() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const compressedData = urlParams.get('data');
+            if (!compressedData) return false;
+            
+            try {
+                let jsonString = LZString.decompressFromEncodedURIComponent(compressedData);
+                let data = jsonString ? JSON.parse(jsonString) : null;
+                if (!data || !data.customQuests) return false;
+                
+                const existingTexts = new Set(getAllQuests().map(q => q.text));
+                const newQuests = data.customQuests.filter(q => q.text && !existingTexts.has(q.text));
+                
+                if (newQuests.length === 0) {
+                    showNotification("No new quests to import", false);
+                    return false;
+                }
+                
+                if (confirm(`Import ${newQuests.length} custom quests from shared link?`)) {
+                    customQuests.push(...newQuests);
+                    localStorage.setItem('sidequestfun_customQuests', JSON.stringify(customQuests));
+                    renderCustomQuestsList();
+                    generateSidequest();
+                    const totalCountElem = document.getElementById('total-count');
+                    if (totalCountElem) totalCountElem.textContent = getAllQuests().length;
+                    showNotification(`${newQuests.length} quests imported!`);
+                    
+                    const newUrl = new URL(window.location.href);
+                    newUrl.searchParams.delete('data');
+                    newUrl.searchParams.delete('name');
+                    window.history.replaceState({}, '', newUrl.toString());
+                    return true;
+                }
+                return false;
+            } catch (e) {
+                console.error("URL import error:", e);
+                return false;
             }
         }
         
-        function updateCompletedCounter() {
+        // ==================== MODAL FUNCTIONS ====================
+        function openSavedQuestsModal() {
+            savedCount.textContent = savedQuests.length;
             completedCount.textContent = completedQuests.length;
+            totalCount.textContent = getAllQuests().length;
+            showQuestsByType('saved');
+            updateStatistics();
+            myQuestsModal.style.display = 'flex';
         }
         
-        function showNotification(message) {
-            notificationText.textContent = message;
-            notification.classList.add('show');
-            setTimeout(() => {
-                notification.classList.remove('show');
-            }, 3000);
-        }
-        
-        function enableDarkMode() {
-            document.body.classList.add('dark-mode');
-            modalThemeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
-            isDarkMode = true;
-            localStorage.setItem('sidequestfun_darkMode', 'true');
-            applyLogoByMode();
-        }
-        
-        function disableDarkMode() {
-            document.body.classList.remove('dark-mode');
-            modalThemeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
-            isDarkMode = false;
-            localStorage.setItem('sidequestfun_darkMode', 'false');
-            applyLogoByMode();
-        }
-        
-        function toggleDarkMode() {
-            if (isDarkMode) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
+        function openCustomQuestsModal() {
+            renderCustomQuestsList();
+            customQuestsModal.style.display = 'flex';
         }
         
         function showQuestsByType(type) {
             currentView = type;
             
             [statSaved, statCompleted, statTotal].forEach(stat => stat.classList.remove('active'));
-            document.getElementById(`stat-${type}`).classList.add('active');
+            const activeStat = document.getElementById(`stat-${type}`);
+            if (activeStat) activeStat.classList.add('active');
             
+            if (!savedQuestsList) return;
             savedQuestsList.innerHTML = '';
             let questsToShow = [];
             
@@ -2425,12 +2778,6 @@
             }
             
             updateStatistics();
-        }
-        
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
         }
         
         function completeQuestFromList(index, type) {
@@ -2483,74 +2830,169 @@
             if (currentQuest && savedQuests.every(q => q.text !== currentQuest.text)) updateSaveButton();
         }
         
-        function openSavedQuestsModal() {
-            savedCount.textContent = savedQuests.length;
-            completedCount.textContent = completedQuests.length;
-            totalCount.textContent = getAllQuests().length;
-            showQuestsByType('saved');
-            updateStatistics();
-            myQuestsModal.style.display = 'flex';
-        }
-        
         function updateStatistics() {
             const allQuestsArray = getAllQuests();
             const categoryCounts = { indoor: { total: 0, completed: 0 }, outdoor: { total: 0, completed: 0 }, social: { total: 0, completed: 0 } };
-            allQuestsArray.forEach(quest => { categoryCounts[quest.category].total++; if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category].completed++; });
+            allQuestsArray.forEach(quest => { 
+                if (categoryCounts[quest.category]) {
+                    categoryCounts[quest.category].total++; 
+                    if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category].completed++;
+                }
+            });
             const completionPercentage = Math.round((completedQuests.length / allQuestsArray.length) * 100);
             let mostPopularCategory = 'None', mostCompleted = 0;
             Object.entries(categoryCounts).forEach(([cat, data]) => { if (data.completed > mostCompleted) { mostCompleted = data.completed; mostPopularCategory = cat; } });
             let favoriteIcon = '', favoriteDisplayName = '';
             switch(mostPopularCategory) { case 'indoor': favoriteIcon = '🏠'; favoriteDisplayName = 'Indoor'; break; case 'outdoor': favoriteIcon = '🌳'; favoriteDisplayName = 'Outdoor'; break; case 'social': favoriteIcon = '🗣️'; favoriteDisplayName = 'Social'; break; default: favoriteIcon = '📊'; favoriteDisplayName = 'None'; }
-            statsDetails.innerHTML = `${getStreakDisplay()}<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
-            statsDetails.classList.add('show');
-        }
-        
-        function clearAllData() {
-            if (confirm("Are you sure you want to clear all saved data? This will delete all your saved and completed quests.")) {
-                savedQuests = []; completedQuests = []; questHistory = [];
-                localStorage.removeItem('sidequestfun_savedQuests'); localStorage.removeItem('sidequestfun_completedQuests'); 
-                localStorage.removeItem('sidequestfun_history');
-                localStorage.removeItem('sidequestfun_streak'); localStorage.removeItem('sidequestfun_lastCompletedTimestamp');
-                currentStreak = 0;
-                showNotification("All data has been cleared!");
-                closeSettingsModalFunc();
-                updateSaveButton(); generateSidequest(); updateCompletedCounter(); initQuestOfMonth();
-                totalCount.textContent = getAllQuests().length;
+            if (statsDetails) {
+                statsDetails.innerHTML = `${getStreakDisplay()}<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
+                statsDetails.classList.add('show');
             }
         }
         
-        function openSettingsModal() { settingsModal.style.display = 'flex'; }
-        function openPrivacyModal() { privacyModal.style.display = 'flex'; }
-        function closeSavedQuestsModal() { myQuestsModal.style.display = 'none'; }
-        function closeSettingsModalFunc() { settingsModal.style.display = 'none'; }
-        function closePrivacyPolicyModal() { privacyModal.style.display = 'none'; }
+        // ==================== DARK MODE ====================
+        function enableDarkMode() {
+            document.body.classList.add('dark-mode');
+            if (modalThemeToggle) modalThemeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
+            isDarkMode = true;
+            localStorage.setItem('sidequestfun_darkMode', 'true');
+            applyLogoByMode();
+        }
+        
+        function disableDarkMode() {
+            document.body.classList.remove('dark-mode');
+            if (modalThemeToggle) modalThemeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
+            isDarkMode = false;
+            localStorage.setItem('sidequestfun_darkMode', 'false');
+            applyLogoByMode();
+        }
+        
+        function toggleDarkMode() {
+            if (isDarkMode) {
+                disableDarkMode();
+            } else {
+                enableDarkMode();
+            }
+        }
+        
+        // ==================== CLEAR DATA ====================
+        function clearAllData() {
+            if (confirm("Are you sure you want to clear all saved data? This will delete all your saved, completed and custom quests.")) {
+                savedQuests = []; 
+                completedQuests = []; 
+                questHistory = [];
+                customQuests = [];
+                localStorage.removeItem('sidequestfun_savedQuests');
+                localStorage.removeItem('sidequestfun_completedQuests'); 
+                localStorage.removeItem('sidequestfun_history');
+                localStorage.removeItem('sidequestfun_streak');
+                localStorage.removeItem('sidequestfun_lastCompletedTimestamp');
+                localStorage.removeItem('sidequestfun_customQuests');
+                currentStreak = 0;
+                showNotification("All data has been cleared!");
+                if (typeof closeSettingsModalFunc === 'function') closeSettingsModalFunc();
+                updateSaveButton(); 
+                generateSidequest(); 
+                updateCompletedCounter(); 
+                initQuestOfMonth();
+                if (totalCount) totalCount.textContent = getAllQuests().length;
+                if (customQuestsList) renderCustomQuestsList();
+            }
+        }
+        
+        // ==================== MODAL CONTROLS ====================
+        function closeSavedQuestsModal() { if (myQuestsModal) myQuestsModal.style.display = 'none'; }
+        function closeCustomQuestsModal() { if (customQuestsModal) customQuestsModal.style.display = 'none'; }
+        function closeSettingsModalFunc() { if (settingsModal) settingsModal.style.display = 'none'; }
+        function closePrivacyPolicyModal() { if (privacyModal) privacyModal.style.display = 'none'; }
+        function openSettingsModal() { if (settingsModal) settingsModal.style.display = 'flex'; }
+        function openPrivacyModal() { if (privacyModal) privacyModal.style.display = 'flex'; }
         
         function initQuestOfMonth() {
             const now = new Date();
             const currentMonth = now.getMonth();
             const qom = monthlyQuests[currentMonth];
-            document.getElementById('qom-month-name').innerHTML = qom.name;
-            document.getElementById('qom-quest-text').innerHTML = qom.text;
+            const monthNameElem = document.getElementById('qom-month-name');
+            const questTextElem = document.getElementById('qom-quest-text');
+            if (monthNameElem) monthNameElem.innerHTML = qom.name;
+            if (questTextElem) questTextElem.innerHTML = qom.text;
         }
         
-        generateBtn.addEventListener('click', generateSidequest);
-        saveBtn.addEventListener('click', saveSidequest);
-        myQuestsBtn.addEventListener('click', openSavedQuestsModal);
-        completeBtn.addEventListener('click', completeQuest);
-        shareBtn.addEventListener('click', shareQuest);
-        closeModal.addEventListener('click', closeSavedQuestsModal);
-        closeSettingsModal.addEventListener('click', closeSettingsModalFunc);
-        closePrivacyModal.addEventListener('click', closePrivacyPolicyModal);
-        modalThemeToggle.addEventListener('click', toggleDarkMode);
-        privacyLink.addEventListener('click', openPrivacyModal);
-        settingsLink.addEventListener('click', openSettingsModal);
-        clearDataBtn.addEventListener('click', clearAllData);
-        
-        window.addEventListener('click', (event) => {
-            if (event.target === myQuestsModal) closeSavedQuestsModal();
-            if (event.target === settingsModal) closeSettingsModalFunc();
-            if (event.target === privacyModal) closePrivacyPolicyModal();
-        });
+        // ==================== EVENT LISTENERS ====================
+        function init() {
+            const allQuestsCount = getAllQuests().length;
+            if (totalCount) totalCount.textContent = allQuestsCount;
+            updateStreakOnLoad();
+            
+            if (isDarkMode) enableDarkMode();
+            else disableDarkMode();
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    setActiveFilter(button.dataset.category);
+                });
+            });
+            
+            if (statSaved) statSaved.addEventListener('click', () => showQuestsByType('saved'));
+            if (statCompleted) statCompleted.addEventListener('click', () => showQuestsByType('completed'));
+            if (statTotal) statTotal.addEventListener('click', () => showQuestsByType('total'));
+            
+            document.querySelectorAll('.difficulty-filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const filter = btn.dataset.diffFilter;
+                    difficultyFilter = filter;
+                    localStorage.setItem('sidequestfun_difficultyFilter', filter);
+                    document.querySelectorAll('.difficulty-filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    generateSidequest();
+                });
+                if (btn.dataset.diffFilter === difficultyFilter) btn.classList.add('active');
+            });
+            
+            if (generateBtn) generateBtn.addEventListener('click', generateSidequest);
+            if (saveBtn) saveBtn.addEventListener('click', saveSidequest);
+            if (myQuestsBtn) myQuestsBtn.addEventListener('click', openSavedQuestsModal);
+            if (customQuestsBtn) customQuestsBtn.addEventListener('click', openCustomQuestsModal);
+            if (completeBtn) completeBtn.addEventListener('click', completeQuest);
+            if (closeModal) closeModal.addEventListener('click', closeSavedQuestsModal);
+            if (closeCustomModal) closeCustomModal.addEventListener('click', closeCustomQuestsModal);
+            if (closeSettingsModal) closeSettingsModal.addEventListener('click', closeSettingsModalFunc);
+            if (closePrivacyModal) closePrivacyModal.addEventListener('click', closePrivacyPolicyModal);
+            if (modalThemeToggle) modalThemeToggle.addEventListener('click', toggleDarkMode);
+            if (privacyLink) privacyLink.addEventListener('click', openPrivacyModal);
+            if (settingsLink) settingsLink.addEventListener('click', openSettingsModal);
+            if (clearDataBtn) clearDataBtn.addEventListener('click', clearAllData);
+            
+            const addCustomBtn = document.getElementById('add-custom-quest-btn');
+            if (addCustomBtn) addCustomBtn.addEventListener('click', addCustomQuest);
+            
+            const shareDeckBtn = document.getElementById('share-deck-btn');
+            if (shareDeckBtn) shareDeckBtn.addEventListener('click', shareDeckLink);
+            
+            const exportBtn = document.getElementById('export-quests-btn');
+            if (exportBtn) exportBtn.addEventListener('click', exportQuests);
+            
+            const importFileInput = document.getElementById('import-quests-file');
+            if (importFileInput) {
+                importFileInput.addEventListener('change', e => {
+                    if (e.target.files[0]) importQuests(e.target.files[0]);
+                    e.target.value = '';
+                });
+            }
+            
+            window.addEventListener('click', (event) => {
+                if (event.target === myQuestsModal) closeSavedQuestsModal();
+                if (event.target === customQuestsModal) closeCustomQuestsModal();
+                if (event.target === settingsModal) closeSettingsModalFunc();
+                if (event.target === privacyModal) closePrivacyPolicyModal();
+            });
+            
+            generateSidequest();
+            updateCompletedCounter();
+            initQuestOfMonth();
+            handleUrlImport();
+        }
         
         window.addEventListener('load', init);
     </script>
