@@ -2987,6 +2987,9 @@
                 if (event.target === settingsModal) closeSettingsModalFunc();
                 if (event.target === privacyModal) closePrivacyPolicyModal();
             });
+                       
+            // Setup click outside to close modals
+            setupModalClickOutside();
             
             generateSidequest();
             updateCompletedCounter();
