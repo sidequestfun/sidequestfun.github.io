@@ -492,15 +492,17 @@
         
         .donation-section {
             text-align: center;
-            padding: 20px 0;
+            padding: 30px 0;
         }
         
         .donation-container {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: center;
+            justify-content: center;
             width: 100%;
-            gap: 20px;
+            gap: 16px;
+            flex-wrap: wrap;
         }
         
         .donation-btn {
@@ -517,23 +519,63 @@
             outline: none;
         }
         
+        .sidequest-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background-color: #DD467F;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            flex: 1;
+            min-width: 250px;
+            max-width: 380px;
+            box-shadow: 0 4px 8px rgba(221, 70, 127, 0.15);
+        }
+        
+        .sidequest-link-btn:hover, .sidequest-link-btn:active, .sidequest-link-btn:focus {
+            background-color: #d1306d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(221, 70, 127, 0.25);
+            text-decoration: none;
+            outline: none;
+        }
+        
+        .sidequest-link-btn i {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .sidequest-link-btn span {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
         .free-notice {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
             color: #666;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             margin: 0;
-            padding: 18px 25px;
+            padding: 12px 20px;
             background-color: #f8f9fa;
             border-radius: 12px;
             border: 1px solid #e9ecef;
             text-align: center;
-            width: 100%;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
+            flex: 1;
+            min-width: 250px;
+            max-width: 380px;
+            margin-left: 0;
+            margin-right: 0;
         }
         
         body.dark-mode .free-notice {
@@ -544,7 +586,7 @@
         
         .free-notice i {
             color: #14B3D9;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             flex-shrink: 0;
         }
         
@@ -721,14 +763,28 @@
                 font-size: 1rem;
             }
             
+            .donation-container {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
             .free-notice {
                 padding: 15px 20px;
                 font-size: 1rem;
                 gap: 10px;
+                width: 100%;
+                max-width: 100%;
             }
             
             .free-notice i {
                 font-size: 1.2rem;
+            }
+            
+            .sidequest-link-btn {
+                padding: 14px 28px;
+                font-size: 1rem;
+                width: 100%;
+                max-width: 100%;
             }
         }
         
@@ -1749,6 +1805,10 @@
         <div class="card">
             <div class="donation-section">
                 <div class="donation-container">
+                    <a href="https://linktr.ee/sidequestfun" target="_blank" rel="noopener noreferrer" class="sidequest-link-btn">
+                        <i class="fas fa-compass"></i>
+                        <span>Get more Sidequests</span>
+                    </a>
                     <div class="free-notice">
                         <i class="fas fa-check-circle"></i>
                         <span>Free to use and free of ads. If you love it, share it!</span>
@@ -2352,7 +2412,7 @@
         
         function getStreakDisplay() {
             if (currentStreak > 0) {
-                return `<div class="streak-badge"><i class="fas fa-fire"></i> ${currentStreak}-Day Streak! 🔥</div>`;
+                return `<div class="streak-badge"><i class="fas fa-fire"></i> ${currentStreak}-Day Streak!</div>`;
             }
             return '';
         }
