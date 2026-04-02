@@ -1805,13 +1805,14 @@
         <div class="card">
             <div class="donation-section">
                 <div class="donation-container">
-                    <a href="https://linktr.ee/sidequestfun" target="_blank" rel="noopener noreferrer" class="sidequest-link-btn">
+                    <a href="https://tinyurl.com/sidequestfun" target="_blank" rel="noopener noreferrer" class="sidequest-link-btn">
                         <i class="fas fa-compass"></i>
                         <span>Get more Sidequests</span>
                     </a>
+                    <p style="font-size: 0.85rem; text-align: center; margin: 8px 0 0 0; color: #666; margin-top: 5px;">Find your next real-life adventure and discover things to do with GetYourGuide.</p>
                     <div class="free-notice">
                         <i class="fas fa-check-circle"></i>
-                        <span>Free to use and free of ads. If you love it, share it!</span>
+                        <span>Free to use. If you love it, share it!</span>
                     </div>
                 </div>
             </div>
@@ -1968,6 +1969,7 @@
                 
                 <h3>4. External Links</h3>
                 <p>If you click on buttons leading to external websites, you will be redirected to a third-party platform. From that moment on, the privacy policy of that respective third party applies. We have no control over the content or data processing of external sites.</p>
+                <p>Some external links are affiliate links, meaning we may receive a small commission if you make a purchase, at no additional cost to you.</p>
             </div>
         </div>
     </div>
@@ -2438,7 +2440,7 @@
             if (isSaved) {
                 saveBtn.innerHTML = '<i class="fas fa-check"></i>';
                 saveBtn.style.backgroundColor = '#28a745';
-                saveBtn.disabled = true;
+                saveBtn.disabled = false;
             } else {
                 saveBtn.innerHTML = '<i class="fas fa-bookmark"></i>';
                 saveBtn.style.backgroundColor = '';
@@ -2524,10 +2526,22 @@
         }
         
         function saveSidequest() {
-            if (!currentQuest || savedQuests.some(q => q.text === currentQuest.text)) return;
-            savedQuests.push(currentQuest);
-            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-            showNotification("Quest saved to your browser storage!");
+            if (!currentQuest) return;
+            
+            const questIndex = savedQuests.findIndex(q => q.text === currentQuest.text);
+            
+            if (questIndex !== -1) {
+                // Quest is already saved, remove it
+                savedQuests.splice(questIndex, 1);
+                localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
+                showNotification("Quest removed from your saved quests!");
+            } else {
+                // Quest is not saved, add it
+                savedQuests.push(currentQuest);
+                localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
+                showNotification("Quest saved to your browser storage!");
+            }
+            
             updateSaveButton();
         }
         
