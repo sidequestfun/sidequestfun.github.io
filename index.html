@@ -1728,6 +1728,64 @@
         .delete-custom-btn:hover {
             background: #c82333;
         }
+        
+        /* Collapsible Styles */
+        .collapsible-section {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+            margin-bottom: 0;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .collapsible-header h2 {
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            flex: 1;
+        }
+        
+        .collapsible-header h2:hover {
+            opacity: 0.8;
+        }
+        
+        .collapsible-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            transition: transform 0.3s ease;
+            color: #14B3D9;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+        
+        .collapsible-toggle.closed {
+            transform: rotate(-90deg);
+        }
+        
+        .collapsible-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .collapsible-content.collapsed {
+            max-height: 0;
+            margin-top: 0;
+            overflow: hidden;
+        }
     </style>
 </head>
 <body>
@@ -1781,16 +1839,26 @@
             </div>
         </div>
         
-        <div class="card info-card">
-            <h2>How It Works</h2>
-            <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Hit "Save" to keep quests for later and "Complete" to track your total progress.</p>
-            <p>Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
+        <div class="card info-card collapsible-section">
+            <div class="collapsible-header">
+                <h2>How It Works</h2>
+                <span class="collapsible-toggle">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Hit "Save" to keep quests for later and "Complete" to track your total progress.</p>
+                <p>Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
+            </div>
         </div>
         
-        <div class="card info-card">
-            <h2>Why Sidequests Beat Boredom</h2>
-            <p>It's time to stop living the same day over and over and start adding new chapters to your story. Do you remember when life felt like a grand adventure? Somewhere along the way, routines took over. Sidequests are here to bring that magic back. By embracing small, unexpected challenges, you disrupt the monotony and trigger new ways of thinking.</p>
-            <p>Every sidequest is a playful micro-adventure that makes your day more vibrant and your personal story more exciting. Step outside your comfort zone and start living a life full of variety.</p>
+        <div class="card info-card collapsible-section">
+            <div class="collapsible-header">
+                <h2>Why Sidequests Beat Boredom</h2>
+                <span class="collapsible-toggle">▼</span>
+            </div>
+            <div class="collapsible-content">
+                <p>It's time to stop living the same day over and over and start adding new chapters to your story. Do you remember when life felt like a grand adventure? Somewhere along the way, routines took over. Sidequests are here to bring that magic back. By embracing small, unexpected challenges, you disrupt the monotony and trigger new ways of thinking.</p>
+                <p>Every sidequest is a playful micro-adventure that makes your day more vibrant and your personal story more exciting. Step outside your comfort zone and start living a life full of variety.</p>
+            </div>
         </div>
         
         <div class="quest-of-month" id="quest-of-month-container">
@@ -1805,7 +1873,7 @@
         <div class="card">
             <div class="donation-section">
                 <div class="donation-container">
-                     <p style="font-size: 0.85rem; text-align: center; margin: 8px 0 0 0; color: #666; margin-top: 5px;">Find your next real-life adventure and discover things to do with GetYourGuide. (Ad*)</p>
+                     <p>Find your next real-life adventure and discover things to do with GetYourGuide. (Ad*)</p>
                     <a href="https://tinyurl.com/sidequestfun" target="_blank" rel="noopener noreferrer" class="sidequest-link-btn">
                         <i class="fas fa-compass"></i>
                         <span>Get more Sidequests*</span>
@@ -2992,6 +3060,42 @@
             if (questTextElem) questTextElem.innerHTML = qom.text;
         }
          
+        // ==================== COLLAPSIBLE SECTIONS ====================
+        function initCollapsible() {
+            const collapsibleSections = document.querySelectorAll('.collapsible-section');
+            const isMobile = window.innerWidth < 768;
+            
+            collapsibleSections.forEach(section => {
+                const header = section.querySelector('.collapsible-header');
+                const content = section.querySelector('.collapsible-content');
+                const toggle = section.querySelector('.collapsible-toggle');
+                
+                if (!header || !content || !toggle) return;
+                
+                // Set initial state based on screen size
+                if (isMobile) {
+                    // Mobile: collapsed by default
+                    content.classList.add('collapsed');
+                    toggle.classList.add('closed');
+                } else {
+                    // Desktop: expanded by default
+                    content.classList.remove('collapsed');
+                    toggle.classList.remove('closed');
+                }
+                
+                // Click handler for header
+                header.addEventListener('click', () => {
+                    content.classList.toggle('collapsed');
+                    toggle.classList.toggle('closed');
+                });
+            });
+        }
+        
+        // Re-initialize on window resize
+        window.addEventListener('resize', () => {
+            initCollapsible();
+        });
+        
         // ==================== CLICK OUTSIDE MODAL TO CLOSE ====================
         function setupModalClickOutside() {
             const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal];
@@ -3083,6 +3187,9 @@
             updateCompletedCounter();
             initQuestOfMonth();
             handleUrlImport();
+            
+            // Initialize collapsible sections
+            initCollapsible();
         }
         
         window.addEventListener('load', init);
