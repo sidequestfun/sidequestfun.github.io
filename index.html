@@ -497,13 +497,92 @@
         
         .donation-container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             width: 100%;
             gap: 16px;
             flex-wrap: wrap;
+            text-align: center;
         }
+        
+        .final-sidequest-card {
+            background: linear-gradient(135deg, rgba(20, 179, 217, 0.08) 0%, rgba(221, 70, 127, 0.08) 100%);
+            border: 2px solid #14B3D9;
+            margin-bottom: 0;
+        }
+        
+        body.dark-mode .final-sidequest-card {
+            background: linear-gradient(135deg, rgba(20, 179, 217, 0.12) 0%, rgba(221, 70, 127, 0.12) 100%);
+            border-color: #14B3D9;
+        }
+        
+        .final-sidequest-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .final-sidequest-text {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .final-sidequest-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #14B3D9;
+            margin: 0 0 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        body.dark-mode .final-sidequest-title {
+            color: #14B3D9;
+        }
+        
+        .final-sidequest-title i {
+            font-size: 1.3rem;
+        }
+        
+        .final-sidequest-description {
+            font-size: 0.95rem;
+            margin: 0;
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        body.dark-mode .final-sidequest-description {
+            color: #cbd5e1;
+        }
+        
+        .final-sidequest-btn {
+            background-color: #DD467F;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            white-space: nowrap;
+            box-shadow: 0 4px 8px rgba(221, 70, 127, 0.2);
+            flex-shrink: 0;
+        }
+        
+        .final-sidequest-btn:hover, .final-sidequest-btn:active, .final-sidequest-btn:focus {
+            background-color: #d1306d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(221, 70, 127, 0.3);
+            text-decoration: none;
+            outline: none;
+        }
+        
         
         .donation-btn {
             background-color: #DD467F;
@@ -785,6 +864,20 @@
                 font-size: 1rem;
                 width: 100%;
                 max-width: 100%;
+            }
+            
+            .final-sidequest-content {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .final-sidequest-text {
+                min-width: auto;
+            }
+            
+            .final-sidequest-btn {
+                width: 100%;
+                text-align: center;
             }
         }
         
@@ -1802,19 +1895,17 @@
             <div class="qom-quest-text" id="qom-quest-text">Loading quest of the month...</div>
         </div>
         
-        <div class="card">
-            <div class="donation-section">
-                <div class="donation-container">
-                     <p style="font-size: 0.85rem; text-align: center; margin: 8px 0 0 0; margin-top: 5px;">Find your next real-life adventure and discover things to do with GetYourGuide. (Ad*)</p>
-                    <a href="https://tinyurl.com/sidequestfun" target="_blank" rel="noopener noreferrer" class="sidequest-link-btn">
-                        <i class="fas fa-compass"></i>
-                        <span>Get more Sidequests*</span>
-                    </a>
-                    <div class="free-notice">
-                        <i class="fas fa-check-circle"></i>
-                        <span>Free to use. If you love it, share it!</span>
-                    </div>
+        <div class="card final-sidequest-card">
+            <div class="final-sidequest-content">
+                <div class="final-sidequest-text">
+                    <h3 class="final-sidequest-title">
+                        <i class="fas fa-play-circle"></i> Your final Sidequest:
+                    </h3>
+                    <p class="final-sidequest-description">Host a movie night with a genre you never watch. Grab a free trial at Paramount+ and start watching. (Ad*)</p>
                 </div>
+                <a href="https://tinyurl.com/sidequestfunstream" target="_blank" rel="noopener noreferrer" class="final-sidequest-btn">
+                    Start Now
+                </a>
             </div>
         </div>
     </div>
