@@ -1824,43 +1824,6 @@
         }
         
         /* ========== SOUND CONTROL BUTTON ========== */
-        .sound-control {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            transition: all 0.3s ease;
-            border: 2px solid #14B3D9;
-        }
-
-        body.dark-mode .sound-control {
-            background: #1e2139;
-            border-color: #14B3D9;
-        }
-
-        .sound-control:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        }
-
-        .sound-control i {
-            color: #14B3D9;
-            font-size: 1.3rem;
-        }
-
-        .sound-control.muted i {
-            color: #999;
-        }
-
         /* ========== QUEST SEARCH ========== */
         .quest-search-container {
             margin-bottom: 20px;
@@ -1930,15 +1893,6 @@
 
         .search-results-info.hidden {
             display: none;
-        }
-
-        @media (max-width: 640px) {
-            .sound-control {
-                bottom: 15px;
-                right: 15px;
-                width: 45px;
-                height: 45px;
-            }
         }
     </style>
 </head>
@@ -2141,6 +2095,12 @@
                     <span class="theme-text">Light Mode</span>
                 </div>
                 
+                <h3>Sound</h3>
+                <div class="theme-toggle" id="sound-toggle-btn">
+                    <i class="fas fa-volume-up"></i>
+                    <span class="theme-text">Sound Enabled</span>
+                </div>
+                
                 <h3>Quest Difficulty Filter</h3>
                 <div class="difficulty-filter-group">
                     <button class="difficulty-filter-btn" data-diff-filter="all">All</button>
@@ -2197,11 +2157,6 @@
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
         <span id="notification-text">Quest saved to your browser storage!</span>
-    </div>
-    
-    <!-- Sound Control Button -->
-    <div class="sound-control" id="sound-control-btn">
-        <i class="fas fa-volume-up"></i>
     </div>
 
     <script>
@@ -2530,6 +2485,7 @@
         const privacyLink = document.getElementById('privacy-link');
         const settingsLink = document.getElementById('settings-link');
         const clearDataBtn = document.getElementById('clear-data-btn');
+        const soundToggleBtn = document.getElementById('sound-toggle-btn');
         const statsDetails = document.getElementById('stats-details');
         const statSaved = document.getElementById('stat-saved');
         const statCompleted = document.getElementById('stat-completed');
@@ -3198,14 +3154,14 @@
         };
 
         function updateSoundControlButton() {
-            const soundBtn = document.getElementById('sound-control-btn');
-            if (soundBtn) {
+            const soundToggle = document.getElementById('sound-toggle-btn');
+            if (soundToggle) {
                 if (soundSystem.enabled) {
-                    soundBtn.classList.remove('muted');
-                    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    soundToggle.classList.remove('muted');
+                    soundToggle.innerHTML = '<i class="fas fa-volume-up"></i><span class="theme-text">Sound Enabled</span>';
                 } else {
-                    soundBtn.classList.add('muted');
-                    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                    soundToggle.classList.add('muted');
+                    soundToggle.innerHTML = '<i class="fas fa-volume-mute"></i><span class="theme-text">Sound Disabled</span>';
                 }
             }
         }
@@ -3364,12 +3320,6 @@
         
         // ==================== EVENT LISTENERS ====================
         function init() {
-            const soundControlBtn = document.getElementById('sound-control-btn');
-            if (soundControlBtn) {
-                soundControlBtn.addEventListener('click', () => {
-                    soundSystem.toggleSound();
-                });
-            }
             updateSoundControlButton();
 
             initializeQuestSearch();
@@ -3414,6 +3364,10 @@
             if (closeSettingsModal) closeSettingsModal.addEventListener('click', closeSettingsModalFunc);
             if (closePrivacyModal) closePrivacyModal.addEventListener('click', closePrivacyPolicyModal);
             if (modalThemeToggle) modalThemeToggle.addEventListener('click', toggleDarkMode);
+            if (soundToggleBtn) soundToggleBtn.addEventListener('click', () => {
+                soundSystem.toggleSound();
+                updateSoundControlButton();
+            });
             if (privacyLink) privacyLink.addEventListener('click', openPrivacyModal);
             if (settingsLink) settingsLink.addEventListener('click', openSettingsModal);
             if (clearDataBtn) clearDataBtn.addEventListener('click', clearAllData);
