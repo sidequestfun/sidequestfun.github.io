@@ -1224,6 +1224,7 @@
         
         .stats-details.show {
             display: block;
+            margin-bottom: 20px;
         }
         
         .stats-details h3 {
@@ -1821,6 +1822,124 @@
         .delete-custom-btn:hover {
             background: #c82333;
         }
+        
+        /* ========== SOUND CONTROL BUTTON ========== */
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            border: 2px solid #14B3D9;
+        }
+
+        body.dark-mode .sound-control {
+            background: #1e2139;
+            border-color: #14B3D9;
+        }
+
+        .sound-control:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+
+        .sound-control i {
+            color: #14B3D9;
+            font-size: 1.3rem;
+        }
+
+        .sound-control.muted i {
+            color: #999;
+        }
+
+        /* ========== QUEST SEARCH ========== */
+        .quest-search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .quest-search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .quest-search-input:focus {
+            outline: none;
+            border-color: #14B3D9;
+        }
+
+        body.dark-mode .quest-search-input {
+            background-color: #1e2139;
+            border-color: #2a3f5f;
+            color: #e0e0e0;
+        }
+
+        .quest-search-clear {
+            padding: 10px 14px;
+            background: #f0f0f0;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            font-weight: 600;
+        }
+
+        body.dark-mode .quest-search-clear {
+            background: #2a3f5f;
+            border-color: #3a5f8f;
+            color: #e0e0e0;
+        }
+
+        .quest-search-clear:hover {
+            background: #e0e0e0;
+        }
+
+        body.dark-mode .quest-search-clear:hover {
+            background: #3a5f8f;
+        }
+
+        .search-results-info {
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            background: #f0f0f0;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        body.dark-mode .search-results-info {
+            background: #2a3f5f;
+            color: #e0e0e0;
+        }
+
+        .search-results-info.hidden {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .sound-control {
+                bottom: 15px;
+                right: 15px;
+                width: 45px;
+                height: 45px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -1940,7 +2059,17 @@
             </div>
             
             <div class="stats-details" id="stats-details"></div>
-            
+
+            <div style="height: 20px;"></div>
+
+            <!-- Quest Search Container (only visible in Total tab) -->
+            <div id="questSearchContainer" class="quest-search-container" style="display: none;">
+                <input type="text" id="questSearchInput" class="quest-search-input" placeholder="🔍 Search quests...">
+                <button class="quest-search-clear" id="questSearchClear">Clear</button>
+            </div>
+
+            <div class="search-results-info hidden" id="searchResultsInfo"></div>
+
             <div class="saved-quests-list" id="saved-quests-list"></div>
         </div>
     </div>
@@ -2070,6 +2199,11 @@
         <span id="notification-text">Quest saved to your browser storage!</span>
     </div>
     
+    <!-- Sound Control Button -->
+    <div class="sound-control" id="sound-control-btn">
+        <i class="fas fa-volume-up"></i>
+    </div>
+
     <script>
         // ==================== SIDEQUESTS DATABASE ====================
         let sidequests = [
@@ -2355,9 +2489,7 @@
         ];
         
         // ==================== GLOBAL VARIABLES ====================
-        // Custom Quests Storage
         let customQuests = JSON.parse(localStorage.getItem('sidequestfun_customQuests')) || [];
-        
         let savedQuests = JSON.parse(localStorage.getItem('sidequestfun_savedQuests')) || [];
         let completedQuests = JSON.parse(localStorage.getItem('sidequestfun_completedQuests')) || [];
         let currentQuest = null;
@@ -2544,6 +2676,7 @@
         }
         
         function generateSidequest() {
+            soundSystem.playGenerate();
             let filteredQuests = getAllQuests();
             
             if (currentCategory !== 'all') {
@@ -2622,12 +2755,10 @@
             const questIndex = savedQuests.findIndex(q => q.text === currentQuest.text);
             
             if (questIndex !== -1) {
-                // Quest is already saved, remove it
                 savedQuests.splice(questIndex, 1);
                 localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
                 showNotification("Quest removed from your saved quests!");
             } else {
-                // Quest is not saved, add it
                 savedQuests.push(currentQuest);
                 localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
                 showNotification("Quest saved to your browser storage!");
@@ -2645,6 +2776,7 @@
             completedQuests.push(currentQuest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
             updateStreakAfterComplete();
+            soundSystem.playComplete();
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             showNotification("Congratulations! Quest completed!");
             updateCompletedCounter();
@@ -2727,7 +2859,6 @@
             showNotification("Custom quest added!");
         }
         
-        // Share Link Function with LZ-String compression
         function generateShareLink() {
             const deckData = { customQuests: customQuests };
             
@@ -3015,6 +3146,140 @@
             }
         }
         
+        // ==================== SOUND EFFECTS SYSTEM ====================
+        const soundSystem = {
+            enabled: localStorage.getItem('sidequestfun_soundEnabled') !== 'false',
+            audioContext: null,
+
+            playBeep(frequency = 800, duration = 100, type = 'sine') {
+                if (!this.enabled) return;
+                
+                try {
+                    if (!this.audioContext) {
+                        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                    }
+                    
+                    const ctx = this.audioContext;
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.frequency.value = frequency;
+                    osc.type = type;
+                    
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration / 1000);
+                    
+                    osc.start(ctx.currentTime);
+                    osc.stop(ctx.currentTime + duration / 1000);
+                } catch (e) {
+                    console.log('Audio context not available');
+                }
+            },
+
+            playGenerate() {
+                this.playBeep(600, 80);
+                setTimeout(() => this.playBeep(800, 80), 50);
+            },
+
+            playComplete() {
+                this.playBeep(523.25, 100);
+                setTimeout(() => this.playBeep(659.25, 100), 80);
+                setTimeout(() => this.playBeep(783.99, 150), 160);
+            },
+
+            toggleSound() {
+                this.enabled = !this.enabled;
+                localStorage.setItem('sidequestfun_soundEnabled', this.enabled ? 'true' : 'false');
+                updateSoundControlButton();
+            }
+        };
+
+        function updateSoundControlButton() {
+            const soundBtn = document.getElementById('sound-control-btn');
+            if (soundBtn) {
+                if (soundSystem.enabled) {
+                    soundBtn.classList.remove('muted');
+                    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                } else {
+                    soundBtn.classList.add('muted');
+                    soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                }
+            }
+        }
+
+        // ==================== QUEST SEARCH ====================
+        function initializeQuestSearch() {
+            const searchInput = document.getElementById('questSearchInput');
+            const searchClear = document.getElementById('questSearchClear');
+
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    performQuestSearch(this.value);
+                });
+            }
+
+            if (searchClear) {
+                searchClear.addEventListener('click', function() {
+                    searchInput.value = '';
+                    searchInput.dispatchEvent(new Event('input'));
+                });
+            }
+        }
+
+        function performQuestSearch(searchTerm) {
+            const searchResultsInfo = document.getElementById('searchResultsInfo');
+            const questContainer = document.getElementById('saved-quests-list');
+            if (!questContainer) return;
+
+            const questItems = questContainer.querySelectorAll('.saved-quest-item');
+            let visibleCount = 0;
+            const lowerSearchTerm = searchTerm.toLowerCase();
+
+            questItems.forEach(item => {
+                const questText = item.textContent.toLowerCase();
+                
+                if (lowerSearchTerm === '' || questText.includes(lowerSearchTerm)) {
+                    item.style.display = '';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            if (searchResultsInfo) {
+                if (lowerSearchTerm.length > 0) {
+                    searchResultsInfo.classList.remove('hidden');
+                    searchResultsInfo.textContent = `Found ${visibleCount} quest${visibleCount !== 1 ? 's' : ''}`;
+                } else {
+                    searchResultsInfo.classList.add('hidden');
+                }
+            }
+        }
+
+        function updateTabVisibility(tabName) {
+            const searchContainer = document.getElementById('questSearchContainer');
+            
+            if (searchContainer) {
+                if (tabName === 'total') {
+                    searchContainer.style.display = 'flex';
+                } else {
+                    searchContainer.style.display = 'none';
+                }
+            }
+            
+            const searchInput = document.getElementById('questSearchInput');
+            const searchResultsInfo = document.getElementById('searchResultsInfo');
+            if (searchInput && (tabName !== 'total')) {
+                searchInput.value = '';
+                if (searchResultsInfo) {
+                    searchResultsInfo.classList.add('hidden');
+                }
+            }
+        }
+        
         // ==================== DARK MODE ====================
         function enableDarkMode() {
             document.body.classList.add('dark-mode');
@@ -3082,7 +3347,7 @@
             if (monthNameElem) monthNameElem.innerHTML = qom.name;
             if (questTextElem) questTextElem.innerHTML = qom.text;
         }
-         
+        
         // ==================== CLICK OUTSIDE MODAL TO CLOSE ====================
         function setupModalClickOutside() {
             const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal];
@@ -3099,6 +3364,16 @@
         
         // ==================== EVENT LISTENERS ====================
         function init() {
+            const soundControlBtn = document.getElementById('sound-control-btn');
+            if (soundControlBtn) {
+                soundControlBtn.addEventListener('click', () => {
+                    soundSystem.toggleSound();
+                });
+            }
+            updateSoundControlButton();
+
+            initializeQuestSearch();
+
             const allQuestsCount = getAllQuests().length;
             if (totalCount) totalCount.textContent = allQuestsCount;
             updateStreakOnLoad();
@@ -3113,9 +3388,9 @@
                 });
             });
             
-            if (statSaved) statSaved.addEventListener('click', () => showQuestsByType('saved'));
-            if (statCompleted) statCompleted.addEventListener('click', () => showQuestsByType('completed'));
-            if (statTotal) statTotal.addEventListener('click', () => showQuestsByType('total'));
+            if (statSaved) statSaved.addEventListener('click', () => { showQuestsByType('saved'); updateTabVisibility('saved'); });
+            if (statCompleted) statCompleted.addEventListener('click', () => { showQuestsByType('completed'); updateTabVisibility('completed'); });
+            if (statTotal) statTotal.addEventListener('click', () => { showQuestsByType('total'); updateTabVisibility('total'); });
             
             document.querySelectorAll('.difficulty-filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -3166,8 +3441,7 @@
                 if (event.target === settingsModal) closeSettingsModalFunc();
                 if (event.target === privacyModal) closePrivacyPolicyModal();
             });
-                       
-            // Setup click outside to close modals
+            
             setupModalClickOutside();
             
             generateSidequest();
@@ -3179,7 +3453,7 @@
         window.addEventListener('load', init);
     </script>
 
-<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0aed4efa70ba4514a5634996eb71a8cc"}'></script><!-- End Cloudflare Web Analytics -->
-    
+    <!-- Cloudflare Web Analytics -->
+    <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0aed4efa70ba4514a5634996eb71a8cc"}'></script>
 </body>
 </html>
