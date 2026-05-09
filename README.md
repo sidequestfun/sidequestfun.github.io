@@ -1,7 +1,7 @@
 # SidequestFun.com – Random Sidequest Generator
-SidequestFun.com – Random Sidequest Generator
 
 A simple, non-commercial hobby project. Click, get a challenge, beat boredom.
+
 **Try it here: [sidequestfun.com](https://sidequestfun.com)**
 
 Just HTML, CSS, and JavaScript. No database. No tracking, no accounts.
