@@ -1,9 +1,9 @@
 # SidequestFun.com – Random Sidequest Generator
+SidequestFun.com – Random Sidequest Generator
 
-A simple, non-commercial hobby project – random sidequests to beat boredom.  
+A simple, non-commercial hobby project. Click, get a challenge, beat boredom.
 **Try it here: [sidequestfun.com](https://sidequestfun.com)**
 
-Click a button, get a random challenge. Save the ones you like. Track what you've finished.  
 Just HTML, CSS, and JavaScript. No database. No tracking, no accounts.
 
 Have fun! 🎲
@@ -25,7 +25,7 @@ The project is **100% client‑side**: all your progress (saved quests, complete
 - 🏷️ **Filters** – choose between *All*, *Indoor*, *Outdoor*, or *Social* quests  
 - 🔥 **Difficulty levels** – Easy, Medium, Epic – filter by difficulty in the settings  
 - 💾 **Save & complete** – bookmark quests you like, mark them as done, and watch your streak grow  
-- 📊 **Progress tracking** – see how many quests you’ve completed per category, your current streak, and overall completion percentage  
+- 📊 **Progress tracking** – see how many quests you’ve completed per category & your current streak
 - ➕ **Custom quests** – add your own challenges, share them as a link, or export/import them as JSON files  
 - 🌙 **Dark mode** – toggle between light and dark themes  
 - 🔊 **Sound effects** – optional audio feedback when generating or completing a quest  
