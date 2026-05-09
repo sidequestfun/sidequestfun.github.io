@@ -4,8 +4,6 @@ A simple, non-commercial hobby project. Click, get a challenge, beat boredom.
 
 **Try it here: [sidequestfun.com](https://sidequestfun.com)**
 
-Just HTML, CSS, and JavaScript. No database. No tracking, no accounts.
-
 Have fun! 🎲
 
 ---
@@ -49,4 +47,3 @@ The project is **100% client‑side**: all your progress (saved quests, complete
 # 📄 License
 
 All rights reserved. Use of the website is free, but the source code is not shared for redistribution.
-
