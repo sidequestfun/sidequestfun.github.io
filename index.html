@@ -2426,7 +2426,19 @@
             #custom-quests-modal .custom-quests-list-wrapper {
                 max-height: 250px;
             }
-        }
+            }
+            /* Animation Questcard */
+            @keyframes shake {
+            0%   { transform: translateX(0); }
+            20%  { transform: translateX(-8px); }
+            40%  { transform: translateX(8px); }
+            60%  { transform: translateX(-5px); }
+            80%  { transform: translateX(5px); }
+            100% { transform: translateX(0); }
+            }
+            .quest-display.shuffling {
+            animation: shake 0.3s ease-in-out;
+            }
     </style>
 </head>
 <body>
@@ -3384,23 +3396,33 @@
                 return;
             }
 
-            const randomIndex = Math.floor(Math.random() * questsToUse.length);
-            currentQuest = questsToUse[randomIndex];
-            questText.textContent = currentQuest.text;
+            // Animation start
+            const questDisplay = document.querySelector('.quest-display');
+            questDisplay.classList.add('shuffling');
 
-            addToHistory(currentQuest.text);
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * questsToUse.length);
+                currentQuest = questsToUse[randomIndex];
+                questText.textContent = currentQuest.text;
 
-            difficultyTags.innerHTML = '';
-            const difficultyTag = document.createElement('div');
-            difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
-            difficultyTag.textContent = currentQuest.difficulty;
-            difficultyTags.appendChild(difficultyTag);
+                addToHistory(currentQuest.text);
 
-            questText.classList.remove('new-quest');
-            void questText.offsetWidth;
-            questText.classList.add('new-quest');
+                difficultyTags.innerHTML = '';
+                const difficultyTag = document.createElement('div');
+                difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
+                difficultyTag.textContent = currentQuest.difficulty;
+                difficultyTags.appendChild(difficultyTag);
 
-            updateSaveButton();
+                // Animation end
+                questDisplay.classList.remove('shuffling');
+
+                // new Element
+                questText.classList.remove('new-quest');
+                void questText.offsetWidth;
+                questText.classList.add('new-quest');
+
+                updateSaveButton();
+                }, 380);
         }
 
         function setActiveFilter(category) {
