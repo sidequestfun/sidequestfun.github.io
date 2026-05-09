@@ -1,7 +1,7 @@
 # SidequestFun.com – Random Sidequest Generator
 
-> A simple, non-commercial hobby project – random sidequests to beat boredom.  
-> **Try it here: [sidequestfun.com](https://sidequestfun.com)**
+A simple, non-commercial hobby project – random sidequests to beat boredom.  
+**Try it here: [sidequestfun.com](https://sidequestfun.com)**
 
 Click a button, get a random challenge. Save the ones you like. Track what you've finished.  
 Just HTML, CSS, and JavaScript. No database. No tracking, no accounts.
@@ -10,7 +10,7 @@ Have fun! 🎲
 
 ---
 
-## 📖 About
+# 📖 About
 
 SidequestFun is a lightweight web app that generates spontaneous micro‑adventures – indoor, outdoor, or social.  
 It helps you break out of everyday routines, try new things, and turn ordinary days into memorable stories.
@@ -19,7 +19,7 @@ The project is **100% client‑side**: all your progress (saved quests, complete
 
 ---
 
-## ✨ Features
+# ✨ Features
 
 - 🎲 **Random quest generator** – 250+ built‑in sidequests, plus your own custom ones  
 - 🏷️ **Filters** – choose between *All*, *Indoor*, *Outdoor*, or *Social* quests  
@@ -34,7 +34,7 @@ The project is **100% client‑side**: all your progress (saved quests, complete
 
 ---
 
-## 🧩 Technology Stack
+# 🧩 Technology Stack
 
 - **HTML5** – semantic structure  
 - **CSS3** – responsive design, animations, dark mode  
@@ -42,14 +42,11 @@ The project is **100% client‑side**: all your progress (saved quests, complete
 - **LocalStorage** – persistent progress and custom quests  
 - **Canvas Confetti** – celebratory explosions on quest completion  
 - **LZ‑String** – compact URL encoding for sharing quest decks  
-- **Font Awesome 6** – icons  
 - **Cloudflare Web Analytics** – anonymous, cookie‑free visitor counting  
 
 ---
 
-## 📄 License
+# 📄 License
 
-This project is **free and non‑commercial**.  
 All rights reserved. Use of the website is free, but the source code is not shared for redistribution.
 
----
