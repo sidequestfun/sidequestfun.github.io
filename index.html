@@ -706,7 +706,7 @@
             margin-bottom: 30px;
             justify-content: center;
             gap: 5px;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
             transition: all 0.3s ease;
         }
 
@@ -831,14 +831,15 @@
             }
 
             .category-filters {
-                gap: 5px;
-                padding: 6px;
+                gap: 3px;
+                padding: 4px;
+                flex-wrap: nowrap;        
             }
 
             .filter-btn {
-                padding: 8px 8px;
-                font-size: 0.80rem;
-                min-width: 60px;
+                padding: 8px 6px;       
+                font-size: 0.8rem;        
+                min-width: 0;             
                 min-height: 40px;
             }
 
@@ -1103,16 +1104,16 @@
 
         .saved-quest-actions {
             display: flex;
-            gap: 4px;
-            flex-wrap: nowrap;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .action-btn {
-            padding: 4px 8px;
+            padding: 8px 15px;
             border-radius: 25px;
             border: none;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s ease;
             min-height: 40px;
@@ -1595,13 +1596,15 @@
                 margin-top: 10px;
                 width: 100%;
                 justify-content: flex-end;
-                flex-wrap: wrap;
+                flex-wrap: nowrap;        
+                gap: 4px;               
             }
 
             .action-btn {
                 min-height: 36px;
-                padding: 6px 12px;
-                font-size: 0.85rem;
+                padding: 4px 8px;    
+                font-size: 0.75rem;  
+                white-space: nowrap; 
             }
 
             .modal-title {
