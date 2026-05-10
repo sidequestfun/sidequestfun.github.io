@@ -1012,7 +1012,7 @@
             max-width: 700px;
             width: 90%;
             max-height: 80vh;
-            overflow-y: hidden;
+            overflow-y: auto;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
         }
@@ -2441,6 +2441,21 @@
             }        
             body.modal-open {
             overflow: hidden;
+            }
+            /* Scroll in Saved Quest */
+            .privacy-modal .modal-content,
+            .settings-modal .modal-content {
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            }
+
+            .privacy-modal .privacy-content,
+            .settings-modal .settings-content {
+            flex: 1;
+            overflow-y: auto;
+            max-height: none;
+            margin-top: 20px;
             }
     </style>
 </head>
