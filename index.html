@@ -1012,7 +1012,7 @@
             max-width: 700px;
             width: 90%;
             max-height: 80vh;
-            overflow-y: auto;
+            overflow-y: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             position: relative;
         }
@@ -1398,7 +1398,7 @@
 
         .settings-content,
         .privacy-content {
-            max-height: 70vh;
+            max-height: calc(80vh - 120px);
             overflow-y: auto;
         }
 
@@ -2438,6 +2438,9 @@
             }
             .quest-display.shuffling {
             animation: shake 0.3s ease-in-out;
+            }        
+            body.modal-open {
+            overflow: hidden;
             }
     </style>
 </head>
@@ -3720,12 +3723,14 @@
             totalCount.textContent = getAllQuests().length;
             showQuestsByType('saved');
             updateStatistics();
+            document.body.classList.add('modal-open');   // ← NEU
             myQuestsModal.style.display = 'flex';
         }
 
         function openCustomQuestsModal() {
             renderCustomQuestsList();
             updateCustomQuestCountBadge();
+            document.body.classList.add('modal-open'); // ← NEU
             customQuestsModal.style.display = 'flex';
         }
 
@@ -4094,17 +4099,17 @@
         }
 
         // ==================== MODAL CONTROLS ====================
-        function closeSavedQuestsModal() { if (myQuestsModal) myQuestsModal.style.display = 'none'; }
+        function closeSavedQuestsModal() { document.body.classList.remove('modal-open'); if (myQuestsModal) myQuestsModal.style.display = 'none'; }
 
-        function closeCustomQuestsModal() { if (customQuestsModal) customQuestsModal.style.display = 'none'; }
+        function closeCustomQuestsModal() { document.body.classList.remove('modal-open'); if (customQuestsModal) customQuestsModal.style.display = 'none'; }
 
-        function closeSettingsModalFunc() { if (settingsModal) settingsModal.style.display = 'none'; }
+        function closeSettingsModalFunc() { document.body.classList.remove('modal-open'); if (settingsModal) settingsModal.style.display = 'none'; }
 
-        function closePrivacyPolicyModal() { if (privacyModal) privacyModal.style.display = 'none'; }
+        function closePrivacyPolicyModal() { document.body.classList.remove('modal-open'); if (privacyModal) privacyModal.style.display = 'none'; }
 
-        function openSettingsModal() { if (settingsModal) settingsModal.style.display = 'flex'; }
+        function openSettingsModal() { document.body.classList.add('modal-open'); if (settingsModal) settingsModal.style.display = 'flex'; }
 
-        function openPrivacyModal() { if (privacyModal) privacyModal.style.display = 'flex'; }
+        function openPrivacyModal() { document.body.classList.add('modal-open'); if (privacyModal) privacyModal.style.display = 'flex'; }
 
         function initQuestOfMonth() {
             const now = new Date();
