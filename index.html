@@ -3754,14 +3754,15 @@
             totalCount.textContent = getAllQuests().length;
             showQuestsByType('saved');
             updateStatistics();
-            document.body.classList.add('modal-open');   // ← NEU
+            updateTabVisibility('saved');   // ← NEW
+            document.body.classList.add('modal-open');
             myQuestsModal.style.display = 'flex';
         }
 
         function openCustomQuestsModal() {
             renderCustomQuestsList();
             updateCustomQuestCountBadge();
-            document.body.classList.add('modal-open'); // ← NEU
+            document.body.classList.add('modal-open'); // ← NEW
             customQuestsModal.style.display = 'flex';
         }
 
@@ -3880,7 +3881,7 @@
             if (type === 'saved') quest = savedQuests[index];
             else if (type === 'completed') quest = completedQuests[index];
             else quest = getAllQuests()[index];
-            const text = `Check out this sidequest: "${quest.text}" - Find more at SidequestFun.com!`;
+            const text = `Check out this sidequest: "${quest.text}"`;
             if (navigator.share) {
                 navigator.share({ title: 'SidequestFun', text: text, url: 'https://sidequestfun.com' }).catch(
                 () => {});
@@ -4051,26 +4052,22 @@
                     searchResultsInfo.classList.add('hidden');
                 }
             }
-        }
-
-        function updateTabVisibility(tabName) {
+        }        
+            function updateTabVisibility(tabName) {
             const searchContainer = document.getElementById('questSearchContainer');
-
             if (searchContainer) {
-                if (tabName === 'total') {
-                    searchContainer.style.display = 'flex';
-                } else {
-                    searchContainer.style.display = 'none';
-                }
+                // Search List
+                searchContainer.style.display = 'flex';
             }
 
+            // Clear Search at tab switch
             const searchInput = document.getElementById('questSearchInput');
             const searchResultsInfo = document.getElementById('searchResultsInfo');
-            if (searchInput && (tabName !== 'total')) {
+            if (searchInput) {
                 searchInput.value = '';
-                if (searchResultsInfo) {
-                    searchResultsInfo.classList.add('hidden');
-                }
+            }
+            if (searchResultsInfo) {
+                searchResultsInfo.classList.add('hidden');
             }
         }
 
