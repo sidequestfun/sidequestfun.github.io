@@ -30,11 +30,9 @@
     <meta name="twitter:image" content="logo.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js">
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <!-- LZ-String for compact URL links -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js">
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js"></script>
 
     <style>
         * {
@@ -1251,113 +1249,6 @@
             color: #94a3b8;
         }
 
-        .stats-details {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            display: none;
-        }
-
-        body.dark-mode .stats-details {
-            background-color: #0f172a;
-        }
-
-        .stats-details.show {
-            display: block;
-            margin-bottom: 20px;
-        }
-
-        .stats-details h3 {
-            color: #14B3D9;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            text-align: center;
-            font-weight: 700;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .stat-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-            border: 1px solid #e9ecef;
-        }
-
-        body.dark-mode .stat-card {
-            background-color: #1e293b;
-            border-color: #334155;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-card-icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
-        }
-
-        .stat-card-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #14B3D9;
-            margin-bottom: 5px;
-        }
-
-        .stat-card-label {
-            font-size: 0.85rem;
-            color: #666;
-            font-weight: 500;
-        }
-
-        body.dark-mode .stat-card-label {
-            color: #94a3b8;
-        }
-
-        .favorite-category {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            background-color: white;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border: 1px solid #e9ecef;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        body.dark-mode .favorite-category {
-            background-color: #1e293b;
-            border-color: #334155;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .category-icon {
-            font-size: 1.8rem;
-        }
-
-        .favorite-category-text {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #333;
-        }
-
-        body.dark-mode .favorite-category-text {
-            color: #e0e0e0;
-        }
-
-        .favorite-category-name {
-            color: #14B3D9;
-            font-weight: 700;
-        }
-
         .progress-container {
             margin-top: 20px;
         }
@@ -1639,24 +1530,6 @@
                 font-size: 0.75rem;
             }
 
-            .stats-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 8px;
-            }
-            .stat-card {
-                padding: 10px 5px;
-            }
-            .stat-card-icon {
-                font-size: 1.2rem;
-                margin-bottom: 5px;
-            }
-            .stat-card-value {
-                font-size: 1rem;
-            }
-            .stat-card-label {
-                font-size: 0.7rem;
-            }
-
             .difficulty-filter-group {
                 gap: 8px;
             }
@@ -1779,7 +1652,289 @@
             margin-bottom: 15px;
         }
 
-        /* Custom Quest Modal Styles */
+        /* ==================== PROFILE DASHBOARD STYLES ==================== */
+        .profile-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.9) 100%);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .profile-card {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .profile-header {
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-avatar-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #14B3D9 0%, #DD467F 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 4px 12px rgba(20, 179, 217, 0.4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(20, 179, 217, 0.6);
+        }
+
+        .profile-rank-info {
+            flex: 1;
+        }
+
+        .profile-rank-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            background: linear-gradient(135deg, #14B3D9 0%, #DD467F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        body.dark-mode .profile-rank-title {
+            -webkit-text-fill-color: unset;
+            background: unset;
+            color: #e0e0e0;
+        }
+
+        .profile-xp-bar-container {
+            position: relative;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.08);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        body.dark-mode .profile-xp-bar-container {
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .profile-xp-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #14B3D9 0%, #DD467F 100%);
+            border-radius: 12px;
+            width: 0%;
+            transition: width 0.4s ease;
+            position: relative;
+        }
+
+        .profile-xp-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .profile-xp-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            white-space: nowrap;
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .profile-stat-box {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        body.dark-mode .profile-stat-box {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-stat-box:hover {
+            background: rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        body.dark-mode .profile-stat-box:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #14B3D9 0%, #DD467F 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        body.dark-mode .profile-stat-number {
+            -webkit-text-fill-color: unset;
+            background: unset;
+            color: #e0e0e0;
+        }
+
+        .profile-stat-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        body.dark-mode .profile-stat-label {
+            color: #a0aec0;
+        }
+
+        .profile-achievements {
+            padding-top: 16px;
+            border-top: 2px solid rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .profile-achievements {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .achievements-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin: 0 0 16px 0;
+            color: #333;
+        }
+
+        body.dark-mode .achievements-title {
+            color: #e0e0e0;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 12px;
+        }
+
+        .achievement-badge {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+
+        .achievement-badge.locked {
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0.5;
+            font-size: 1.4rem;
+        }
+
+        body.dark-mode .achievement-badge.locked {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .achievement-badge.unlocked {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .achievement-badge:hover {
+            transform: scale(1.1);
+        }
+
+        .achievement-badge.unlocked:hover {
+            box-shadow: 0 6px 16px rgba(245, 158, 11, 0.6);
+        }
+
+        .achievement-tooltip {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            margin-bottom: 8px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .achievement-badge:hover .achievement-tooltip {
+            opacity: 1;
+        }
+
+        .achievement-badge .achievement-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 4px solid transparent;
+            border-top-color: rgba(0, 0, 0, 0.9);
+        }
+
+        /* Custom Deck Section */
+        
         .storage-hint {
             background-color: #f8f9fa;
             padding: 12px 16px;
@@ -2529,8 +2684,8 @@
             <h2>How It Works</h2>
             <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
             <p>
-            <i class="fas fa-bookmark"></i> <strong>Bookmark</strong> — Save a quest you like to your personal collection.<br>
-            <i class="fas fa-tasks"></i> <strong>List</strong> — View all your saved and completed quests & your statistics.<br>
+            <i class="fas fa-bookmark"></i> <strong>Bookmark</strong> — Save a quest you like to your list.<br>
+            <i class="fas fa-tasks"></i> <strong>List</strong> — View all your saved and completed quests.<br>
             <i class="fas fa-plus-circle"></i> <strong>Plus</strong> — Add your own custom sidequests and build a deck of personal challenges.<br>
             <strong>Share them with friends</strong> via a link so everyone can join the adventure!
             </p>
@@ -2550,6 +2705,44 @@
             <div class="qom-month-name" id="qom-month-name">✨ MONTH</div>
             <div class="qom-quest-text" id="qom-quest-text">Loading quest of the month...</div>
         </div>
+
+        <!-- PROFILE DASHBOARD SECTION -->
+        <section id="profile-dashboard" class="card profile-card">
+            <div class="profile-header">
+                <div class="profile-avatar-container">
+                    <div class="profile-avatar" id="profile-avatar">👤</div>
+                </div>
+                <div class="profile-rank-info">
+                    <h3 class="profile-rank-title" id="profile-rank-title">Level 1: Novice Adventurer</h3>
+                    <div class="profile-xp-bar-container">
+                        <div class="profile-xp-bar" id="profile-xp-bar"></div>
+                        <span class="profile-xp-text" id="profile-xp-text">0 / 200 XP</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-stats">
+                <div class="profile-stat-box">
+                    <div class="profile-stat-number" id="profile-adventures">0</div>
+                    <div class="profile-stat-label">Total Adventures</div>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="profile-stat-number">
+                        <span id="profile-streak-count">0</span><span style="font-size: 0.8em;">🔥</span>
+                    </div>
+                    <div class="profile-stat-label">Current Streak</div>
+                </div>
+                <div class="profile-stat-box">
+                    <div class="profile-stat-number" id="profile-mastery">0%</div>
+                    <div class="profile-stat-label">QUESTS COMPLETED</div>
+                </div>
+            </div>
+
+            <div class="profile-achievements">
+                <h4 class="achievements-title">🏆 Achievements</h4>
+                <div class="achievements-grid" id="achievements-grid"></div>
+            </div>
+        </section>
 
         <div class="card final-sidequest-card">
             <div class="final-sidequest-content">
@@ -2594,10 +2787,6 @@
                     <div class="stat-label">Available</div>
                 </div>
             </div>
-
-            <div class="stats-details" id="stats-details"></div>
-
-            <div style="height: 20px;"></div>
 
             <!-- Quest Search Container (only visible in Total tab) -->
             <div id="questSearchContainer" class="quest-search-container" style="display: none;">
@@ -3114,11 +3303,8 @@
             { text: "Write a thank-you letter to someone who positively influenced your life, even if it was long ago.",
                 category: "social", difficulty: "easy" },
             { text: "Host an 'International Dinner' where everyone brings a dish from a different country.",
-                category: "social", difficulty: "medium" }
-        ];
-
-        const newQuests = [
-            { text: "Find out where the nearest waterfall is and visit it.", category: "outdoor",
+                category: "social", difficulty: "medium" },
+                        { text: "Find out where the nearest waterfall is and visit it.", category: "outdoor",
             difficulty: "medium" },
             { text: "Go to a candy shop and only buy one color of candy.", category: "social", difficulty: "easy" },
             { text: "Visit a grocery store and build a meal where every item starts with the same letter.",
@@ -3164,7 +3350,6 @@
             { text: "Visit an amusement park or water park near you.", category: "outdoor", difficulty: "medium" },
             { text: "Buy a cheap inflatable boat and go to the nearest lake.", category: "outdoor", difficulty: "medium" }
         ];
-        sidequests.push(...newQuests);
 
         const monthlyQuests = [
             { month: 0, name: "❄️ JANUARY",
@@ -3207,7 +3392,31 @@
         let lastCompletedDate = localStorage.getItem('sidequestfun_lastCompletedDate') || '';
         let currentStreak = parseInt(localStorage.getItem('sidequestfun_streak')) || 0;
 
-        // DOM Elements
+        // ==================== PROFILE USER DATA ====================
+        let userData = JSON.parse(localStorage.getItem('sidequestfun_userData')) || {
+            xp: 0,
+            level: 1,
+            avatar: '👤',
+            unlockedAchievements: [],
+            stats: {
+                completed: 0,
+                epicCompleted: 0,
+                streak: 0
+            }
+        };
+
+        // ========== NEW ACHIEVEMENTS (8) ==========
+        const achievements = [
+            { id: 'first-quest', icon: '👟', locked: 'Complete your very first quest.', name: 'First Step' },
+            { id: 'indoor5', icon: '🏠', locked: 'Complete 5 Indoor quests.', name: 'Indoor Explorer' },
+            { id: 'social5', icon: '💬', locked: 'Complete 5 Social quests.', name: 'Social Gatherer' },
+            { id: 'outdoor5', icon: '🗺️', locked: 'Complete 5 Outdoor quests.', name: 'Outdoor Adventurer' },
+            { id: 'epic10', icon: '💎', locked: 'Complete 10 epic quests', name: 'Epic Hero' },
+            { id: 'level5', icon: '⭐', locked: 'Reach level 5', name: 'Level Up' },
+            { id: 'streak7', icon: '🔥', locked: 'Reach a 7 day streak', name: 'Streak Master' },
+            { id: 'total100', icon: '👑', locked: 'Complete 100 total quests.', name: 'Completionist' }
+        ];
+
         const questText = document.getElementById('quest-text');
         const generateBtn = document.getElementById('generate-btn');
         const saveBtn = document.getElementById('save-btn');
@@ -3236,12 +3445,21 @@
         const settingsLink = document.getElementById('settings-link');
         const clearDataBtn = document.getElementById('clear-data-btn');
         const soundToggleBtn = document.getElementById('sound-toggle-btn');
-        const statsDetails = document.getElementById('stats-details');
         const statSaved = document.getElementById('stat-saved');
         const statCompleted = document.getElementById('stat-completed');
         const statTotal = document.getElementById('stat-total');
 
-        // Logo handling
+        // ==================== PROFILE DASHBOARD DOM ELEMENTS ====================
+        const profileCard = document.getElementById('profile-dashboard');
+        const profileAvatar = document.getElementById('profile-avatar');
+        const profileRankTitle = document.getElementById('profile-rank-title');
+        const profileXpBar = document.getElementById('profile-xp-bar');
+        const profileXpText = document.getElementById('profile-xp-text');
+        const profileAdventures = document.getElementById('profile-adventures');
+        const profileStreakCount = document.getElementById('profile-streak-count');
+        const profileMastery = document.getElementById('profile-mastery');
+        const achievementsGrid = document.getElementById('achievements-grid');
+
         const logoImg = document.getElementById('dynamicLogo');
         const logoContainerElem = document.getElementById('logoContainer');
 
@@ -3396,6 +3614,158 @@
             }
         }
 
+        // ==================== PROFILE DASHBOARD FUNCTIONS ====================
+        function saveUserData() {
+            localStorage.setItem('sidequestfun_userData', JSON.stringify(userData));
+        }
+
+        function gainXP(difficulty) {
+            let points = 0;
+            if (difficulty === 'epic') {
+                points = 100;
+            } else if (difficulty === 'medium') {
+                points = 25;
+            } else {
+                points = 10;
+            }
+
+            userData.xp += points;
+            const xpPerLevel = 200;
+
+            while (userData.xp >= xpPerLevel && userData.level < 10) {
+                userData.xp -= xpPerLevel;
+                userData.level++;
+                showNotification(`🎉 You reached Level ${userData.level}!`);
+                confetti({
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+            }
+
+            saveUserData();
+            updateProfileDashboard();
+            checkAchievementUnlocks();
+        }
+
+        function unlockAchievement(achievementId) {
+            if (!userData.unlockedAchievements.includes(achievementId)) {
+                userData.unlockedAchievements.push(achievementId);
+                const achievement = achievements.find(a => a.id === achievementId);
+                if (achievement) {
+                    showNotification(`🏆 Achievement Unlocked: ${achievement.name}!`);
+                }
+                saveUserData();
+                renderAchievements();
+                checkAchievementUnlocks();
+            }
+        }
+
+        // New unlocked conditions based on new achievements
+        function checkAchievementUnlocks() {
+            const totalCompleted = completedQuests.length;
+            const indoorCompleted = completedQuests.filter(q => q.category === 'indoor').length;
+            const socialCompleted = completedQuests.filter(q => q.category === 'social').length;
+            const outdoorCompleted = completedQuests.filter(q => q.category === 'outdoor').length;
+            const epicCompleted = completedQuests.filter(q => q.difficulty === 'epic').length;
+
+            if (totalCompleted >= 1) unlockAchievement('first-quest');
+            if (indoorCompleted >= 5) unlockAchievement('indoor5');
+            if (socialCompleted >= 5) unlockAchievement('social5');
+            if (outdoorCompleted >= 5) unlockAchievement('outdoor5');
+            if (epicCompleted >= 10) unlockAchievement('epic10');
+            if (userData.level >= 5) unlockAchievement('level5');
+            if (currentStreak >= 7) unlockAchievement('streak7');
+            if (totalCompleted >= 100) unlockAchievement('total100');
+        }
+
+        function renderAchievements() {
+            if (!achievementsGrid) return;
+            achievementsGrid.innerHTML = '';
+
+            achievements.forEach(achievement => {
+                const isUnlocked = userData.unlockedAchievements.includes(achievement.id);
+                const badge = document.createElement('div');
+                badge.className = `achievement-badge ${isUnlocked ? 'unlocked' : 'locked'}`;
+                badge.innerHTML = `
+                    ${achievement.icon}
+                    <div class="achievement-tooltip">${isUnlocked ? achievement.name : achievement.locked}</div>
+                `;
+
+                if (isUnlocked) {
+                    badge.style.cursor = 'pointer';
+                    badge.addEventListener('click', () => {
+                        userData.avatar = achievement.icon;
+                        saveUserData();
+                        updateProfileDashboard();
+                        showNotification(`Avatar changed to ${achievement.icon}`);
+                    });
+                }
+
+                achievementsGrid.appendChild(badge);
+            });
+        }
+
+        function updateProfileDashboard() {
+            if (!profileCard) return;
+
+            // Update Avatar
+            if (profileAvatar) {
+                profileAvatar.textContent = userData.avatar;
+            }
+
+            // Update Rank Title
+            const rankTitles = [
+                'Curious Beginner',
+                'Weekend Explorer',
+                'Trail Wanderer',     
+                'Adventure Chaser',
+                'Experience Hunter', 
+                'Memory Collector',
+                'Comfort Zone Breaker',
+                'Legendary Explorer',
+                'Micro-Adventure Legend',
+                'Master of Sidequests'
+            ];
+            
+            const rankTitle = rankTitles[Math.min(userData.level - 1, rankTitles.length - 1)];
+            if (profileRankTitle) {
+                profileRankTitle.textContent = `Level ${userData.level}: ${rankTitle}`;
+            }
+
+            // Update XP Bar
+            const xpPerLevel = 200;
+            const xpPercent = (userData.xp / xpPerLevel) * 100;
+            if (profileXpBar) {
+                profileXpBar.style.width = xpPercent + '%';
+            }
+            if (profileXpText) {
+                profileXpText.textContent = `${userData.xp} / ${xpPerLevel} XP`;
+            }
+
+            // Update Stats
+            userData.stats.completed = completedQuests.length;
+            userData.stats.streak = currentStreak;
+            userData.stats.epicCompleted = completedQuests.filter(q => q.difficulty === 'epic').length;
+
+            if (profileAdventures) {
+                profileAdventures.textContent = userData.stats.completed;
+            }
+            if (profileStreakCount) {
+                profileStreakCount.textContent = userData.stats.streak;
+            }
+            if (profileMastery) {
+                const totalAllQuests = getAllQuests().length;
+                const completedAll = completedQuests.length; 
+                const masteryPercent = totalAllQuests > 0 ?
+                    Math.round((completedAll / totalAllQuests) * 100) : 0;
+                profileMastery.textContent = masteryPercent + '%';
+            }
+
+            saveUserData();
+            renderAchievements();
+        }
+
         function generateSidequest() {
             soundSystem.playGenerate();
             let filteredQuests = getAllQuests();
@@ -3511,6 +3881,9 @@
             confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
             showNotification("Congratulations! Quest completed!");
             updateCompletedCounter();
+            // Profile System Updates
+            gainXP(currentQuest.difficulty);
+            updateProfileDashboard();
         }
 
         // ==================== CUSTOM QUESTS FUNCTIONS ====================
@@ -3753,8 +4126,7 @@
             completedCount.textContent = completedQuests.length;
             totalCount.textContent = getAllQuests().length;
             showQuestsByType('saved');
-            updateStatistics();
-            updateTabVisibility('saved');   // ← NEW
+            updateTabVisibility('saved');
             document.body.classList.add('modal-open');
             myQuestsModal.style.display = 'flex';
         }
@@ -3842,8 +4214,6 @@
                         saveQuestFromList(idx, tp);
                     }));
             }
-
-            updateStatistics();
         }
 
         function completeQuestFromList(index, type) {
@@ -3896,47 +4266,6 @@
             showNotification("Quest removed from saved list");
             showQuestsByType(currentView);
             if (currentQuest && savedQuests.every(q => q.text !== currentQuest.text)) updateSaveButton();
-        }
-
-        function updateStatistics() {
-            const allQuestsArray = getAllQuests();
-            const categoryCounts = { indoor: { total: 0, completed: 0 }, outdoor: { total: 0, completed: 0 },
-                social: { total: 0, completed: 0 } };
-            allQuestsArray.forEach(quest => {
-                if (categoryCounts[quest.category]) {
-                    categoryCounts[quest.category].total++;
-                    if (completedQuests.some(q => q.text === quest.text)) categoryCounts[quest.category]
-                        .completed++;
-                }
-            });
-            const completionPercentage = Math.round((completedQuests.length / allQuestsArray.length) * 100);
-            let mostPopularCategory = 'None',
-                mostCompleted = 0;
-            Object.entries(categoryCounts).forEach(([cat, data]) => { if (data.completed > mostCompleted) {
-                    mostCompleted = data.completed;
-                    mostPopularCategory = cat; } });
-            let favoriteIcon = '',
-                favoriteDisplayName = '';
-            switch (mostPopularCategory) { case 'indoor':
-                    favoriteIcon = '🏠';
-                    favoriteDisplayName = 'Indoor';
-                    break;
-                case 'outdoor':
-                    favoriteIcon = '🌳';
-                    favoriteDisplayName = 'Outdoor';
-                    break;
-                case 'social':
-                    favoriteIcon = '🗣️';
-                    favoriteDisplayName = 'Social';
-                    break;
-                default:
-                    favoriteIcon = '📊';
-                    favoriteDisplayName = 'None'; }
-            if (statsDetails) {
-                statsDetails.innerHTML =
-                    `${getStreakDisplay()}<h3>Your Statistics</h3><div class="stats-grid"><div class="stat-card"><div class="stat-card-icon">🏠</div><div class="stat-card-value">${categoryCounts.indoor.completed}/${categoryCounts.indoor.total}</div><div class="stat-card-label">Indoor</div></div><div class="stat-card"><div class="stat-card-icon">🌳</div><div class="stat-card-value">${categoryCounts.outdoor.completed}/${categoryCounts.outdoor.total}</div><div class="stat-card-label">Outdoor</div></div><div class="stat-card"><div class="stat-card-icon">🗣️</div><div class="stat-card-value">${categoryCounts.social.completed}/${categoryCounts.social.total}</div><div class="stat-card-label">Social</div></div></div><div class="favorite-category"><div class="category-icon">${favoriteIcon}</div><div class="favorite-category-text">Favorite category: <span class="favorite-category-name">${favoriteDisplayName}</span> (${mostCompleted} completed)</div></div><div class="progress-container"><div class="progress-bar"><div class="progress-fill" style="width: ${completionPercentage}%"></div></div><div class="progress-text">${completionPercentage}% of all quests completed</div></div>`;
-                statsDetails.classList.add('show');
-            }
         }
 
         // ==================== SOUND EFFECTS SYSTEM ====================
@@ -4101,7 +4430,7 @@
         // ==================== CLEAR DATA ====================
         function clearAllData() {
             if (confirm(
-                    "Are you sure you want to clear all saved data? This will delete all your saved, completed and custom quests."
+                    "Are you sure you want to clear all saved data? This will delete all your saved, completed and custom quests, and reset your profile progress."
                     )) {
                 savedQuests = [];
                 completedQuests = [];
@@ -4113,7 +4442,19 @@
                 localStorage.removeItem('sidequestfun_streak');
                 localStorage.removeItem('sidequestfun_lastCompletedTimestamp');
                 localStorage.removeItem('sidequestfun_customQuests');
+                localStorage.removeItem('sidequestfun_userData');
                 currentStreak = 0;
+                userData = {
+                    xp: 0,
+                    level: 1,
+                    avatar: '👤',
+                    unlockedAchievements: [],
+                    stats: {
+                        completed: 0,
+                        epicCompleted: 0,
+                        streak: 0
+                    }
+                };
                 showNotification("All data has been cleared!");
                 if (typeof closeSettingsModalFunc === 'function') closeSettingsModalFunc();
                 updateSaveButton();
@@ -4121,6 +4462,7 @@
                 updateCompletedCounter();
                 updateCustomQuestCountBadge();
                 initQuestOfMonth();
+                updateProfileDashboard();
                 if (totalCount) totalCount.textContent = getAllQuests().length;
                 if (customQuestsList) renderCustomQuestsList();
             }
@@ -4251,6 +4593,7 @@
             generateSidequest();
             updateCompletedCounter();
             initQuestOfMonth();
+            updateProfileDashboard();
             handleUrlImport();
         }
 
