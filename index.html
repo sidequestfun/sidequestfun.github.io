@@ -167,20 +167,23 @@
             .logo-text-fallback {
                 font-size: 1.9rem;
                 padding: 0 30px;
-            }
+            }          
             .quest-search-container {
-                flex-wrap: wrap;
-                gap: 8px;
+                flex-wrap: nowrap;
+                gap: 6px;
             }
             .quest-search-input {
-                width: 100%;
-                flex: auto;
+                width: calc(100% - 70px);
+                flex: 0 0 auto;
+                padding: 10px 12px;
+                font-size: 0.9rem;
             }
             .quest-search-clear {
-                width: auto;
-                padding: 10px 16px;
-                margin-left: auto;
-                margin-right: auto;
+                width: 64px;
+                flex-shrink: 0;
+                padding: 10px 0;
+                font-size: 0.8rem;
+                text-align: center;
             }
         }
 
@@ -1945,7 +1948,7 @@
         }
 
         .quest-search-clear {
-            padding: 10px 14px;
+            padding: 10px 8px;
             background: #f0f0f0;
             border: 2px solid #eee;
             border-radius: 8px;
