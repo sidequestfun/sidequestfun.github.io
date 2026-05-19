@@ -2563,21 +2563,6 @@
                 background: linear-gradient(135deg, #218838, #1e7e34);
                 box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
             }
-
-            .settings-buttons-row {
-                display: flex;
-                gap: 15px;
-                justify-content: center;
-                flex-wrap: wrap;
-                margin: 10px 0 20px 0;
-            }
-
-            .settings-buttons-row .theme-toggle {
-                width: auto;
-                max-width: none;
-                padding: 10px 20px;
-                margin: 0;
-            }
     </style>
 </head>
 <body>
@@ -2781,15 +2766,15 @@
 
             <div class="settings-content">
                 <h3>Appearance</h3>
-                <div class="settings-buttons-row">
-                    <div class="theme-toggle" id="modal-theme-toggle">
-                        <i class="fas fa-sun"></i>
-                        <span class="theme-text">Light Mode</span>
-                    </div>
-                    <div class="theme-toggle" id="sound-toggle-btn">
-                        <i class="fas fa-volume-up"></i>
-                        <span class="theme-text">Sound Enabled</span>
-                    </div>
+                <div class="theme-toggle" id="modal-theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <span class="theme-text">Light Mode</span>
+                </div>
+
+                <h3>Sound</h3>
+                <div class="theme-toggle" id="sound-toggle-btn">
+                    <i class="fas fa-volume-up"></i>
+                    <span class="theme-text">Sound Enabled</span>
                 </div>
 
                 <h3>Quest Filter (multiple select)</h3>
