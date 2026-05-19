@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js">
     </script>
+    <!-- LZ-String for compact URL links -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js">
     </script>
 
@@ -2515,54 +2516,6 @@
                 filter: grayscale(0.3);
                 transform: scale(0.98);
             }       
-
-            /* Backup Buttons in Settings */
-            .backup-btn-container {
-                display: flex;
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-                width: 100%;
-                margin-top: 10px;
-                margin-bottom: 25px;
-            }
-
-            .backup-btn {
-                background: linear-gradient(135deg, #14B3D9, #0fa3c7);
-                color: white;
-                border: none;
-                border-radius: 12px;
-                padding: 14px 24px;
-                font-size: 1rem;
-                font-weight: 600;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-                flex: 1;
-                min-width: 220px;
-                box-shadow: 0 4px 12px rgba(20, 179, 217, 0.2);
-                text-decoration: none;
-            }
-
-            .backup-btn:hover {
-                transform: translateY(-2px);
-                box-shadow: 0 6px 16px rgba(20, 179, 217, 0.3);
-                background: linear-gradient(135deg, #0fa3c7, #0b8fa8);
-            }
-
-            .backup-btn.restore {
-                background: linear-gradient(135deg, #28a745, #218838);
-                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
-                margin: 0;
-            }
-
-            .backup-btn.restore:hover {
-                background: linear-gradient(135deg, #218838, #1e7e34);
-                box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
-            }
     </style>
 </head>
 <body>
@@ -2690,6 +2643,7 @@
 
             <div style="height: 20px;"></div>
 
+            <!-- Quest Search Container -->
             <div id="questSearchContainer" class="quest-search-container" style="display: none;">
                 <input type="text" id="questSearchInput" class="quest-search-input" placeholder="🔍 Search quests...">
                 <button class="quest-search-clear" id="questSearchClear">Clear</button>
@@ -2701,6 +2655,7 @@
         </div>
     </div>
 
+    <!-- Custom Quests Modal -->
     <div class="modal" id="custom-quests-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2717,6 +2672,7 @@
                 <i class="fas fa-info-circle"></i> Your custom quests are saved locally. Share them with friends via link or file!
             </div>
 
+            <!-- Form to add new quests -->
             <div class="add-quest-section">
                 <h3><i class="fas fa-pen-to-square"></i> Add New Quest</h3>
                 <div class="input-group">
@@ -2737,11 +2693,13 @@
                 </div>
             </div>
 
+            <!-- List of custom quests -->
             <div class="custom-quests-list-header">
                 <h3><i class="fas fa-list-check"></i> Your Custom Quests</h3>
             </div>
             <div class="custom-quests-list-wrapper" id="custom-quests-list"></div>
 
+            <!-- Import/Export Bar -->
             <div class="import-export-bar">
                 <button id="share-deck-btn" class="share-link-btn">
                     <i class="fas fa-share-alt"></i> Share via Link
@@ -2777,24 +2735,13 @@
                     <span class="theme-text">Sound Enabled</span>
                 </div>
 
-                <h3>Quest Filter (multiple select)</h3>
-                <div class="difficulty-filter-group">
-                    <button class="difficulty-filter-btn" data-filter="custom">Custom</button>
-                    <button class="difficulty-filter-btn" data-filter="easy">Easy</button>
-                    <button class="difficulty-filter-btn" data-filter="medium">Medium</button>
-                    <button class="difficulty-filter-btn" data-filter="epic">Epic</button>
-                </div>
-
-                <h3>Backup & Restore</h3>
-                <div class="backup-btn-container">
-                    <button class="backup-btn" id="settings-export-quests-btn">
-                        <i class="fas fa-download"></i> Backup as File
-                    </button>
-                    <label for="settings-import-quests-file" class="backup-btn restore">
-                        <i class="fas fa-upload"></i> Restore from File
-                    </label>
-                    <input type="file" id="settings-import-quests-file" accept=".json" style="display: none;">
-                </div>
+            <h3>Quest Filter (multiple select)</h3>
+            <div class="difficulty-filter-group">
+                <button class="difficulty-filter-btn" data-filter="custom">Custom</button>
+                <button class="difficulty-filter-btn" data-filter="easy">Easy</button>
+                <button class="difficulty-filter-btn" data-filter="medium">Medium</button>
+                <button class="difficulty-filter-btn" data-filter="epic">Epic</button>
+            </div>
 
                 <h3>Clear Data</h3>
                 <button class="btn icon-btn" id="clear-data-btn" style="width: 100%; max-width: 300px; margin: 0 auto; display: block;">
@@ -3274,7 +3221,7 @@
             { month: 0, name: "❄️ JANUARY",
                 text: "Have a day of outdoor fun: Go sledding, build a small snowman, or make snow angels. Embrace the cold and let your inner child play." },
             { month: 1, name: "🐦 FEBRUARY",
-                text: "Build a bird feeder from recycled materials and observe for a week which birds come to visit. Keep a journal of feathered guests." },
+                text: "Build a bird feeder from recycled materials and observe for a week which birds come to visit. Keep a journal of your feathered guests." },
             { month: 2, name: "🌷 MARCH",
                 text: "Find the first 10 signs of spring in your area — blossoms, buds, returning birds — and photograph them. Celebrate nature's comeback." },
             { month: 3, name: "🥚 APRIL",
@@ -3656,11 +3603,9 @@
                         </div>
                         <div class="quest-text-content">${escapeHtml(quest.text)}</div>
                     </div>
-                    <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                        <button class="delete-custom-btn" data-index="${index}" title="Delete this quest">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </div>
+                    <button class="delete-custom-btn" data-index="${index}" title="Delete this quest">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
                 </div>
             `).join('');
 
@@ -3722,34 +3667,24 @@
             showNotification("Custom quest added! ✨");
         }
 
-        function generateShareLink(questData) {
+        function generateShareLink() {
+            const deckData = { customQuests: customQuests };
+
+            if (customQuests.length === 0) {
+                showNotification("No custom quests to share! Add some first.", true);
+                return null;
+            }
+
             try {
-                // Determine what exactly is being shared (specific quest vs all custom quests)
-                const dataToShare = (questData && questData.customQuests) ? questData : { customQuests: customQuests };
-
-                if (!dataToShare.customQuests || dataToShare.customQuests.length === 0) {
-                    showNotification("No custom quests to share! Add some first.", true);
-                    return null;
-                }
-
-                const jsonString = JSON.stringify(dataToShare);
-                const compressed = LZString.compressToEncodedURIComponent(jsonString);
-                
-                // Pack Name Generierung
-                let packName = '';
-                if (dataToShare.customQuests.length === 1) {
-                    packName = dataToShare.customQuests[0].text.substring(0, 30);
-                    if (dataToShare.customQuests[0].text.length > 30) packName += '...';
-                } else {
-                    packName = `${dataToShare.customQuests.length} Custom Quests`;
-                }
-                
+                const compressed = LZString.compressToEncodedURIComponent(JSON.stringify(deckData));
                 const url = new URL(window.location.href);
                 url.searchParams.set('data', compressed);
+                let packName = `${customQuests.length} Custom Quests`;
                 url.searchParams.set('name', packName);
                 return url.toString();
             } catch (e) {
-                console.error("Share link error:", e);
+                console.error("Compression error:", e);
+                showNotification("Error creating share link", true);
                 return null;
             }
         }
@@ -3780,22 +3715,23 @@
         }
 
         function exportQuests() {
+            if (customQuests.length === 0) {
+                showNotification("No custom quests to export!", true);
+                return;
+            }
+
             const data = {
                 customQuests: customQuests,
-                savedQuests: savedQuests,
-                completedQuests: completedQuests,
-                questHistory: questHistory,
-                currentStreak: currentStreak,
-                version: "2.0",
+                version: "1.0",
                 exportDate: new Date().toISOString()
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
             const a = document.createElement('a');
             a.href = URL.createObjectURL(blob);
-            a.download = `sidequestfun_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.download = `sidequestfun_custom_${new Date().toISOString().slice(0,10)}.json`;
             a.click();
             URL.revokeObjectURL(a.href);
-            showNotification("Backup created successfully!");
+            showNotification("Quests exported successfully!");
         }
 
         function importQuests(file) {
@@ -3803,34 +3739,6 @@
             reader.onload = function(e) {
                 try {
                     const json = JSON.parse(e.target.result);
-                    
-                    // Handle new backup format (v2.0)
-                    if (json.version === "2.0") {
-                        const backupDate = new Date(json.exportDate).toLocaleDateString();
-                        if (confirm(`Restore backup from ${backupDate}?\n\nThis will replace your current data with:\n- ${json.customQuests?.length || 0} custom quests\n- ${json.completedQuests?.length || 0} completed quests\n- Streak: ${json.currentStreak || 0}`)) {
-                            if (json.customQuests) customQuests = json.customQuests;
-                            if (json.savedQuests) savedQuests = json.savedQuests;
-                            if (json.completedQuests) completedQuests = json.completedQuests;
-                            if (json.questHistory) questHistory = json.questHistory;
-                            if (json.currentStreak !== undefined) currentStreak = json.currentStreak;
-                            
-                            localStorage.setItem('sidequestfun_customQuests', JSON.stringify(customQuests));
-                            localStorage.setItem('sidequestfun_savedQuests', JSON.stringify(savedQuests));
-                            localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
-                            localStorage.setItem('sidequestfun_history', JSON.stringify(questHistory));
-                            localStorage.setItem('sidequestfun_streak', currentStreak.toString());
-                            
-                            renderCustomQuestsList();
-                            updateCompletedCounter();
-                            updateCustomQuestCountBadge();
-                            generateSidequest();
-                            showNotification("Backup restored successfully!");
-                            closeSettingsModalFunc();
-                        }
-                        return;
-                    }
-                    
-                    // Handle old format (v1.0)
                     let importedQuests = [];
                     if (json.customQuests && Array.isArray(json.customQuests)) {
                         importedQuests = json.customQuests;
@@ -4414,21 +4322,10 @@
 
             const exportBtn = document.getElementById('export-quests-btn');
             if (exportBtn) exportBtn.addEventListener('click', exportQuests);
-            
-            const settingsExportBtn = document.getElementById('settings-export-quests-btn');
-            if (settingsExportBtn) settingsExportBtn.addEventListener('click', exportQuests);
 
             const importFileInput = document.getElementById('import-quests-file');
             if (importFileInput) {
                 importFileInput.addEventListener('change', e => {
-                    if (e.target.files[0]) importQuests(e.target.files[0]);
-                    e.target.value = '';
-                });
-            }
-            
-            const settingsImportFileInput = document.getElementById('settings-import-quests-file');
-            if (settingsImportFileInput) {
-                settingsImportFileInput.addEventListener('change', e => {
                     if (e.target.files[0]) importQuests(e.target.files[0]);
                     e.target.value = '';
                 });
@@ -4452,6 +4349,7 @@
         window.addEventListener('load', init);
     </script>
 
+    <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0aed4efa70ba4514a5634996eb71a8cc"}'></script>
 </body>
 </html>
