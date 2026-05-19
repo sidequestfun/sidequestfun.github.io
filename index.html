@@ -2518,303 +2518,51 @@
 
             /* Backup Buttons in Settings */
             .backup-btn-container {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: 100%;
-            margin-top: 10px;
-            margin-bottom: 25px;
+                display: flex;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+                width: 100%;
+                margin-top: 10px;
+                margin-bottom: 25px;
             }
 
             .backup-btn {
-            background: linear-gradient(135deg, #14B3D9, #0fa3c7);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            padding: 14px 24px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            flex: 1;
-            min-width: 220px;
-            box-shadow: 0 4px 12px rgba(20, 179, 217, 0.2);
-            text-decoration: none;
-            }
-
-            .backup-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(20, 179, 217, 0.3);
-            background: linear-gradient(135deg, #0fa3c7, #0b8fa8);
-            }
-
-            .backup-btn.restore {
-            background: linear-gradient(135deg, #28a745, #218838);
-            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
-            margin: 0;
-            }
-
-            .backup-btn.restore:hover {
-            background: linear-gradient(135deg, #218838, #1e7e34);
-            box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
-            }
-        
-            /* ========== SETTINGS  ========== */
-            #settings-modal .modal-content {
-                max-width: 580px;
-                border-radius: 32px;
-                padding: 0;
-                background: white;
-                display: flex;
-                flex-direction: column;
-                max-height: 85vh;
-                overflow: hidden;
-                box-shadow: 0 24px 40px -12px rgba(0, 0, 0, 0.25);
-            }
-
-            body.dark-mode #settings-modal .modal-content {
-                background: #1e293b;
-            }
-
-            #settings-modal .modal-header {
-                padding: 20px 24px 12px 24px;
-                border-bottom: 1px solid #eef2f6;
-                flex-shrink: 0;
-            }
-
-            body.dark-mode #settings-modal .modal-header {
-                border-bottom-color: #334155;
-            }
-
-            #settings-modal .modal-title {
-                font-size: 1.7rem;
-                margin: 0;
-            }
-
-            #settings-modal .settings-content {
-                padding: 20px 24px 28px 24px;
-                overflow-y: auto;
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .settings-row {
-                display: flex;
-                gap: 14px;
-                flex-wrap: wrap;
-            }
-
-            .settings-row .theme-toggle {
-                flex: 1;
-                background: #f8fafc;
-                border-radius: 60px;
-                padding: 14px 12px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 12px;
-                border: 1px solid #e2e8f0;
-                cursor: pointer;
-                transition: all 0.2s;
-                min-width: 140px;
-            }
-
-            body.dark-mode .settings-row .theme-toggle {
-                background: #0f172a;
-                border-color: #334155;
-            }
-
-            .settings-row .theme-toggle:hover {
-                transform: translateY(-2px);
-                background: #eef2ff;
-            }
-
-            .settings-row .theme-toggle i {
-                font-size: 1.4rem;
-                width: 32px;
-            }
-
-            .settings-row .theme-toggle .theme-text {
-                font-weight: 600;
-                font-size: 1rem;
-                white-space: nowrap;
-            }
-
-            #settings-modal .settings-content > h3 {
-                font-size: 1.1rem;
-                font-weight: 700;
-                margin: 4px 0 6px 0;
-                color: #14B3D9;
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                letter-spacing: -0.2px;
-            }
-
-            body.dark-mode #settings-modal .settings-content > h3 {
-                color: #38c3e6;
-            }
-
-            .difficulty-filter-group {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 12px;
-                background: #f8fafc;
-                padding: 14px;
-                border-radius: 28px;
-                border: 1px solid #e2e8f0;
-            }
-
-            body.dark-mode .difficulty-filter-group {
-                background: #0f172a;
-                border-color: #334155;
-            }
-
-            .difficulty-filter-btn {
-                flex: 1;
-                min-width: 85px;
-                text-align: center;
-                padding: 12px 8px;
-                border-radius: 48px;
-                font-weight: 700;
-                font-size: 0.95rem;
-                border: none;
-                background: white;
-                color: #1e293b;
-                cursor: pointer;
-                transition: 0.15s;
-                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-            }
-
-            body.dark-mode .difficulty-filter-btn {
-                background: #1e293b;
-                color: #cbd5e1;
-                border: 1px solid #334155;
-            }
-
-            .difficulty-filter-btn.active {
-                background: #14B3D9 !important;
-                color: white !important;
-                border-color: #14B3D9 !important;
-                box-shadow: 0 4px 12px rgba(20, 179, 217, 0.35);
-                transform: scale(1.02);
-            }
-
-            /* Backup‑Buttons */
-            .backup-btn-container {
-                display: flex;
-                gap: 14px;
-                flex-wrap: wrap;
-            }
-
-            .backup-btn,
-            label.backup-btn {
-                flex: 1;
-                min-width: 160px;
-                padding: 14px 20px;
-                border-radius: 60px;
-                font-weight: 700;
-                font-size: 1rem;
-                text-align: center;
                 background: linear-gradient(135deg, #14B3D9, #0fa3c7);
                 color: white;
-                cursor: pointer;
                 border: none;
+                border-radius: 12px;
+                padding: 14px 24px;
+                font-size: 1rem;
+                font-weight: 600;
+                cursor: pointer;
+                transition: all 0.3s ease;
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
                 gap: 10px;
-                transition: 0.2s;
-                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+                flex: 1;
+                min-width: 220px;
+                box-shadow: 0 4px 12px rgba(20, 179, 217, 0.2);
+                text-decoration: none;
+            }
+
+            .backup-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 16px rgba(20, 179, 217, 0.3);
+                background: linear-gradient(135deg, #0fa3c7, #0b8fa8);
             }
 
             .backup-btn.restore {
-                background: linear-gradient(135deg, #2c7da0, #1f5e7a);
+                background: linear-gradient(135deg, #28a745, #218838);
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.2);
+                margin: 0;
             }
 
-            .backup-btn:hover,
-            label.backup-btn:hover {
-                transform: translateY(-2px);
-                filter: brightness(1.03);
-                box-shadow: 0 8px 18px rgba(20, 179, 217, 0.3);
+            .backup-btn.restore:hover {
+                background: linear-gradient(135deg, #218838, #1e7e34);
+                box-shadow: 0 6px 16px rgba(40, 167, 69, 0.3);
             }
-
-            /* Clear‑Data Button */
-            #clear-data-btn {
-                background: #fff5f5;
-                border: 1px solid #ffcdca;
-                color: #c2412c;
-                font-weight: 700;
-                font-size: 1rem;
-                padding: 14px 20px;
-                border-radius: 60px;
-                width: 100%;
-                transition: 0.2s;
-                box-shadow: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                gap: 10px;
-            }
-
-            body.dark-mode #clear-data-btn {
-                background: #2d1a1a;
-                border-color: #7f2e2e;
-                color: #fca5a5;
-            }
-
-            #clear-data-btn:hover {
-                background: #fee2e1;
-                transform: translateY(-2px);
-            }
-
-            /* Mobile */
-            @media (max-width: 640px) {
-                #settings-modal .modal-content {
-                    width: 94%;
-                    border-radius: 28px;
-                }
-                #settings-modal .modal-header {
-                    padding: 16px 20px 8px 20px;
-                }
-                #settings-modal .settings-content {
-                    padding: 16px 20px 24px 20px;
-                    gap: 18px;
-                }
-                .settings-row {
-                    flex-direction: column;
-                    gap: 10px;
-                }
-                .settings-row .theme-toggle {
-                    padding: 12px 12px;
-                }
-                .difficulty-filter-group {
-                    gap: 10px;
-                    padding: 12px;
-                }
-                .difficulty-filter-btn {
-                    min-width: 70px;
-                    font-size: 0.85rem;
-                    padding: 10px 4px;
-                }
-                .backup-btn-container {
-                    flex-direction: column;
-                    gap: 12px;
-                }
-                .backup-btn,
-                label.backup-btn {
-                    width: 100%;
-                    min-width: unset;
-                }
-            }
-
     </style>
 </head>
 <body>
@@ -3017,17 +2765,17 @@
             </div>
 
             <div class="settings-content">
-            <h3>Appearance</h3>
-            <div class="settings-row">
+                <h3>Appearance</h3>
                 <div class="theme-toggle" id="modal-theme-toggle">
                     <i class="fas fa-sun"></i>
                     <span class="theme-text">Light Mode</span>
                 </div>
+
+                <h3>Sound</h3>
                 <div class="theme-toggle" id="sound-toggle-btn">
                     <i class="fas fa-volume-up"></i>
                     <span class="theme-text">Sound Enabled</span>
                 </div>
-            </div>
 
                 <h3>Quest Filter (multiple select)</h3>
                 <div class="difficulty-filter-group">
