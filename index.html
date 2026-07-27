@@ -380,7 +380,6 @@
             border-color: #991b1b;
         }
 
-        /* ---- Button styles (reverted to original) ---- */
         .main-buttons-container {
             display: flex;
             gap: 15px;
@@ -501,7 +500,6 @@
             background-color: #334155;
         }
 
-        /* ---- Rest of the styles remain unchanged ---- */
         h2 {
             color: #14B3D9;
             margin-bottom: 15px;
@@ -1565,7 +1563,6 @@
             gap: 30px;
             width: 100%;
             padding: 0 20px;
-            flex-wrap: wrap;
         }
 
         .footer-link {
@@ -1639,13 +1636,12 @@
             .footer-links {
                 flex-direction: row;
                 justify-content: center;
-                gap: 15px;
-                flex-wrap: wrap;
+                gap: 25px;
             }
 
             .footer-link {
-                font-size: 0.95rem;
-                padding: 10px 12px;
+                font-size: 1rem;
+                padding: 12px 10px;
             }
 
             .modal-stats {
@@ -2519,105 +2515,7 @@
                 opacity: 0.6;
                 filter: grayscale(0.3);
                 transform: scale(0.98);
-            }
-/* ---- Minimalist Install App Modal ---- */
-.minimalist-install {
-    text-align: center;
-    padding: 35px 25px !important;
-    border-radius: 24px !important;
-    max-width: 400px !important;
-}
-
-.minimalist-install .modal-header {
-    position: relative;
-    justify-content: center;
-    border: none;
-    margin-bottom: 5px;
-}
-
-.minimalist-install .modal-title {
-    font-size: 1.5rem;
-    color: #333;
-    font-weight: 700;
-    margin: 0;
-}
-
-body.dark-mode .minimalist-install .modal-title {
-    color: #e0e0e0;
-}
-
-.minimalist-install .close-modal {
-    position: absolute;
-    right: -10px;
-    top: -15px;
-}
-
-.install-subtitle {
-    color: #888;
-    font-size: 0.95rem;
-    margin-bottom: 25px;
-    line-height: 1.4;
-}
-
-body.dark-mode .install-subtitle {
-    color: #94a3b8;
-}
-
-.install-os-block {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    align-items: center;
-}
-
-.minimal-step {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    background: #f5f5f7;
-    padding: 16px 20px;
-    border-radius: 16px;
-    width: 100%;
-    text-align: left;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
-}
-
-body.dark-mode .minimal-step {
-    background: #1e293b;
-    border-color: #334155;
-}
-
-.minimal-step i {
-    font-size: 1.4rem;
-    color: #14B3D9;
-    width: 24px;
-    text-align: center;
-}
-
-.minimal-step span {
-    font-size: 1.05rem;
-    color: #333;
-}
-
-body.dark-mode .minimal-step span {
-    color: #e0e0e0;
-}
-
-.desktop-hint {
-    background: #f8f9fa;
-    padding: 15px;
-    border-radius: 12px;
-    color: #666;
-    font-size: 0.95rem;
-    border: 1px solid #e9ecef;
-}
-
-body.dark-mode .desktop-hint {
-    background: #0f172a;
-    color: #94a3b8;
-    border-color: #334155;
-}
+            }       
     </style>
 </head>
 <body>
@@ -2649,7 +2547,6 @@ body.dark-mode .desktop-hint {
                 <div id="quest-text">Your sidequest will appear here. Ready for an adventure?</div>
             </div>
 
-            <!-- Primary Buttons (original classes) -->
             <div class="main-buttons-container">
                 <button class="btn generate-btn" id="generate-btn">
                     <i class="fas fa-dice icon"></i> Generate Sidequest
@@ -2659,7 +2556,6 @@ body.dark-mode .desktop-hint {
                 </button>
             </div>
 
-            <!-- Secondary Buttons (original .icon-btn) -->
             <div class="secondary-buttons-container">
                 <button class="btn icon-btn" id="save-btn" aria-label="Save this quest">
                     <i class="fas fa-bookmark"></i>
@@ -2682,6 +2578,7 @@ body.dark-mode .desktop-hint {
             <i class="fas fa-plus-circle"></i> <strong>Plus</strong> — Add your own custom sidequests and build a deck of personal challenges.<br>
             <strong>Share them with friends</strong> via a link so everyone can join the adventure!
             </p>
+            <p><strong>Install App:</strong> Open the browser menu (Safari <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-1px"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> / Chrome<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg>) and  select "Add to Home Screen".</p>
         </div>
 
         <div class="card info-card">
@@ -2718,11 +2615,9 @@ body.dark-mode .desktop-hint {
         <div class="footer-links">
             <a class="footer-link" id="settings-link"><i class="fas fa-cog"></i> Settings</a>
             <a class="footer-link" id="privacy-link"><i class="fas fa-shield-alt"></i> Privacy</a>
-            <a class="footer-link" id="install-link"><i class="fas fa-mobile-alt"></i> Install App</a>
         </div>
     </div>
 
-    <!-- Modals (existing) -->
     <div class="modal" id="my-quests-modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -2749,6 +2644,7 @@ body.dark-mode .desktop-hint {
 
             <div style="height: 20px;"></div>
 
+            <!-- Quest Search Container -->
             <div id="questSearchContainer" class="quest-search-container" style="display: none;">
                 <input type="text" id="questSearchInput" class="quest-search-input" placeholder="🔍 Search quests...">
                 <button class="quest-search-clear" id="questSearchClear">Clear</button>
@@ -2777,6 +2673,7 @@ body.dark-mode .desktop-hint {
                 <i class="fas fa-info-circle"></i> Your custom quests are saved locally. Share them with friends via link or file!
             </div>
 
+            <!-- Form to add new quests -->
             <div class="add-quest-section">
                 <h3><i class="fas fa-pen-to-square"></i> Add New Quest</h3>
                 <div class="input-group">
@@ -2797,11 +2694,13 @@ body.dark-mode .desktop-hint {
                 </div>
             </div>
 
+            <!-- List of custom quests -->
             <div class="custom-quests-list-header">
                 <h3><i class="fas fa-list-check"></i> Your Custom Quests</h3>
             </div>
             <div class="custom-quests-list-wrapper" id="custom-quests-list"></div>
 
+            <!-- Import/Export Bar -->
             <div class="import-export-bar">
                 <button id="share-deck-btn" class="share-link-btn">
                     <i class="fas fa-share-alt"></i> Share via Link
@@ -2891,47 +2790,6 @@ body.dark-mode .desktop-hint {
             </div>
         </div>
     </div>
-<!-- Install App Modal -->
-<div class="modal install-modal" id="install-modal">
-    <div class="modal-content minimalist-install">
-        <div class="modal-header">
-            <h2 class="modal-title">Install App</h2>
-            <button class="close-modal" id="close-install-modal">&times;</button>
-        </div>
-        <div class="install-body">
-            <p class="install-subtitle">Add SidequestFun to your home screen for quick access.</p>
-
-            <!-- iOS Block -->
-            <div id="install-ios" class="install-os-block" style="display: none;">
-                <div class="minimal-step">
-                    <i class="fas fa-square-arrow-up"></i>
-                    <span>1. Tap <strong>Share</strong></span>
-                </div>
-                <div class="minimal-step">
-                    <i class="fas fa-plus-square"></i>
-                    <span>2. Select <strong>Add to Home Screen</strong></span>
-                </div>
-            </div>
-
-            <!-- Android Block -->
-            <div id="install-android" class="install-os-block" style="display: none;">
-                <div class="minimal-step">
-                    <i class="fas fa-ellipsis-vertical"></i>
-                    <span>1. Tap <strong>Menu</strong></span>
-                </div>
-                <div class="minimal-step">
-                    <i class="fas fa-mobile-screen"></i>
-                    <span>2. Select <strong>Install app</strong></span>
-                </div>
-            </div>
-
-            <!-- Desktop / Fallback Block -->
-            <div id="install-desktop" class="install-os-block" style="display: none;">
-                <p class="desktop-hint">Open this website on your mobile device (iOS Safari or Android Chrome) to install the app!</p>
-            </div>
-        </div>
-    </div>
-</div>
 
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
@@ -3429,13 +3287,10 @@ body.dark-mode .desktop-hint {
         const customQuestsModal = document.getElementById('custom-quests-modal');
         const settingsModal = document.getElementById('settings-modal');
         const privacyModal = document.getElementById('privacy-modal');
-        const installModal = document.getElementById('install-modal');
         const closeModal = document.getElementById('close-modal');
         const closeCustomModal = document.getElementById('close-custom-modal');
         const closeSettingsModal = document.getElementById('close-settings-modal');
         const closePrivacyModal = document.getElementById('close-privacy-modal');
-        const closeInstallModal = document.getElementById('close-install-modal');
-        const installLink = document.getElementById('install-link');
         const savedQuestsList = document.getElementById('saved-quests-list');
         const customQuestsList = document.getElementById('custom-quests-list');
         const savedCount = document.getElementById('saved-count');
@@ -3477,35 +3332,6 @@ body.dark-mode .desktop-hint {
         }
 
         // ==================== CORE FUNCTIONS ====================
-        
-        // Funktion zur Geräteerkennung für das Install-Modal
-function showRelevantInstallInstructions() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    const iosBlock = document.getElementById('install-ios');
-    const androidBlock = document.getElementById('install-android');
-    const desktopBlock = document.getElementById('install-desktop');
-
-    // Zuerst alle verstecken
-    iosBlock.style.display = 'none';
-    androidBlock.style.display = 'none';
-    desktopBlock.style.display = 'none';
-
-    // Gerät prüfen und entsprechenden Block anzeigen
-    if (/android/i.test(userAgent)) {
-        androidBlock.style.display = 'flex';
-    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-        iosBlock.style.display = 'flex';
-    } else {
-        desktopBlock.style.display = 'block';
-    }
-}
-
-// Event Listener anpassen (falls du bereits einen für "install-link" hast, ergänze ihn einfach um den Funktionsaufruf)
-document.getElementById('install-link').addEventListener('click', () => {
-    showRelevantInstallInstructions(); // Logik vor dem Öffnen ausführen
-    document.getElementById('install-modal').style.display = 'flex';
-});
-        
         function getAllQuests() {
             return [...sidequests, ...customQuests];
         }
@@ -4388,10 +4214,6 @@ document.getElementById('install-link').addEventListener('click', () => {
 
         function openPrivacyModal() { document.body.classList.add('modal-open'); if (privacyModal) privacyModal.style.display = 'flex'; }
 
-        function openInstallModal() { document.body.classList.add('modal-open'); if (installModal) installModal.style.display = 'flex'; }
-
-        function closeInstallModalFunc() { document.body.classList.remove('modal-open'); if (installModal) installModal.style.display = 'none'; }
-
         function initQuestOfMonth() {
             const now = new Date();
             const currentMonth = now.getMonth();
@@ -4404,7 +4226,7 @@ document.getElementById('install-link').addEventListener('click', () => {
 
         // ==================== CLICK OUTSIDE MODAL TO CLOSE ====================
         function setupModalClickOutside() {
-            const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal, installModal];
+            const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal];
 
             modals.forEach(modal => {
                 if (!modal) return;
@@ -4489,8 +4311,6 @@ document.getElementById('install-link').addEventListener('click', () => {
             if (closeCustomModal) closeCustomModal.addEventListener('click', closeCustomQuestsModal);
             if (closeSettingsModal) closeSettingsModal.addEventListener('click', closeSettingsModalFunc);
             if (closePrivacyModal) closePrivacyModal.addEventListener('click', closePrivacyPolicyModal);
-            if (closeInstallModal) closeInstallModal.addEventListener('click', closeInstallModalFunc);
-            if (installLink) installLink.addEventListener('click', openInstallModal);
             if (modalThemeToggle) modalThemeToggle.addEventListener('click', toggleDarkMode);
             if (soundToggleBtn) soundToggleBtn.addEventListener('click', () => {
                 soundSystem.toggleSound();
@@ -4522,7 +4342,6 @@ document.getElementById('install-link').addEventListener('click', () => {
                 if (event.target === customQuestsModal) closeCustomQuestsModal();
                 if (event.target === settingsModal) closeSettingsModalFunc();
                 if (event.target === privacyModal) closePrivacyPolicyModal();
-                if (event.target === installModal) closeInstallModalFunc();
             });
 
             setupModalClickOutside();
