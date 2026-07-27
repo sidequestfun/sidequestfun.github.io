@@ -521,6 +521,75 @@
             margin-bottom: 20px;
         }
 
+        .accordion-card {
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            list-style: none;
+            padding: 24px;
+            transition: background-color 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .accordion-header::-webkit-details-marker,
+        .accordion-header::marker {
+            display: none;
+            content: "";
+        }
+
+        .accordion-header h2 {
+            margin-bottom: 0;
+        }
+
+        .accordion-header:hover,
+        .accordion-header:focus {
+            background-color: #f8f9fa;
+            outline: none;
+        }
+
+        body.dark-mode .accordion-header:hover,
+        body.dark-mode .accordion-header:focus {
+            background-color: #0f172a;
+        }
+
+        .accordion-icon {
+            color: #14B3D9;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            transition: transform 0.3s ease;
+        }
+
+        details[open] > .accordion-header .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-body {
+            padding: 0 24px 24px 24px;
+            animation: accordionOpen 0.25s ease;
+        }
+
+        @keyframes accordionOpen {
+            from { opacity: 0; transform: translateY(-6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .accordion-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .accordion-header {
+                cursor: default;
+            }
+        }
+
         .donation-section {
             text-align: center;
             padding: 30px 0;
@@ -1542,6 +1611,52 @@
         }
 
         body.dark-mode .privacy-content li {
+            color: #cbd5e1;
+        }
+
+        .install-modal {
+            max-width: 600px;
+        }
+
+        .install-content {
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .install-platform {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            border: 2px solid #e9ecef;
+        }
+
+        body.dark-mode .install-platform {
+            background-color: #0f172a;
+            border-color: #334155;
+        }
+
+        .install-platform h3 {
+            color: #14B3D9;
+            margin: 0 0 12px 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .install-steps {
+            margin-left: 20px;
+        }
+
+        .install-steps li {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        .install-steps li:last-child {
+            margin-bottom: 0;
+        }
+
+        body.dark-mode .install-steps li {
             color: #cbd5e1;
         }
 
@@ -2569,21 +2684,35 @@
             </div>
         </div>
 
-        <div class="card info-card">
-            <h2>How It Works</h2>
-            <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
-            <p>
-            <i class="fas fa-bookmark"></i> <strong>Bookmark</strong> — Save a quest you like to your personal collection.<br>
-            <i class="fas fa-tasks"></i> <strong>List</strong> — View all your saved and completed quests & your statistics.<br>
-            <i class="fas fa-plus-circle"></i> <strong>Plus</strong> — Add your own custom sidequests and build a deck of personal challenges.<br>
-            <strong>Share them with friends</strong> via a link so everyone can join the adventure!
-            </p>
+        <div class="card info-card accordion-card">
+            <details class="accordion">
+                <summary class="accordion-header">
+                    <h2>How It Works</h2>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </summary>
+                <div class="accordion-body">
+                    <p>Click the "Generate Sidequest" button to receive a random, fun task. These are simple, creative activities designed to break your routine and add excitement to your day. Each sidequest is a small adventure that can be completed in a short amount of time, usually with little to no preparation needed.</p>
+                    <p>
+                    <i class="fas fa-bookmark"></i> <strong>Bookmark</strong> — Save a quest you like to your personal collection.<br>
+                    <i class="fas fa-tasks"></i> <strong>List</strong> — View all your saved and completed quests & your statistics.<br>
+                    <i class="fas fa-plus-circle"></i> <strong>Plus</strong> — Add your own custom sidequests and build a deck of personal challenges.<br>
+                    <strong>Share them with friends</strong> via a link so everyone can join the adventure!
+                    </p>
+                </div>
+            </details>
         </div>
 
-        <div class="card info-card">
-            <h2>Why Sidequests Beat Boredom</h2>
-            <p>It's time to stop living the same day over and over and start adding new chapters to your story. Do you remember when life felt like a grand adventure? Somewhere along the way, routines took over. Sidequests are here to bring that magic back. By embracing small, unexpected challenges, you disrupt the monotony and trigger new ways of thinking.</p>
-            <p>Every sidequest is a playful micro-adventure. In a world of endless scrolling, we wanted to build a tool that encourages real-world interaction. There are no accounts, no ads, and no hidden costs. <strong>Just free, sidequests for everyone!</strong></p>
+        <div class="card info-card accordion-card">
+            <details class="accordion">
+                <summary class="accordion-header">
+                    <h2>Why Sidequests Beat Boredom</h2>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
+                </summary>
+                <div class="accordion-body">
+                    <p>It's time to stop living the same day over and over and start adding new chapters to your story. Do you remember when life felt like a grand adventure? Somewhere along the way, routines took over. Sidequests are here to bring that magic back. By embracing small, unexpected challenges, you disrupt the monotony and trigger new ways of thinking.</p>
+                    <p>Every sidequest is a playful micro-adventure. In a world of endless scrolling, we wanted to build a tool that encourages real-world interaction. There are no accounts, no ads, and no hidden costs. <strong>Just free, sidequests for everyone!</strong></p>
+                </div>
+            </details>
         </div>
 
         <div class="quest-of-month" id="quest-of-month-container">
@@ -2612,6 +2741,7 @@
 
     <div class="footer">
         <div class="footer-links">
+            <a class="footer-link" id="install-link"><i class="fas fa-mobile-alt"></i> Install App</a>
             <a class="footer-link" id="settings-link"><i class="fas fa-cog"></i> Settings</a>
             <a class="footer-link" id="privacy-link"><i class="fas fa-shield-alt"></i> Privacy</a>
         </div>
@@ -2786,6 +2916,37 @@
                 <p>When you use the "Share" function, a unique link is generated that contains your quest data in an encoded format. No data is stored on our end during this process; the information is contained entirely within the URL you share.</p>
                 <h3>6. External Links</h3>
                 <p>If you click on buttons leading to external websites, you will be redirected to a third-party platform. From that moment on, the privacy policy of that respective third party applies. We have no control over the content or data processing of external sites.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="install-modal">
+        <div class="modal-content install-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Install App</h2>
+                <button class="close-modal" id="close-install-modal">&times;</button>
+            </div>
+
+            <div class="install-content">
+                <p>Install SidequestFun on your home screen for quick, full-screen access — no app store needed.</p>
+
+                <div class="install-platform">
+                    <h3>🍎 For iPhone / iPad (Safari)</h3>
+                    <ol class="install-steps">
+                        <li>Tap the <strong>Share</strong> button (the square icon with the arrow pointing up at the bottom of the screen).</li>
+                        <li>Scroll down the options and select <strong>"Add to Home Screen"</strong>.</li>
+                        <li>Tap <strong>"Add"</strong> in the top-right corner.</li>
+                    </ol>
+                </div>
+
+                <div class="install-platform">
+                    <h3>🤖 For Android (Chrome)</h3>
+                    <ol class="install-steps">
+                        <li>Tap the <strong>Menu</strong> icon (the three dots in the top-right corner).</li>
+                        <li>Select <strong>"Add to Home screen"</strong> (or <strong>"Install app"</strong>).</li>
+                        <li>Confirm by tapping <strong>"Add"</strong>.</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
@@ -3286,10 +3447,12 @@
         const customQuestsModal = document.getElementById('custom-quests-modal');
         const settingsModal = document.getElementById('settings-modal');
         const privacyModal = document.getElementById('privacy-modal');
+        const installModal = document.getElementById('install-modal');
         const closeModal = document.getElementById('close-modal');
         const closeCustomModal = document.getElementById('close-custom-modal');
         const closeSettingsModal = document.getElementById('close-settings-modal');
         const closePrivacyModal = document.getElementById('close-privacy-modal');
+        const closeInstallModal = document.getElementById('close-install-modal');
         const savedQuestsList = document.getElementById('saved-quests-list');
         const customQuestsList = document.getElementById('custom-quests-list');
         const savedCount = document.getElementById('saved-count');
@@ -3300,6 +3463,7 @@
         const modalThemeToggle = document.getElementById('modal-theme-toggle');
         const privacyLink = document.getElementById('privacy-link');
         const settingsLink = document.getElementById('settings-link');
+        const installLink = document.getElementById('install-link');
         const clearDataBtn = document.getElementById('clear-data-btn');
         const soundToggleBtn = document.getElementById('sound-toggle-btn');
         const statsDetails = document.getElementById('stats-details');
@@ -4209,9 +4373,43 @@
 
         function closePrivacyPolicyModal() { document.body.classList.remove('modal-open'); if (privacyModal) privacyModal.style.display = 'none'; }
 
+        function closeInstallModalFunc() { document.body.classList.remove('modal-open'); if (installModal) installModal.style.display = 'none'; }
+
         function openSettingsModal() { document.body.classList.add('modal-open'); if (settingsModal) settingsModal.style.display = 'flex'; }
 
         function openPrivacyModal() { document.body.classList.add('modal-open'); if (privacyModal) privacyModal.style.display = 'flex'; }
+
+        function openInstallModal() { document.body.classList.add('modal-open'); if (installModal) installModal.style.display = 'flex'; }
+
+        // ==================== PWA INSTALL PROMPT ====================
+        let deferredInstallPrompt = null;
+
+        function isRunningStandalone() {
+            return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+        }
+
+        window.addEventListener('beforeinstallprompt', (event) => {
+            event.preventDefault();
+            deferredInstallPrompt = event;
+        });
+
+        window.addEventListener('appinstalled', () => {
+            deferredInstallPrompt = null;
+            if (installLink) installLink.style.display = 'none';
+        });
+
+        async function handleInstallClick(event) {
+            if (event) event.preventDefault();
+            if (deferredInstallPrompt) {
+                deferredInstallPrompt.prompt();
+                try {
+                    await deferredInstallPrompt.userChoice;
+                } catch (e) { /* ignore */ }
+                deferredInstallPrompt = null;
+            } else {
+                openInstallModal();
+            }
+        }
 
         function initQuestOfMonth() {
             const now = new Date();
@@ -4225,7 +4423,7 @@
 
         // ==================== CLICK OUTSIDE MODAL TO CLOSE ====================
         function setupModalClickOutside() {
-            const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal];
+            const modals = [myQuestsModal, customQuestsModal, settingsModal, privacyModal, installModal];
 
             modals.forEach(modal => {
                 if (!modal) return;
@@ -4318,6 +4516,14 @@
             if (privacyLink) privacyLink.addEventListener('click', openPrivacyModal);
             if (settingsLink) settingsLink.addEventListener('click', openSettingsModal);
             if (clearDataBtn) clearDataBtn.addEventListener('click', clearAllData);
+            if (installLink) {
+                if (isRunningStandalone()) {
+                    installLink.style.display = 'none';
+                } else {
+                    installLink.addEventListener('click', handleInstallClick);
+                }
+            }
+            if (closeInstallModal) closeInstallModal.addEventListener('click', closeInstallModalFunc);
 
             const addCustomBtn = document.getElementById('add-custom-quest-btn');
             if (addCustomBtn) addCustomBtn.addEventListener('click', addCustomQuest);
@@ -4341,6 +4547,7 @@
                 if (event.target === customQuestsModal) closeCustomQuestsModal();
                 if (event.target === settingsModal) closeSettingsModalFunc();
                 if (event.target === privacyModal) closePrivacyPolicyModal();
+                if (event.target === installModal) closeInstallModalFunc();
             });
 
             setupModalClickOutside();
