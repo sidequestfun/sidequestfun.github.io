@@ -2520,52 +2520,104 @@
                 filter: grayscale(0.3);
                 transform: scale(0.98);
             }
+/* ---- Minimalist Install App Modal ---- */
+.minimalist-install {
+    text-align: center;
+    padding: 35px 25px !important;
+    border-radius: 24px !important;
+    max-width: 400px !important;
+}
 
-        /* ---- Install App Modal (unchanged) ---- */
-        .install-modal .modal-content {
-            max-width: 540px;
-        }
-        .install-modal .modal-title i {
-            margin-right: 10px;
-            color: #DD467F;
-        }
-        .install-step {
-            display: flex;
-            gap: 16px;
-            margin-bottom: 22px;
-            align-items: flex-start;
-        }
-        .install-step .step-icon {
-            font-size: 1.8rem;
-            min-width: 48px;
-            text-align: center;
-            color: #14B3D9;
-        }
-        .install-step .step-content h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 6px;
-        }
-        .install-step .step-content p {
-            margin: 0;
-            font-size: 0.95rem;
-            color: #555;
-        }
-        body.dark-mode .install-step .step-content h4 {
-            color: #e0e0e0;
-        }
-        body.dark-mode .install-step .step-content p {
-            color: #cbd5e1;
-        }
-        .install-divider {
-            height: 1px;
-            background: #eee;
-            margin: 20px 0;
-        }
-        body.dark-mode .install-divider {
-            background: #334155;
-        }
+.minimalist-install .modal-header {
+    position: relative;
+    justify-content: center;
+    border: none;
+    margin-bottom: 5px;
+}
+
+.minimalist-install .modal-title {
+    font-size: 1.5rem;
+    color: #333;
+    font-weight: 700;
+    margin: 0;
+}
+
+body.dark-mode .minimalist-install .modal-title {
+    color: #e0e0e0;
+}
+
+.minimalist-install .close-modal {
+    position: absolute;
+    right: -10px;
+    top: -15px;
+}
+
+.install-subtitle {
+    color: #888;
+    font-size: 0.95rem;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+body.dark-mode .install-subtitle {
+    color: #94a3b8;
+}
+
+.install-os-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+}
+
+.minimal-step {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: #f5f5f7;
+    padding: 16px 20px;
+    border-radius: 16px;
+    width: 100%;
+    text-align: left;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+body.dark-mode .minimal-step {
+    background: #1e293b;
+    border-color: #334155;
+}
+
+.minimal-step i {
+    font-size: 1.4rem;
+    color: #14B3D9;
+    width: 24px;
+    text-align: center;
+}
+
+.minimal-step span {
+    font-size: 1.05rem;
+    color: #333;
+}
+
+body.dark-mode .minimal-step span {
+    color: #e0e0e0;
+}
+
+.desktop-hint {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    color: #666;
+    font-size: 0.95rem;
+    border: 1px solid #e9ecef;
+}
+
+body.dark-mode .desktop-hint {
+    background: #0f172a;
+    color: #94a3b8;
+    border-color: #334155;
+}
     </style>
 </head>
 <body>
@@ -2839,41 +2891,47 @@
             </div>
         </div>
     </div>
+<!-- Install App Modal -->
+<div class="modal install-modal" id="install-modal">
+    <div class="modal-content minimalist-install">
+        <div class="modal-header">
+            <h2 class="modal-title">Install App</h2>
+            <button class="close-modal" id="close-install-modal">&times;</button>
+        </div>
+        <div class="install-body">
+            <p class="install-subtitle">Add SidequestFun to your home screen for quick access.</p>
 
-    <!-- Install App Modal -->
-    <div class="modal install-modal" id="install-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title"><i class="fas fa-mobile-alt"></i> Install SidequestFun</h2>
-                <button class="close-modal" id="close-install-modal">&times;</button>
+            <!-- iOS Block -->
+            <div id="install-ios" class="install-os-block" style="display: none;">
+                <div class="minimal-step">
+                    <i class="fas fa-square-arrow-up"></i>
+                    <span>1. Tap <strong>Share</strong></span>
+                </div>
+                <div class="minimal-step">
+                    <i class="fas fa-plus-square"></i>
+                    <span>2. Select <strong>Add to Home Screen</strong></span>
+                </div>
             </div>
-            <div style="margin-bottom: 20px;">
-                <p style="font-size:1rem; color:#444; margin-bottom:10px;">Add SidequestFun to your home screen for quick access – just like a native app!</p>
-                <div class="install-divider"></div>
-                <div class="install-step">
-                    <div class="step-icon"><i class="fab fa-apple"></i></div>
-                    <div class="step-content">
-                        <h4>🍎 iPhone / iPad (Safari)</h4>
-                        <p>1. Tap the Share button <i class="fas fa-square-arrow-up" style="font-size:1.2rem; margin:0 4px;"></i> (bottom of the screen).<br>
-                        2. Scroll down and select <strong>"Add to Home Screen"</strong>.<br>
-                        3. Tap <strong>"Add"</strong> in the top‑right corner.</p>
-                    </div>
+
+            <!-- Android Block -->
+            <div id="install-android" class="install-os-block" style="display: none;">
+                <div class="minimal-step">
+                    <i class="fas fa-ellipsis-vertical"></i>
+                    <span>1. Tap <strong>Menu</strong></span>
                 </div>
-                <div class="install-divider"></div>
-                <div class="install-step">
-                    <div class="step-icon"><i class="fab fa-android"></i></div>
-                    <div class="step-content">
-                        <h4>🤖 Android (Chrome)</h4>
-                        <p>1. Tap the Menu icon <i class="fas fa-ellipsis-vertical" style="font-size:1.2rem; margin:0 4px;"></i> (top‑right corner).<br>
-                        2. Select <strong>"Add to Home screen"</strong> or <strong>"Install app"</strong>.<br>
-                        3. Confirm by tapping <strong>"Add"</strong>.</p>
-                    </div>
+                <div class="minimal-step">
+                    <i class="fas fa-mobile-screen"></i>
+                    <span>2. Select <strong>Install app</strong></span>
                 </div>
-                <div class="install-divider"></div>
-                <p style="font-size:0.9rem; color:#666; text-align:center;">This is a progressive web app (PWA). No app store required!</p>
+            </div>
+
+            <!-- Desktop / Fallback Block -->
+            <div id="install-desktop" class="install-os-block" style="display: none;">
+                <p class="desktop-hint">Open this website on your mobile device (iOS Safari or Android Chrome) to install the app!</p>
             </div>
         </div>
     </div>
+</div>
 
     <div class="notification" id="notification">
         <i class="fas fa-check-circle"></i>
@@ -3419,6 +3477,35 @@
         }
 
         // ==================== CORE FUNCTIONS ====================
+        
+        // Funktion zur Geräteerkennung für das Install-Modal
+function showRelevantInstallInstructions() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    const iosBlock = document.getElementById('install-ios');
+    const androidBlock = document.getElementById('install-android');
+    const desktopBlock = document.getElementById('install-desktop');
+
+    // Zuerst alle verstecken
+    iosBlock.style.display = 'none';
+    androidBlock.style.display = 'none';
+    desktopBlock.style.display = 'none';
+
+    // Gerät prüfen und entsprechenden Block anzeigen
+    if (/android/i.test(userAgent)) {
+        androidBlock.style.display = 'flex';
+    } else if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        iosBlock.style.display = 'flex';
+    } else {
+        desktopBlock.style.display = 'block';
+    }
+}
+
+// Event Listener anpassen (falls du bereits einen für "install-link" hast, ergänze ihn einfach um den Funktionsaufruf)
+document.getElementById('install-link').addEventListener('click', () => {
+    showRelevantInstallInstructions(); // Logik vor dem Öffnen ausführen
+    document.getElementById('install-modal').style.display = 'flex';
+});
+        
         function getAllQuests() {
             return [...sidequests, ...customQuests];
         }
