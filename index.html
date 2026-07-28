@@ -185,6 +185,11 @@
                 font-size: 0.8rem;
                 text-align: center;
             }
+            /* Mobile button width adjustment: full width of container */
+            .btn {
+                max-width: 100% !important;
+                width: 100% !important;
+            }
         }
 
         @media (max-width: 400px) {
@@ -196,6 +201,10 @@
             .logo-text-fallback {
                 font-size: 1.7rem;
                 padding: 0 25px;
+            }
+            .btn {
+                max-width: 100% !important;
+                width: 100% !important;
             }
         }
 
@@ -852,6 +861,8 @@
                 padding: 14px 20px;
                 font-size: 1rem;
                 min-height: 50px;
+                max-width: 100% !important;
+                width: 100% !important;
             }
 
             h2 {
@@ -956,6 +967,8 @@
             .btn {
                 padding: 12px 18px;
                 font-size: 0.95rem;
+                max-width: 100% !important;
+                width: 100% !important;
             }
 
             .free-notice {
@@ -2473,7 +2486,7 @@
                 max-height: 250px;
             }
             }
-            /* Animation Questcard */
+            /* Questcard animation */
             @keyframes shake {
             0%   { transform: translateX(0); box-shadow: none; }
             20%  { transform: translateX(-8px); box-shadow: 0 0 0 2px rgba(20, 179, 217, 0.18); }
@@ -3476,11 +3489,11 @@
             }
         }
 
-        // ==================== GENERATE SIDEQUEST (mit optionalem Button-Parameter) ====================
+        // ==================== GENERATE SIDEQUEST (with optional button param) ====================
         function generateSidequest(fromButton = false) {
             soundSystem.playGenerate();
 
-            // Nur bei direktem Klick auf den Button die Press-Animation ausführen
+            // Only animate if button click
             if (fromButton && generateBtn) {
                 generateBtn.classList.remove('pressed');
                 void generateBtn.offsetWidth;
@@ -3567,7 +3580,7 @@
             }
 
             currentCategory = category;
-            generateSidequest(); // kein Button-Animation
+            generateSidequest(); // No button animation
         }
 
         function saveSidequest() {
@@ -4034,7 +4047,7 @@
             }
         }
 
-        // ==================== SOUND EFFECTS SYSTEM (verbesserte Frequenzen) ====================
+        // ==================== SOUND EFFECTS SYSTEM (improved frequencies) ====================
         const soundSystem = {
             enabled: localStorage.getItem('sidequestfun_soundEnabled') !== 'false',
             audioContext: null,
@@ -4068,13 +4081,13 @@
             },
 
             playGenerate() {
-                // Weicherer, zweistufiger Ton: 500 Hz → 800 Hz
+                // Softer two-tone: 500 Hz → 800 Hz
                 this.playBeep(500, 80);
                 setTimeout(() => this.playBeep(800, 80), 50);
             },
 
             playComplete() {
-                // C-Dur Dreiklang: C (523), E (659), G (784)
+                // C-major triad: C (523), E (659), G (784)
                 this.playBeep(523.25, 100);
                 setTimeout(() => this.playBeep(659.25, 100), 80);
                 setTimeout(() => this.playBeep(783.99, 150), 160);
@@ -4153,11 +4166,11 @@
             function updateTabVisibility(tabName) {
             const searchContainer = document.getElementById('questSearchContainer');
             if (searchContainer) {
-                // Search List
+                // Show search on any tab
                 searchContainer.style.display = 'flex';
             }
 
-            // Clear Search at tab switch
+            // Clear search on tab switch
             const searchInput = document.getElementById('questSearchInput');
             const searchResultsInfo = document.getElementById('searchResultsInfo');
             if (searchInput) {
@@ -4324,7 +4337,7 @@
              }
             });
 
-            // Generate-Button: jetzt mit true für die Animation
+            // Generate-Button: now with true for animation
             if (generateBtn) generateBtn.addEventListener('click', () => generateSidequest(true));
             if (saveBtn) saveBtn.addEventListener('click', saveSidequest);
             if (myQuestsBtn) myQuestsBtn.addEventListener('click', openSavedQuestsModal);
