@@ -452,6 +452,17 @@
             outline: none;
         }
 
+        @keyframes btnPress {
+            0%   { transform: scale(1); }
+            40%  { transform: scale(0.94); }
+            100% { transform: scale(1); }
+        }
+
+        .generate-btn.pressed,
+        .complete-btn.pressed {
+            animation: btnPress 0.25s ease;
+        }
+
         .complete-btn {
             background-color: #28a745;
             color: white;
@@ -957,11 +968,15 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(10px) scale(0.96);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-2px) scale(1.02);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
@@ -2460,12 +2475,12 @@
             }
             /* Animation Questcard */
             @keyframes shake {
-            0%   { transform: translateX(0); }
-            20%  { transform: translateX(-8px); }
-            40%  { transform: translateX(8px); }
-            60%  { transform: translateX(-5px); }
-            80%  { transform: translateX(5px); }
-            100% { transform: translateX(0); }
+            0%   { transform: translateX(0); box-shadow: none; }
+            20%  { transform: translateX(-8px); box-shadow: 0 0 0 2px rgba(20, 179, 217, 0.18); }
+            40%  { transform: translateX(8px); box-shadow: 0 0 0 2px rgba(20, 179, 217, 0.18); }
+            60%  { transform: translateX(-5px); box-shadow: 0 0 0 2px rgba(20, 179, 217, 0.15); }
+            80%  { transform: translateX(5px); box-shadow: 0 0 0 2px rgba(20, 179, 217, 0.1); }
+            100% { transform: translateX(0); box-shadow: none; }
             }
             .quest-display.shuffling {
             animation: shake 0.3s ease-in-out;
@@ -3461,80 +3476,82 @@
             }
         }
 
-            function generateSidequest() {
-              soundSystem.playGenerate();
-    
-              // 1. Get all quests (built-in + custom)
-               let allQuests = getAllQuests();
-    
-               // 2. Filter by current category (indoor/outdoor/social)
-               if (currentCategory !== 'all') {
-                   allQuests = allQuests.filter(quest => quest.category === currentCategory);
-               }
-    
-              // 3. Filter by active filters (custom, easy, medium, epic)
-                let filteredQuests = allQuests.filter(quest => {
-                let matches = false;
-        
-                    // Custom Filter: is this quest in customQuests?
-                    if (activeFilters.includes('custom') && customQuests.includes(quest)) {
-                        matches = true;
-                    }
-                    // Difficulty filter
-                    if (!matches && activeFilters.includes(quest.difficulty)) {
-                        matches = true;
-                    }
-                    return matches;
-                });
-    
-                // 4. If nothing else is left, show message
-                if (filteredQuests.length === 0) {
-                    questText.textContent = "No quests match your filters. Activate at least one filter in Settings!";
-                    difficultyTags.innerHTML = '';
-                    currentQuest = null;
-                    updateSaveButton();
-                    return;
-                }
-    
-                // 5. Exclude history and already completed quests (optional)
-                const availableQuests = filteredQuests.filter(quest =>
-                    !questHistory.includes(quest.text) &&
-                    !completedQuests.some(completed => completed.text === quest.text)
-                );
-                const questsToUse = availableQuests.length > 0 ? availableQuests : filteredQuests.filter(quest =>
-                    !completedQuests.some(completed => completed.text === quest.text)
-              );
-    
-               if (questsToUse.length === 0) {
-                    questText.textContent = "You've completed all quests with these filters! Try another filter.";
-                    difficultyTags.innerHTML = '';
-                    currentQuest = null;
-                    updateSaveButton();
-                    return;
-                }
-    
-                // 6. Animation & selection
-               const questDisplay = document.querySelector('.quest-display');
-               questDisplay.classList.add('shuffling');
-               setTimeout(() => {
-                  const randomIndex = Math.floor(Math.random() * questsToUse.length);
-                   currentQuest = questsToUse[randomIndex];
-                   questText.textContent = currentQuest.text;
-                   addToHistory(currentQuest.text);
-        
-                  difficultyTags.innerHTML = '';
-                  const difficultyTag = document.createElement('div');
-                  difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
-                  difficultyTag.textContent = currentQuest.difficulty;
-                  difficultyTags.appendChild(difficultyTag);
-        
-                  questDisplay.classList.remove('shuffling');
-                 questText.classList.remove('new-quest');
-                 void questText.offsetWidth;
-                  questText.classList.add('new-quest');
-                  updateSaveButton();
-              }, 380);
+        // ==================== GENERATE SIDEQUEST (mit optionalem Button-Parameter) ====================
+        function generateSidequest(fromButton = false) {
+            soundSystem.playGenerate();
+
+            // Nur bei direktem Klick auf den Button die Press-Animation ausführen
+            if (fromButton && generateBtn) {
+                generateBtn.classList.remove('pressed');
+                void generateBtn.offsetWidth;
+                generateBtn.classList.add('pressed');
             }
+
+            // 1. Get all quests (built-in + custom)
+            let allQuests = getAllQuests();
+
+            // 2. Filter by current category (indoor/outdoor/social)
+            if (currentCategory !== 'all') {
+                allQuests = allQuests.filter(quest => quest.category === currentCategory);
+            }
+
+            // 3. Filter by active filters (custom, easy, medium, epic)
+            let filteredQuests = allQuests.filter(quest => {
+                let matches = false;
+                if (activeFilters.includes('custom') && customQuests.includes(quest)) {
+                    matches = true;
+                }
+                if (!matches && activeFilters.includes(quest.difficulty)) {
+                    matches = true;
+                }
+                return matches;
+            });
+
+            if (filteredQuests.length === 0) {
+                questText.textContent = "No quests match your filters. Activate at least one filter in Settings!";
+                difficultyTags.innerHTML = '';
+                currentQuest = null;
+                updateSaveButton();
+                return;
+            }
+
+            const availableQuests = filteredQuests.filter(quest =>
+                !questHistory.includes(quest.text) &&
+                !completedQuests.some(completed => completed.text === quest.text)
+            );
+            const questsToUse = availableQuests.length > 0 ? availableQuests : filteredQuests.filter(quest =>
+                !completedQuests.some(completed => completed.text === quest.text)
+            );
+
+            if (questsToUse.length === 0) {
+                questText.textContent = "You've completed all quests with these filters! Try another filter.";
+                difficultyTags.innerHTML = '';
+                currentQuest = null;
+                updateSaveButton();
+                return;
+            }
+
+            const questDisplay = document.querySelector('.quest-display');
+            questDisplay.classList.add('shuffling');
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * questsToUse.length);
+                currentQuest = questsToUse[randomIndex];
+                questText.textContent = currentQuest.text;
+                addToHistory(currentQuest.text);
+
+                difficultyTags.innerHTML = '';
+                const difficultyTag = document.createElement('div');
+                difficultyTag.className = `difficulty-tag difficulty-${currentQuest.difficulty}`;
+                difficultyTag.textContent = currentQuest.difficulty;
+                difficultyTags.appendChild(difficultyTag);
+
+                questDisplay.classList.remove('shuffling');
+                questText.classList.remove('new-quest');
+                void questText.offsetWidth;
+                questText.classList.add('new-quest');
+                updateSaveButton();
+            }, 380);
+        }
 
         function setActiveFilter(category) {
             filterButtons.forEach(btn => {
@@ -3550,7 +3567,7 @@
             }
 
             currentCategory = category;
-            generateSidequest();
+            generateSidequest(); // kein Button-Animation
         }
 
         function saveSidequest() {
@@ -3576,6 +3593,11 @@
             if (completedQuests.some(q => q.text === currentQuest.text)) {
                 showNotification("You've already completed this quest!");
                 return;
+            }
+            if (completeBtn) {
+                completeBtn.classList.remove('pressed');
+                void completeBtn.offsetWidth;
+                completeBtn.classList.add('pressed');
             }
             completedQuests.push(currentQuest);
             localStorage.setItem('sidequestfun_completedQuests', JSON.stringify(completedQuests));
@@ -4012,7 +4034,7 @@
             }
         }
 
-        // ==================== SOUND EFFECTS SYSTEM ====================
+        // ==================== SOUND EFFECTS SYSTEM (verbesserte Frequenzen) ====================
         const soundSystem = {
             enabled: localStorage.getItem('sidequestfun_soundEnabled') !== 'false',
             audioContext: null,
@@ -4046,11 +4068,13 @@
             },
 
             playGenerate() {
-                this.playBeep(600, 80);
+                // Weicherer, zweistufiger Ton: 500 Hz → 800 Hz
+                this.playBeep(500, 80);
                 setTimeout(() => this.playBeep(800, 80), 50);
             },
 
             playComplete() {
+                // C-Dur Dreiklang: C (523), E (659), G (784)
                 this.playBeep(523.25, 100);
                 setTimeout(() => this.playBeep(659.25, 100), 80);
                 setTimeout(() => this.playBeep(783.99, 150), 160);
@@ -4300,7 +4324,8 @@
              }
             });
 
-            if (generateBtn) generateBtn.addEventListener('click', generateSidequest);
+            // Generate-Button: jetzt mit true für die Animation
+            if (generateBtn) generateBtn.addEventListener('click', () => generateSidequest(true));
             if (saveBtn) saveBtn.addEventListener('click', saveSidequest);
             if (myQuestsBtn) myQuestsBtn.addEventListener('click', openSavedQuestsModal);
             if (customQuestsBtn) customQuestsBtn.addEventListener('click', openCustomQuestsModal);
