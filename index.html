@@ -2546,6 +2546,117 @@
                 filter: grayscale(0.3);
                 transform: scale(0.98);
             }       
+
+            /* ==================== BONUS: COLOR CHALLENGE (added) ==================== */
+            .bonus-section {
+                text-align: center;
+                margin-top: 56px;
+                margin-bottom: 6px;
+            }
+
+            .bonus-link-btn {
+                background: none;
+                border: none;
+                color: #b9b9c2;
+                font-size: 0.78rem;
+                font-style: italic;
+                letter-spacing: 0.01em;
+                padding: 10px 18px;
+                border-radius: 20px;
+                cursor: pointer;
+                display: inline-flex;
+                align-items: center;
+                gap: 7px;
+                transition: color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+            }
+
+            .bonus-egg-icon {
+                display: inline-block;
+                font-size: 1rem;
+                font-style: normal;
+                transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+
+            .bonus-link-btn:hover,
+            .bonus-link-btn:focus-visible {
+                color: #14B3D9;
+                background-color: rgba(20, 179, 217, 0.08);
+                outline: none;
+            }
+
+            .bonus-link-btn:hover .bonus-egg-icon,
+            .bonus-link-btn:focus-visible .bonus-egg-icon {
+                transform: rotate(-14deg) scale(1.2);
+            }
+
+            .bonus-link-btn:active {
+                transform: scale(0.95);
+            }
+
+            body.dark-mode .bonus-link-btn {
+                color: #5a6472;
+            }
+
+            body.dark-mode .bonus-link-btn:hover,
+            body.dark-mode .bonus-link-btn:focus-visible {
+                color: #14B3D9;
+                background-color: rgba(20, 179, 217, 0.12);
+            }
+
+            /* Fullscreen modal for the bonus mini-game */
+            #colorgame-modal .modal-content {
+                background-color: transparent;
+                box-shadow: none;
+                max-width: 100%;
+                width: 100%;
+                height: 100dvh;
+                max-height: 100dvh;
+                margin: 0;
+                padding: 0;
+                border-radius: 0;
+                overflow: hidden;
+                display: flex;
+            }
+
+            .colorgame-frame-wrap {
+                flex: 1;
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+                overflow: hidden;
+            }
+
+            #colorgame-iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+                display: block;
+                background: #fafafa;
+            }
+
+            .colorgame-close-float {
+                position: absolute;
+                top: max(14px, env(safe-area-inset-top));
+                right: max(14px, env(safe-area-inset-right));
+                z-index: 10;
+                background-color: rgba(17, 17, 17, 0.55);
+                color: #fff;
+                backdrop-filter: blur(4px);
+            }
+
+            .colorgame-close-float:hover,
+            .colorgame-close-float:active,
+            .colorgame-close-float:focus {
+                background-color: rgba(17, 17, 17, 0.8);
+                color: #fff;
+            }
+
+            @media (max-width: 480px) {
+                .bonus-link-btn {
+                    font-size: 0.74rem;
+                    padding: 9px 14px;
+                }
+            }
     </style>
 </head>
 <body>
@@ -2636,6 +2747,13 @@
                     Start Now
                 </a>
             </div>
+        </div>
+
+        <div class="bonus-section" id="bonus-section">
+            <button class="bonus-link-btn" id="bonus-game-btn" type="button" aria-label="Secret bonus mini-game">
+                <span class="bonus-egg-icon">🥚</span>
+                <span>psst&hellip; found a secret mini-game?</span>
+            </button>
         </div>
     </div>
 
@@ -2816,6 +2934,15 @@
                 <p><strong>Note on Link Sharing:</strong> Since quest data is stored directly within the URL, sharing via link is optimized for up to 50 quests. For larger decks, please use the ⁠.json⁠ file export ("Export as File") to prevent messaging apps like WhatsApp from truncating long links.</p>
                 <h3>6. Your Ideas (Linktree)</h3>
                 <p>By clicking the "Start Now" button, you will be redirected to our Linktree page, where you can voluntarily submit ideas or feature suggestions. By submitting an idea, you grant us a perpetual, worldwide, non-exclusive, royalty-free, and irrevocable right to use, reproduce, modify, adapt, publish, and implement your suggestions to complement or enhance our website and services, without any obligation for compensation or attribution. Please note that visiting external platforms like Linktree is also subject to <a href="https://linktr.ee/s/privacy">Linktree’s Privacy Policy.</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="colorgame-modal">
+        <div class="modal-content">
+            <button class="close-modal colorgame-close-float" id="close-colorgame-modal" aria-label="Close mini-game">&times;</button>
+            <div class="colorgame-frame-wrap">
+                <iframe id="colorgame-iframe" title="Color Game - Color Memory Challenge"></iframe>
             </div>
         </div>
     </div>
@@ -4398,6 +4525,2242 @@
 
         window.addEventListener('load', init);
     </script>
+
+    <script type="text/html" id="colorgame-source"><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>Color Game — Color Memory Challenge</title>
+    <meta property="og:title" content="Color Game — Color Memory Challenge" />
+    <meta property="og:description" content="Test and train your color perception. Memorize 5 colors, then recreate them blindly. A fun brain game for everyone." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='512' height='512' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='64' fill='%23f0f0f0'/%3E%3Ccircle cx='256' cy='256' r='180' fill='none' stroke='%23111111' stroke-width='12'/%3E%3Cpath d='M256 76 L256 436 M76 256 L436 256 M130 130 L382 382 M130 382 L382 130' stroke='%23111111' stroke-width='8' opacity='0.3'/%3E%3Ccircle cx='256' cy='256' r='120' fill='%234facfe' /%3E%3Ccircle cx='256' cy='256' r='80' fill='%23ff5f6d' /%3E%3Ccircle cx='256' cy='256' r='40' fill='%23f5b400' /%3E%3C/svg%3E" />
+
+    <link rel="icon" href="logo.png" sizes="any" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ----- Overscroll & base ----- */
+        html,
+        body {
+            overscroll-behavior: none;
+            height: 100%;
+        }
+
+        /* ----- CSS Variables (Light default) ----- */
+        :root {
+            --bg: #ffffff;
+            --page: #fafafa;
+            --card: #ffffff;
+            --line: #ececec;
+            --line-strong: #dcdcdc;
+            --text: #111111;
+            --muted: #8b8b8b;
+            --accent: #111111;
+            --track: #eeeeee;
+            --good: #1fb865;
+            --bad: #e5484d;
+            --gold: #f5b400;
+            --shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 12px 32px rgba(0, 0, 0, 0.06);
+            --modal-overlay: rgba(0, 0, 0, 0.35);
+            --modal-bg: #ffffff;
+            --switch-bg: #ddd;
+            --switch-dot: #fff;
+            --btn-text: #ffffff;
+            --btn-bg: #111111;
+            --btn-border: #dcdcdc;
+        }
+
+        /* ----- Dark Mode (optimized contrast) ----- */
+        body.dark {
+            --bg: #1a1a1a;
+            --page: #121212;
+            --card: #1e1e1e;
+            --line: #2a2a2a;
+            --line-strong: #3a3a3a;
+            --text: #f0f0f0;
+            --muted: #aaaaaa;
+            --accent: #f0f0f0;
+            --track: #2a2a2a;
+            --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.5);
+            --modal-overlay: rgba(0, 0, 0, 0.7);
+            --modal-bg: #1e1e1e;
+            --switch-bg: #444;
+            --switch-dot: #f0f0f0;
+            --btn-text: #ffffff;
+            --btn-bg: #2a2a2a;
+            --btn-border: #3a3a3a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            background: var(--page);
+            color: var(--text);
+            font-family: 'Sora', sans-serif;
+            min-height: 100dvh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-x: hidden;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        .mono {
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 18px;
+        }
+
+        /* ----- Header / Brand ----- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 0 4px;
+        }
+        .brand {
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text);
+            background: none;
+            -webkit-text-fill-color: initial;
+        }
+        .brand .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+        }
+        .brand-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            color: var(--muted);
+            font-weight: 600;
+            background: var(--track);
+            padding: 3px 7px;
+            border-radius: 20px;
+            margin-left: 2px;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .meta {
+            display: flex;
+            gap: 14px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .meta b {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .meta .k {
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-size: 9px;
+            display: block;
+            margin-bottom: 1px;
+        }
+
+        .icon-btn {
+            appearance: none;
+            border: 1px solid var(--line-strong);
+            background: transparent;
+            color: var(--muted);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 16px;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.12s ease, opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
+        }
+        .icon-btn:active {
+            transform: scale(0.9);
+        }
+        .icon-btn:hover {
+            color: var(--text);
+            border-color: var(--text);
+        }
+
+        /* ----- Card & Screens ----- */
+        .card {
+            width: 100%;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+            transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card.shake {
+            animation: cardShake 0.4s ease;
+        }
+        @keyframes cardShake {
+            10%,
+            90% {
+                transform: translateX(-1px);
+            }
+            20%,
+            80% {
+                transform: translateX(2px);
+            }
+            30%,
+            50%,
+            70% {
+                transform: translateX(-4px);
+            }
+            40%,
+            60% {
+                transform: translateX(4px);
+            }
+        }
+
+        .screen {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .screen.active {
+            display: flex;
+        }
+
+        /* shared swatch box */
+        .swatch-box {
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 18px;
+            position: relative;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+            transition: background-color 0.05s linear;
+            overflow: hidden;
+        }
+
+        /* Start screen */
+        .start-swatch {
+            background: conic-gradient(from 0deg, #ff5f6d, #ffc371, #7bd389, #4facfe, #a367f0, #ff5f6d);
+        }
+        .start-copy {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 4px 6px;
+        }
+        .start-title {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.01em;
+        }
+        .start-sub {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .start-steps {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 2px 2px 4px;
+        }
+        .start-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            text-align: center;
+        }
+        .start-step .num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--track);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .start-step .lbl {
+            font-size: 10.5px;
+            color: var(--muted);
+            line-height: 1.3;
+        }
+
+        .record-chip {
+            align-self: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11.5px;
+            color: var(--muted);
+            background: var(--track);
+            padding: 7px 14px;
+            border-radius: 20px;
+        }
+        .record-chip b {
+            color: var(--text);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .challenge-banner {
+            width: 100%;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.12), rgba(163, 103, 240, 0.12));
+            border: 1px solid var(--line-strong);
+            border-radius: 14px;
+            padding: 11px 14px;
+            animation: stampPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .challenge-banner b {
+            font-family: 'IBM Plex Mono', monospace;
+            color: var(--accent);
+        }
+
+        /* Memorize screen */
+        .countdown-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 50%;
+            width: 46px;
+            height: 46px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .dark .countdown-badge {
+            background: rgba(30, 30, 30, 0.85);
+        }
+        .countdown-badge svg {
+            position: absolute;
+            inset: 0;
+            transform: rotate(-90deg);
+            width: 46px;
+            height: 46px;
+        }
+        .countdown-track {
+            fill: none;
+            stroke: rgba(0, 0, 0, 0.1);
+            stroke-width: 3;
+        }
+        .countdown-fill {
+            fill: none;
+            stroke: #111;
+            stroke-width: 3;
+            stroke-linecap: round;
+        }
+        .dark .countdown-fill {
+            stroke: #f0f0f0;
+        }
+        .countdown-num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            font-size: 15px;
+            position: relative;
+            z-index: 2;
+        }
+        .round-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 20px;
+            padding: 6px 11px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .dark .round-badge {
+            background: rgba(30, 30, 30, 0.85);
+        }
+        .memorize-caption {
+            text-align: center;
+            font-size: 12.5px;
+            color: var(--muted);
+            letter-spacing: 0.01em;
+        }
+
+        /* Guess screen */
+        .guess-hex-tag {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(6px);
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .dark .guess-hex-tag {
+            background: rgba(30, 30, 30, 0.85);
+        }
+        .sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .slider-row .ch-label {
+            width: 16px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+        }
+        .slider-row input[type=range] {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--track);
+            outline: none;
+            touch-action: none;
+            transition: background 0.3s ease;
+            margin: 4px 0;
+        }
+        .slider-row input[type=range]::-webkit-slider-runnable-track {
+            background: transparent;
+            height: 8px;
+            border-radius: 4px;
+        }
+        .slider-row input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--line-strong);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), 0 2px 8px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            margin-top: -10px;
+        }
+        .slider-row input[type=range]::-moz-range-track {
+            height: 8px;
+            border-radius: 4px;
+            background: transparent;
+            border: none;
+        }
+        .slider-row input[type=range]::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid var(--line-strong);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+        #sliderH {
+            background: linear-gradient(90deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+        }
+        #sliderS,
+        #sliderB {
+            background: var(--track);
+        }
+        .slider-row .ch-value {
+            width: 42px;
+            text-align: right;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* Result screen */
+        .stamp {
+            width: 100%;
+            text-align: center;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 11px;
+            border-radius: 12px;
+            animation: stampPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .stamp.perfect {
+            background: linear-gradient(135deg, #fff6da, #ffe58a);
+            color: #8a6300;
+            border: 1px solid #f5cf4d;
+        }
+        .stamp.fail {
+            background: rgba(229, 72, 77, 0.08);
+            color: var(--bad);
+            border: 1px solid rgba(229, 72, 77, 0.35);
+        }
+        .dark .stamp.perfect {
+            background: linear-gradient(135deg, #3d3a1a, #5e4f1a);
+            color: #f5cf4d;
+            border-color: #f5cf4d;
+        }
+        .dark .stamp.fail {
+            background: rgba(229, 72, 77, 0.2);
+            color: #ff7a7a;
+            border-color: #ff7a7a;
+        }
+        @keyframes stampPop {
+            0% {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .result-swatches {
+            display: flex;
+            gap: 10px;
+        }
+        .result-swatches .cell {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .result-swatches .swatch {
+            aspect-ratio: 1/1;
+            border-radius: 14px;
+            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.04);
+        }
+        .result-swatches .cell-label {
+            font-size: 10.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            text-align: center;
+        }
+        .result-swatches .cell-hex {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .score-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 6px 2px;
+        }
+        .score-ring-wrap {
+            position: relative;
+            width: 74px;
+            height: 74px;
+            flex-shrink: 0;
+        }
+        .score-ring-wrap svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+        .score-ring-track {
+            fill: none;
+            stroke: var(--track);
+            stroke-width: 5;
+        }
+        .score-ring-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 5;
+            stroke-linecap: round;
+            transition: stroke 0.3s ease;
+        }
+        .score-ring-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .score-copy .score-title {
+            font-size: 15.5px;
+            font-weight: 700;
+        }
+        .score-copy .score-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .confetti-layer {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: visible;
+        }
+        .confetti-p {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 6px;
+            height: 6px;
+            border-radius: 2px;
+            opacity: 0;
+            animation: confettiBurst 0.9s ease-out forwards;
+        }
+        @keyframes confettiBurst {
+            0% {
+                transform: translate(-50%, -50%) scale(0.6);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1) rotate(var(--rot));
+                opacity: 0;
+            }
+        }
+
+        /* Summary screen */
+        .summary-score-block {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 2px 2px;
+        }
+        .score-ring-wrap.big {
+            width: 112px;
+            height: 112px;
+        }
+        .score-ring-wrap.big .score-ring-num {
+            font-size: 26px;
+        }
+        .summary-copy {
+            text-align: center;
+        }
+        .summary-copy .score-title {
+            font-size: 17px;
+            font-weight: 800;
+        }
+        .summary-copy .score-sub {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .round-dots {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+        }
+        .round-dots .seg {
+            flex: 1;
+            height: 8px;
+            border-radius: 4px;
+            background: var(--track);
+        }
+
+        .record-badge {
+            align-self: center;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--good);
+            background: rgba(31, 184, 101, 0.08);
+            padding: 7px 14px;
+            border-radius: 20px;
+            animation: stampPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .dark .record-badge {
+            background: rgba(31, 184, 101, 0.15);
+        }
+
+        .link-btn {
+            appearance: none;
+            background: none;
+            border: none;
+            color: var(--muted);
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            text-decoration: underline;
+            cursor: pointer;
+            align-self: center;
+            padding: 2px;
+        }
+
+        /* Buttons – improved contrast in dark mode */
+        .btn {
+            appearance: none;
+            border: none;
+            cursor: pointer;
+            font-family: 'Sora', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 14px 22px;
+            border-radius: 14px;
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            width: 100%;
+            transition: transform 0.12s ease, opacity 0.12s ease, background 0.3s ease, color 0.3s ease;
+            touch-action: manipulation;
+        }
+        .btn:active {
+            transform: scale(0.98);
+            opacity: 0.92;
+        }
+        .btn.secondary {
+            background: transparent;
+            border: 1px solid var(--btn-border);
+            color: var(--text);
+        }
+        .dark .btn.secondary {
+            color: #f0f0f0;
+            border-color: #4a4a4a;
+        }
+        .dark .btn.secondary:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .btn-row {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-row .btn {
+            flex: 1;
+        }
+
+        .hint-row {
+            display: flex;
+            justify-content: center;
+            font-size: 11px;
+            color: var(--muted);
+            min-height: 14px;
+            transition: opacity 0.2s ease;
+        }
+
+        /* Footer links */
+        .footer-links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .footer-links a {
+            color: var(--muted);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s ease;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+        }
+        .footer-links a:hover {
+            color: var(--text);
+        }
+        .footer-links .icon {
+            font-size: 14px;
+        }
+
+        /* ----- Modal (single tab shown at a time) ----- */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: var(--modal-overlay);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal {
+            background: var(--modal-bg);
+            border-radius: 24px;
+            max-width: 400px;
+            width: 100%;
+            padding: 28px 24px;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.2);
+            transform: scale(0.95);
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+        .modal-overlay.open .modal {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 22px;
+            line-height: 1;
+            cursor: pointer;
+            color: var(--muted);
+            padding: 0 4px;
+            transition: color 0.2s ease;
+        }
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-body {
+            min-height: 80px;
+        }
+        .modal-body .tab-pane {
+            display: none;
+            flex-direction: column;
+            gap: 16px;
+            animation: fadePane 0.25s ease;
+        }
+        .modal-body .tab-pane.active {
+            display: flex;
+        }
+        @keyframes fadePane {
+            0% {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ----- Toggle switches – active = grün in beiden Modi! ----- */
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .toggle-label {
+            font-weight: 500;
+            font-size: 14px;
+        }
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 26px;
+            background: var(--switch-bg);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: background 0.25s ease;
+            flex-shrink: 0;
+            border: none;
+            padding: 0;
+        }
+        .toggle-switch .dot {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 22px;
+            height: 22px;
+            background: var(--switch-dot);
+            border-radius: 50%;
+            transition: transform 0.25s ease, background 0.25s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        }
+        .toggle-switch.active .dot {
+            transform: translateX(22px);
+        }
+
+        /* 🔥 Fix: In beiden Modi aktiv = grün */
+        .toggle-switch.active {
+            background: var(--good) !important;
+        }
+
+        /* Dark mode Grundfarbe (inaktiv) – überschreibt nicht den aktiven Zustand */
+        body.dark .toggle-switch {
+            background: var(--switch-bg);
+        }
+
+        /* Privacy & History */
+        .privacy-text {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+        .privacy-text strong {
+            color: var(--text);
+        }
+
+        .settings-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .settings-group-label {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .segmented {
+            display: flex;
+            background: var(--track);
+            border-radius: 12px;
+            padding: 3px;
+            gap: 3px;
+        }
+        .segmented button {
+            flex: 1;
+            appearance: none;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-family: 'Sora', sans-serif;
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 8px 4px;
+            border-radius: 9px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .segmented button.active {
+            background: var(--card);
+            color: var(--text);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+        }
+        .settings-divider {
+            height: 1px;
+            background: var(--line);
+            margin: 4px 0;
+        }
+
+        /* History / Stats */
+        .history-summary {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .history-stat {
+            flex: 1;
+            text-align: center;
+            background: var(--track);
+            border-radius: 12px;
+            padding: 10px 6px;
+        }
+        .history-stat .num {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 700;
+            font-size: 17px;
+        }
+        .history-stat .lbl {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 2px;
+        }
+        .trend-note {
+            font-size: 13px;
+            text-align: center;
+            padding: 9px;
+            border-radius: 10px;
+            background: rgba(31, 184, 101, 0.08);
+            color: var(--good);
+            font-weight: 600;
+        }
+        .dark .trend-note {
+            background: rgba(31, 184, 101, 0.15);
+        }
+        .trend-note.down {
+            background: rgba(229, 72, 77, 0.08);
+            color: var(--bad);
+        }
+        .dark .trend-note.down {
+            background: rgba(229, 72, 77, 0.18);
+        }
+        .trend-note.flat {
+            background: var(--track);
+            color: var(--muted);
+        }
+        .history-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 5px;
+            height: 70px;
+            padding: 0 2px;
+        }
+        .history-chart .bar-col {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            height: 100%;
+            gap: 4px;
+        }
+        .history-chart .bar {
+            width: 100%;
+            max-width: 22px;
+            border-radius: 4px 4px 2px 2px;
+            background: var(--accent);
+            min-height: 3px;
+        }
+        .history-chart .bar-val {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            color: var(--muted);
+        }
+        .history-empty {
+            font-size: 13px;
+            color: var(--muted);
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        /* Confirm dialog */
+        .confirm-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text);
+        }
+        .confirm-text .muted {
+            color: var(--muted);
+            font-size: 13px;
+            display: block;
+            margin-top: 4px;
+        }
+
+        .share-link-preview {
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+            font-family: 'IBM Plex Mono', monospace;
+            word-break: break-all;
+        }
+
+        /* ----- Mobile tweaks ----- */
+        @media (max-width: 380px) {
+            .card {
+                padding: 20px;
+                border-radius: 20px;
+            }
+            .start-steps {
+                flex-wrap: wrap;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app">
+
+        <!-- Header -->
+        <div class="app-header">
+            <div class="brand">
+                <span class="dot"></span>Color Game<span></span>
+            </div>
+            <div class="header-right" id="headerRight">
+                <div class="meta mono">
+                    <div><span class="k">Round</span><b id="statRound">1/5</b></div>
+                    <div><span class="k">Avg</span><b id="statAvg">0</b></div>
+                    <div><span class="k">Best</span><b id="statBest">0</b></div>
+                </div>
+                <button class="icon-btn" id="quitBtn" title="Back to start" aria-label="Quit">×</button>
+            </div>
+        </div>
+
+        <!-- Main Card -->
+        <div class="card" id="mainCard">
+
+            <!-- START -->
+            <div class="screen active" id="screenStart">
+                <div class="challenge-banner" id="challengeBanner" style="display:none">
+                    🎯 A friend scored <b id="challengeScore">0</b>/100 — think you can beat it?
+                </div>
+                <div class="swatch-box start-swatch"></div>
+                <div class="start-copy">
+                    <div class="start-title">Can you remember a color?</div>
+                    <div class="start-sub">Most people can't. We'll show you 5 colors – you recreate them from memory. No peeking, no second chances. Prove your eye is better than average.</div>
+                </div>
+                <div class="start-steps">
+                    <div class="start-step"><div class="num mono">1</div><div class="lbl">Memorize<br />the color</div></div>
+                    <div class="start-step"><div class="num mono">2</div><div class="lbl">Recreate<br />it blindly</div></div>
+                    <div class="start-step"><div class="num mono">3</div><div class="lbl">Beat your<br />average</div></div>
+                </div>
+                <button class="btn" id="startBtn">Start <span id="startBtnRounds">5</span> Rounds</button>
+                <div class="record-chip mono" id="recordChip" style="display:none">🏆 Best avg: <b id="recordVal">0</b>/100</div>
+            </div>
+
+            <!-- MEMORIZE -->
+            <div class="screen" id="screenMemorize">
+                <div class="swatch-box" id="targetSwatch">
+                    <div class="round-badge mono" id="roundBadge">Round 1/5</div>
+                    <div class="countdown-badge">
+                        <svg viewBox="0 0 46 46">
+                            <circle class="countdown-track" cx="23" cy="23" r="19"></circle>
+                            <circle class="countdown-fill" id="countdownRing" cx="23" cy="23" r="19"
+                            stroke-dasharray="119" stroke-dashoffset="0"></circle>
+                        </svg>
+                        <div class="countdown-num mono" id="countdownNum">5</div>
+                    </div>
+                </div>
+                <div class="memorize-caption">Memorize this color carefully …</div>
+            </div>
+
+            <!-- GUESS -->
+            <div class="screen" id="screenGuess">
+                <div class="swatch-box" id="guessSwatch">
+                    <div class="guess-hex-tag mono" id="guessHexTag">#808080</div>
+                </div>
+                <div class="sliders">
+                    <div class="slider-row">
+                        <span class="ch-label">H</span>
+                        <input type="range" id="sliderH" min="0" max="360" value="180">
+                        <span class="ch-value mono" id="valH">180°</span>
+                    </div>
+                    <div class="slider-row">
+                        <span class="ch-label">S</span>
+                        <input type="range" id="sliderS" min="0" max="100" value="65">
+                        <span class="ch-value mono" id="valS">65%</span>
+                    </div>
+                    <div class="slider-row">
+                        <span class="ch-label">B</span>
+                        <input type="range" id="sliderB" min="0" max="100" value="65">
+                        <span class="ch-value mono" id="valB">65%</span>
+                    </div>
+                </div>
+                <button class="btn" id="submitGuessBtn">Submit</button>
+            </div>
+
+            <!-- RESULT -->
+            <div class="screen" id="screenResult">
+                <div id="stampSlot"></div>
+                <div class="result-swatches">
+                    <div class="cell">
+                        <div class="swatch" id="resultTargetSwatch"></div>
+                        <div class="cell-label">Original</div>
+                        <div class="cell-hex mono" id="resultTargetHex">#000000</div>
+                    </div>
+                    <div class="cell">
+                        <div class="swatch" id="resultGuessSwatch"></div>
+                        <div class="cell-label">Your Guess</div>
+                        <div class="cell-hex mono" id="resultGuessHex">#000000</div>
+                    </div>
+                </div>
+
+                <div class="score-block">
+                    <div class="score-ring-wrap">
+                        <svg viewBox="0 0 74 74">
+                            <circle class="score-ring-track" cx="37" cy="37" r="31"></circle>
+                            <circle class="score-ring-fill" id="scoreRing" cx="37" cy="37" r="31"
+                            stroke-dasharray="195" stroke-dashoffset="195"></circle>
+                        </svg>
+                        <div class="score-ring-num mono" id="scoreNum">0</div>
+                        <div class="confetti-layer" id="confettiLayer"></div>
+                    </div>
+                    <div class="score-copy">
+                        <div class="score-title" id="scoreTitle">—</div>
+                        <div class="score-sub" id="scoreSub">out of 100</div>
+                    </div>
+                </div>
+
+                <button class="btn" id="nextRoundBtn">Next Round →</button>
+            </div>
+
+            <!-- SUMMARY -->
+            <div class="screen" id="screenSummary">
+                <div class="summary-score-block">
+                    <div class="score-ring-wrap big">
+                        <svg viewBox="0 0 100 100">
+                            <circle class="score-ring-track" cx="50" cy="50" r="45"></circle>
+                            <circle class="score-ring-fill" id="summaryRing" cx="50" cy="50" r="45"
+                            stroke-dasharray="283" stroke-dashoffset="283"></circle>
+                        </svg>
+                        <div class="score-ring-num mono" id="summaryNum">0</div>
+                        <div class="confetti-layer" id="summaryConfetti"></div>
+                    </div>
+                    <div class="summary-copy">
+                        <div class="score-title" id="summaryTitle">—</div>
+                        <div class="score-sub" id="summarySub">Avg over 5 rounds</div>
+                    </div>
+                </div>
+
+                <div class="round-dots" id="roundDots"></div>
+
+                <div class="record-badge" id="newRecordBadge" style="display:none">🏆 New Record!</div>
+
+                <div class="btn-row">
+                    <button class="btn secondary" id="backToStartBtn">Back to Start</button>
+                    <button class="btn" id="restartBtn">New Round</button>
+                </div>
+                <button class="link-btn" id="shareBtn">Share</button>
+            </div>
+
+        </div>
+
+        <!-- Hint row -->
+        <div class="hint-row" id="hintRow">&nbsp;</div>
+
+        <!-- Footer links -->
+        <div class="footer-links">
+            <a id="settingsLink"><span class="icon">⚙️</span> Settings</a>
+            <a id="historyLink"><span class="icon">📊</span> Stats</a>
+            <a id="privacyLink"><span class="icon">🔒</span> Privacy</a>
+        </div>
+
+    </div>
+
+    <!-- Modal Overlay -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <h2 id="modalTitle">Settings</h2>
+                <button class="modal-close" id="modalClose" aria-label="Close modal">✕</button>
+            </div>
+            <div class="modal-body">
+                <!-- Settings -->
+                <div class="tab-pane active" id="paneSettings">
+                    <div class="toggle-row">
+                        <span class="toggle-label">🌙 Dark Mode</span>
+                        <button class="toggle-switch" id="darkToggle" aria-label="Toggle dark mode">
+                            <span class="dot"></span>
+                        </button>
+                    </div>
+                    <div class="toggle-row" style="margin-top: 6px;">
+                        <span class="toggle-label">🔊 Mute Sound</span>
+                        <button class="toggle-switch" id="muteToggle" aria-label="Toggle sound">
+                            <span class="dot"></span>
+                        </button>
+                    </div>
+                    <div class="settings-divider"></div>
+                    <div class="settings-group">
+                        <span class="settings-group-label">🎯 Rounds per session</span>
+                        <div class="segmented" id="roundsSeg">
+                            <button data-val="3">3</button>
+                            <button data-val="5" class="active">5</button>
+                            <button data-val="10">10</button>
+                        </div>
+                    </div>
+                    <div class="settings-group">
+                        <span class="settings-group-label">⏱️ Memorize time</span>
+                        <div class="segmented" id="memtimeSeg">
+                            <button data-val="3">3s</button>
+                            <button data-val="5" class="active">5s</button>
+                            <button data-val="8">8s</button>
+                        </div>
+                    </div>
+                    <p style="font-size:12px; color:var(--muted); margin-top:4px;">Dark theme &amp; sound preferences are saved locally. Difficulty applies to your next session.</p>
+                </div>
+                <!-- Privacy -->
+                <div class="tab-pane" id="panePrivacy">
+                    <div class="privacy-text">
+                        <p>This website is a private, non-commercial hobby project for entertainment purposes only. The content is provided "as is" without any warranties. Any liability for damages of any kind is strictly disclaimed. We do not collect, store, or process any personal data from our visitors. When accessing the website, technically necessary data (such as your IP address) are processed by GitHub as the hosting provider. To ensure an optimal user experience and provide visual elements (icons, fonts, and effects), this website loads external libraries from Content Delivery Networks (CDNs). When these resources are loaded, your IP address is transmitted to the respective providers in order to deliver the files to your browser. This is technically necessary for the website to function correctly.</p>
+                    </div>
+                </div>
+                <!-- History -->
+                <div class="tab-pane" id="paneHistory">
+                    <div class="history-summary">
+                        <div class="history-stat"><div class="num mono" id="histBestSingle">0</div><div class="lbl">Best Single</div></div>
+                        <div class="history-stat"><div class="num mono" id="histBestAvg">0</div><div class="lbl">Best Avg</div></div>
+                        <div class="history-stat"><div class="num mono" id="histSessions">0</div><div class="lbl">Sessions</div></div>
+                    </div>
+                    <div id="trendNote" class="trend-note flat" style="display:none"></div>
+                    <div id="historyChartWrap">
+                        <div class="history-empty" id="historyEmpty">Play a few sessions to see your history here.</div>
+                        <div class="history-chart" id="historyChart" style="display:none"></div>
+                    </div>
+                </div>
+                <!-- Confirm Quit -->
+                <div class="tab-pane" id="paneConfirmQuit">
+                    <div class="confirm-text">
+                        Are you sure you want to quit?
+                        <span class="muted">Your progress in this round will be lost.</span>
+                    </div>
+                    <div class="btn-row">
+                        <button class="btn secondary" id="cancelQuitBtn">Keep Playing</button>
+                        <button class="btn" id="confirmQuitBtn">Quit</button>
+                    </div>
+                </div>
+                <!-- Share -->
+                <div class="tab-pane" id="paneShare">
+                    <div class="confirm-text">Share your score with friends:</div>
+                    <a class="btn" id="whatsappShareBtn" target="_blank" rel="noopener noreferrer" style="text-decoration:none; display:flex; align-items:center; justify-content:center; background:#25D366; color:#ffffff;">💬 Share on WhatsApp</a>
+                    <button class="btn secondary" id="copyLinkBtn">🔗 Copy Link</button>
+                    <div class="share-link-preview" id="shareLinkPreview"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            "use strict";
+
+            // ---------- DOM ----------
+            const screens = {
+                start: document.getElementById('screenStart'),
+                memorize: document.getElementById('screenMemorize'),
+                guess: document.getElementById('screenGuess'),
+                result: document.getElementById('screenResult'),
+                summary: document.getElementById('screenSummary')
+            };
+            const mainCard = document.getElementById('mainCard');
+            const headerRight = document.getElementById('headerRight');
+            const quitBtn = document.getElementById('quitBtn');
+
+            const startBtn = document.getElementById('startBtn');
+            const startBtnRounds = document.getElementById('startBtnRounds');
+            const recordChip = document.getElementById('recordChip');
+            const recordVal = document.getElementById('recordVal');
+            const challengeBanner = document.getElementById('challengeBanner');
+            const challengeScore = document.getElementById('challengeScore');
+
+            const targetSwatch = document.getElementById('targetSwatch');
+            const roundBadge = document.getElementById('roundBadge');
+            const countdownRing = document.getElementById('countdownRing');
+            const countdownNum = document.getElementById('countdownNum');
+
+            const guessSwatch = document.getElementById('guessSwatch');
+            const guessHexTag = document.getElementById('guessHexTag');
+            const sliderH = document.getElementById('sliderH');
+            const sliderS = document.getElementById('sliderS');
+            const sliderB = document.getElementById('sliderB');
+            const valH = document.getElementById('valH');
+            const valS = document.getElementById('valS');
+            const valB = document.getElementById('valB');
+            const submitGuessBtn = document.getElementById('submitGuessBtn');
+
+            const stampSlot = document.getElementById('stampSlot');
+            const resultTargetSwatch = document.getElementById('resultTargetSwatch');
+            const resultGuessSwatch = document.getElementById('resultGuessSwatch');
+            const resultTargetHex = document.getElementById('resultTargetHex');
+            const resultGuessHex = document.getElementById('resultGuessHex');
+            const scoreRing = document.getElementById('scoreRing');
+            const scoreNum = document.getElementById('scoreNum');
+            const scoreTitle = document.getElementById('scoreTitle');
+            const scoreSub = document.getElementById('scoreSub');
+            const confettiLayer = document.getElementById('confettiLayer');
+            const nextRoundBtn = document.getElementById('nextRoundBtn');
+            const hintRow = document.getElementById('hintRow');
+
+            const summaryRing = document.getElementById('summaryRing');
+            const summaryNum = document.getElementById('summaryNum');
+            const summaryTitle = document.getElementById('summaryTitle');
+            const summarySub = document.getElementById('summarySub');
+            const summaryConfetti = document.getElementById('summaryConfetti');
+            const roundDots = document.getElementById('roundDots');
+            const newRecordBadge = document.getElementById('newRecordBadge');
+            const shareBtn = document.getElementById('shareBtn');
+            const restartBtn = document.getElementById('restartBtn');
+            const backToStartBtn = document.getElementById('backToStartBtn');
+
+            const statRound = document.getElementById('statRound');
+            const statAvg = document.getElementById('statAvg');
+            const statBest = document.getElementById('statBest');
+
+            // Modal elements
+            const modalOverlay = document.getElementById('modalOverlay');
+            const modalClose = document.getElementById('modalClose');
+            const modalTitle = document.getElementById('modalTitle');
+            const settingsLink = document.getElementById('settingsLink');
+            const privacyLink = document.getElementById('privacyLink');
+            const historyLink = document.getElementById('historyLink');
+            const darkToggle = document.getElementById('darkToggle');
+            const muteToggle = document.getElementById('muteToggle');
+            const paneSettings = document.getElementById('paneSettings');
+            const panePrivacy = document.getElementById('panePrivacy');
+            const paneHistory = document.getElementById('paneHistory');
+            const paneConfirmQuit = document.getElementById('paneConfirmQuit');
+            const paneShare = document.getElementById('paneShare');
+            const whatsappShareBtn = document.getElementById('whatsappShareBtn');
+            const copyLinkBtn = document.getElementById('copyLinkBtn');
+            const shareLinkPreview = document.getElementById('shareLinkPreview');
+            const cancelQuitBtn = document.getElementById('cancelQuitBtn');
+            const confirmQuitBtn = document.getElementById('confirmQuitBtn');
+            const roundsSeg = document.getElementById('roundsSeg');
+            const memtimeSeg = document.getElementById('memtimeSeg');
+            const histBestSingle = document.getElementById('histBestSingle');
+            const histBestAvg = document.getElementById('histBestAvg');
+            const histSessions = document.getElementById('histSessions');
+            const trendNote = document.getElementById('trendNote');
+            const historyChart = document.getElementById('historyChart');
+            const historyEmpty = document.getElementById('historyEmpty');
+
+            const COUNTDOWN_RING_CIRC = 2 * Math.PI * 19;
+            const SCORE_RING_CIRC = 2 * Math.PI * 31;
+            const SUMMARY_RING_CIRC = 2 * Math.PI * 45;
+            countdownRing.setAttribute('stroke-dasharray', COUNTDOWN_RING_CIRC);
+            scoreRing.setAttribute('stroke-dasharray', SCORE_RING_CIRC);
+            summaryRing.setAttribute('stroke-dasharray', SUMMARY_RING_CIRC);
+
+            // ---------- Difficulty ----------
+            let ROUNDS_TOTAL = 5;
+            let MEMORIZE_MS = 5000;
+            try { ROUNDS_TOTAL = parseInt(localStorage.getItem('huecall_rounds') || '5', 10) || 5; } catch (e) { ROUNDS_TOTAL =
+                5; }
+            try { MEMORIZE_MS = (parseInt(localStorage.getItem('huecall_memtime') || '5', 10) || 5) * 1000; } catch (e) {
+                MEMORIZE_MS = 5000; }
+
+            function effectiveRounds() { return ROUNDS_TOTAL; }
+
+            function effectiveMemorizeMs() { return MEMORIZE_MS; }
+
+            let roundIndex = 0;
+            let sessionScores = [];
+            let bestSingle = 0;
+            let bestAvg = 0;
+            try { bestSingle = parseInt(localStorage.getItem('huecall_best') || '0', 10) || 0; } catch (e) { bestSingle =
+                0; }
+            try { bestAvg = parseInt(localStorage.getItem('huecall_bestavg') || '0', 10) || 0; } catch (e) { bestAvg =
+                0; }
+            let target = { h: 0, s: 0, v: 0 };
+            let phase = 'start';
+            let rafId = null;
+            let hintTimeout = null;
+
+            // ---------- Session history ----------
+            function loadHistory() {
+                try { return JSON.parse(localStorage.getItem('huecall_history') || '[]'); } catch (e) { return []; }
+            }
+
+            function saveHistoryEntry(avg) {
+                let hist = loadHistory();
+                hist.push({ avg: avg, date: new Date().toISOString().slice(0, 10) });
+                try { localStorage.setItem('huecall_history', JSON.stringify(hist)); } catch (e) {}
+            }
+
+            // ---------- Difficulty segmented controls ----------
+            function wireSegmented(container, storageKey, applyFn, defaultVal) {
+                let current = defaultVal;
+                try { current = localStorage.getItem(storageKey) || defaultVal; } catch (e) {}
+                Array.from(container.querySelectorAll('button')).forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.val === String(current));
+                    btn.addEventListener('click', () => {
+                        Array.from(container.querySelectorAll('button')).forEach(b => b.classList.remove(
+                        'active'));
+                        btn.classList.add('active');
+                        try { localStorage.setItem(storageKey, btn.dataset.val); } catch (e) {}
+                        applyFn(parseInt(btn.dataset.val, 10));
+                        playClick();
+                    });
+                });
+                applyFn(parseInt(current, 10));
+            }
+            wireSegmented(roundsSeg, 'huecall_rounds', (v) => {
+                ROUNDS_TOTAL = v;
+                startBtnRounds.textContent = v;
+            }, '5');
+            wireSegmented(memtimeSeg, 'huecall_memtime', (v) => {
+                MEMORIZE_MS = v * 1000;
+            }, '5');
+
+            statBest.textContent = bestSingle;
+            if (bestAvg > 0) {
+                recordChip.style.display = 'flex';
+                recordVal.textContent = bestAvg;
+            }
+
+            // ---------- Shared score challenge banner ----------
+            (function checkSharedScore() {
+                try {
+                    const params = new URLSearchParams(window.location.search);
+                    const raw = params.get('score');
+                    const score = parseInt(raw, 10);
+                    if (raw !== null && Number.isFinite(score) && score >= 0 && score <= 100) {
+                        challengeScore.textContent = score;
+                        challengeBanner.style.display = 'block';
+                    }
+                } catch (e) { /* ignore */ }
+            })();
+
+            // ---------- Dark mode ----------
+            let darkMode = false;
+            try { darkMode = localStorage.getItem('huecall_dark') === 'true'; } catch (e) {}
+
+            function applyDarkMode(on) {
+                document.body.classList.toggle('dark', on);
+                darkToggle.classList.toggle('active', on);
+                darkMode = on;
+                try { localStorage.setItem('huecall_dark', String(on)); } catch (e) {}
+            }
+            applyDarkMode(darkMode);
+            darkToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                applyDarkMode(!darkMode);
+            });
+
+            // ---------- Mute ----------
+            let muted = false;
+            try { muted = localStorage.getItem('huecall_mute') === 'true'; } catch (e) {}
+
+            function applyMute(on) {
+                muted = on;
+                muteToggle.classList.toggle('active', on);
+                try { localStorage.setItem('huecall_mute', String(on)); } catch (e) {}
+            }
+            applyMute(muted);
+            muteToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                applyMute(!muted);
+            });
+
+            // ---------- Modal ----------
+            const allPanes = [paneSettings, panePrivacy, paneHistory, paneConfirmQuit, paneShare];
+
+            function openModal(pane) {
+                modalOverlay.classList.add('open');
+                allPanes.forEach(p => p.classList.remove('active'));
+                if (pane === 'privacy') {
+                    panePrivacy.classList.add('active');
+                    modalTitle.textContent = 'Privacy';
+                    modalClose.style.display = '';
+                } else if (pane === 'history') {
+                    paneHistory.classList.add('active');
+                    modalTitle.textContent = 'Stats & History';
+                    modalClose.style.display = '';
+                    renderHistory();
+                } else if (pane === 'confirmQuit') {
+                    paneConfirmQuit.classList.add('active');
+                    modalTitle.textContent = 'End Session?';
+                    modalClose.style.display = 'none';
+                } else if (pane === 'share') {
+                    paneShare.classList.add('active');
+                    modalTitle.textContent = 'Share';
+                    modalClose.style.display = '';
+                } else {
+                    paneSettings.classList.add('active');
+                    modalTitle.textContent = 'Settings';
+                    modalClose.style.display = '';
+                }
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('open');
+            }
+            settingsLink.addEventListener('click', (e) => { e.preventDefault();
+                openModal('settings'); });
+            privacyLink.addEventListener('click', (e) => { e.preventDefault();
+                openModal('privacy'); });
+            historyLink.addEventListener('click', (e) => { e.preventDefault();
+                openModal('history'); });
+            modalClose.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+
+            // ---------- History rendering ----------
+            function renderHistory() {
+                const hist = loadHistory();
+                histBestSingle.textContent = bestSingle;
+                histBestAvg.textContent = bestAvg;
+                histSessions.textContent = hist.length;
+
+                if (hist.length === 0) {
+                    historyEmpty.style.display = 'block';
+                    historyChart.style.display = 'none';
+                    trendNote.style.display = 'none';
+                    return;
+                }
+                historyEmpty.style.display = 'none';
+                historyChart.style.display = 'flex';
+                historyChart.innerHTML = '';
+                const display = hist.slice(-10);
+                display.forEach(entry => {
+                    const col = document.createElement('div');
+                    col.className = 'bar-col';
+                    const valEl = document.createElement('div');
+                    valEl.className = 'bar-val mono';
+                    valEl.textContent = entry.avg;
+                    const bar = document.createElement('div');
+                    bar.className = 'bar';
+                    const heightPct = Math.max(entry.avg, 3);
+                    bar.style.height = heightPct + '%';
+                    bar.style.background = entry.avg >= 70 ? 'var(--good)' : (entry.avg >= 40 ? 'var(--accent)' :
+                        'var(--bad)');
+                    col.appendChild(valEl);
+                    col.appendChild(bar);
+                    historyChart.appendChild(col);
+                });
+
+                trendNote.style.display = 'block';
+                if (hist.length < 4) {
+                    trendNote.className = 'trend-note flat';
+                    trendNote.textContent = 'Play a few more rounds to reveal a trend.';
+                } else {
+                    const last10 = hist.slice(-10);
+                    const half = Math.floor(last10.length / 2);
+                    const firstHalf = last10.slice(0, half);
+                    const secondHalf = last10.slice(half);
+                    const avgOf = arr => arr.reduce((a, b) => a + b.avg, 0) / arr.length;
+                    const diff = avgOf(secondHalf) - avgOf(firstHalf);
+                    if (diff >= 4) {
+                        trendNote.className = 'trend-note';
+                        trendNote.textContent = "📈 You're improving!";
+                    } else {
+                        trendNote.className = 'trend-note flat';
+                        trendNote.textContent = '➡️ Pretty consistent.';
+                    }
+                }
+            }
+
+            // ---------- Quit ----------
+            function doQuit() {
+                resetSession();
+                phase = 'start';
+                showScreen('start');
+            }
+            cancelQuitBtn.addEventListener('click', () => { playClick();
+                closeModal(); });
+            confirmQuitBtn.addEventListener('click', () => { playClick();
+                closeModal();
+                doQuit(); });
+
+            // ---------- Helpers ----------
+            function showScreen(name) {
+                Object.keys(screens).forEach(k => {
+                    const el = screens[k];
+                    const isActive = k === name;
+                    if (isActive) {
+                        el.style.display = 'flex';
+                        el.classList.add('active');
+                    } else {
+                        el.classList.remove('active');
+                        el.style.display = 'none';
+                    }
+                });
+                headerRight.style.visibility = (name === 'start') ? 'hidden' : 'visible';
+            }
+
+            function updateHeaderStats() {
+                statRound.textContent = (roundIndex + 1) + '/' + effectiveRounds();
+                const avg = sessionScores.length ? Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores
+                    .length) : 0;
+                statAvg.textContent = avg;
+            }
+
+            function resetSession() {
+                roundIndex = 0;
+                sessionScores = [];
+                cancelAnimationFrame(rafId);
+                updateHeaderStats();
+            }
+
+            function showToast(msg) {
+                hintRow.textContent = msg;
+                hintRow.style.opacity = '1';
+                if (hintTimeout) clearTimeout(hintTimeout);
+                hintTimeout = setTimeout(() => {
+                    hintRow.style.opacity = '0';
+                    setTimeout(() => { hintRow.innerHTML = '&nbsp;';
+                        hintRow.style.opacity = '1'; }, 250);
+                }, 2200);
+            }
+
+            // ---------- Sound ----------
+            let actx = null;
+
+            function getCtx() {
+                if (muted) return null;
+                if (!actx) {
+                    const AC = window.AudioContext || window.webkitAudioContext;
+                    if (!AC) return null;
+                    actx = new AC();
+                }
+                return actx;
+            }
+
+            function beep(freq, duration, opts) {
+                const ctx = getCtx();
+                if (!ctx) return;
+                opts = opts || {};
+                try {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = opts.type || 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+                    if (opts.sweepTo) {
+                        osc.frequency.exponentialRampToValueAtTime(opts.sweepTo, ctx.currentTime + duration);
+                    }
+                    const vol = opts.volume !== undefined ? opts.volume : 0.08;
+                    gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(vol, ctx.currentTime + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+                    osc.connect(gain).connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + duration + 0.02);
+                } catch (e) { /* ignore */ }
+            }
+
+            function playTick(urgent) { beep(urgent ? 1400 : 900, 0.06, { volume: 0.06 }); }
+
+            function playWhoosh() { beep(600, 0.22, { sweepTo: 120, volume: 0.045 }); }
+
+            function playClick() { beep(500, 0.05, { volume: 0.05, type: 'square' }); }
+
+            function playResultChime(score) {
+                const base = 220 + (score / 100) * 440;
+                beep(base, 0.32, { volume: 0.07, type: score >= 70 ? 'triangle' : 'sine' });
+                if (score >= 85) { setTimeout(() => beep(base * 1.5, 0.28, { volume: 0.05, type: 'triangle' }), 70); }
+                if (score < 35) { setTimeout(() => beep(base * 0.85, 0.28, { volume: 0.05, type: 'sawtooth' }), 60); }
+            }
+
+            function playFailBuzz() { beep(160, 0.3, { volume: 0.06, type: 'sawtooth', sweepTo: 90 }); }
+
+            function playPerfectFanfare() {
+                beep(660, 0.18, { volume: 0.06, type: 'triangle' });
+                setTimeout(() => beep(880, 0.22, { volume: 0.06, type: 'triangle' }), 90);
+                setTimeout(() => beep(1100, 0.3, { volume: 0.06, type: 'triangle' }), 190);
+            }
+
+            function unlockAudio() {
+                const ctx = getCtx();
+                if (ctx && ctx.state === 'suspended') ctx.resume().catch(() => {});
+            }
+
+            // ---------- Color math ----------
+            function hsvToRgb(h, s, v) {
+                s /= 100;
+                v /= 100;
+                const c = v * s;
+                const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+                const m = v - c;
+                let r = 0,
+                    g = 0,
+                    b = 0;
+                if (h < 60) { r = c;
+                    g = x;
+                    b = 0; } else if (h < 120) { r = x;
+                    g = c;
+                    b = 0; } else if (h < 180) { r = 0;
+                    g = c;
+                    b = x; } else if (h < 240) { r = 0;
+                    g = x;
+                    b = c; } else if (h < 300) { r = x;
+                    g = 0;
+                    b = c; } else { r = c;
+                    g = 0;
+                    b = x; }
+                return {
+                    r: Math.round((r + m) * 255),
+                    g: Math.round((g + m) * 255),
+                    b: Math.round((b + m) * 255)
+                };
+            }
+
+            function toHex(rgb) {
+                return '#' + [rgb.r, rgb.g, rgb.b].map(v => v.toString(16).padStart(2, '0')).join('').toUpperCase();
+            }
+
+            function rgbToLab(rgb) {
+                function lin(c) { c = c / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); }
+                const r = lin(rgb.r),
+                    g = lin(rgb.g),
+                    b = lin(rgb.b);
+                const x = r * 0.4124 + g * 0.3576 + b * 0.1805;
+                const y = r * 0.2126 + g * 0.7152 + b * 0.0722;
+                const z = r * 0.0193 + g * 0.1192 + b * 0.9505;
+                const xn = 0.95047,
+                    yn = 1.0,
+                    zn = 1.08883;
+
+                function f(t) { return t > 0.008856 ? Math.cbrt(t) : (7.787 * t + 16 / 116); }
+                const fx = f(x / xn),
+                    fy = f(y / yn),
+                    fz = f(z / zn);
+                return { L: 116 * fy - 16, A: 500 * (fx - fy), B_: 200 * (fy - fz) };
+            }
+
+            function deltaE(rgbA, rgbB) {
+                const a = rgbToLab(rgbA),
+                    b = rgbToLab(rgbB);
+                return Math.sqrt((a.L - b.L) ** 2 + (a.A - b.A) ** 2 + (a.B_ - b.B_) ** 2);
+            }
+
+            function randomTarget(rand) {
+                rand = rand || Math.random;
+                return {
+                    h: Math.floor(rand() * 360),
+                    s: 35 + Math.floor(rand() * 55),
+                    v: 35 + Math.floor(rand() * 55)
+                };
+            }
+
+            function randomStartGuess() {
+                return {
+                    h: Math.floor(Math.random() * 360),
+                    s: 60 + Math.floor(Math.random() * 30),
+                    v: 60 + Math.floor(Math.random() * 30)
+                };
+            }
+
+            // ---------- Dynamic slider backgrounds ----------
+            function updateSliderBackgrounds() {
+                const h = parseInt(sliderH.value, 10);
+                const s = parseInt(sliderS.value, 10);
+                const sGrad = `linear-gradient(90deg, hsl(${h}, 0%, 50%) 0%, hsl(${h}, 100%, 50%) 100%)`;
+                sliderS.style.background = sGrad;
+                const bGrad = `linear-gradient(90deg, hsl(${h}, ${s}%, 0%) 0%, hsl(${h}, ${s}%, 100%) 100%)`;
+                sliderB.style.background = bGrad;
+            }
+
+            sliderH.addEventListener('input', updateSliderBackgrounds);
+            sliderS.addEventListener('input', updateSliderBackgrounds);
+
+            // ---------- Guess preview ----------
+            function updateGuessPreview() {
+                const g = currentGuess();
+                valH.textContent = g.h + '°';
+                valS.textContent = g.s + '%';
+                valB.textContent = g.v + '%';
+                const rgb = hsvToRgb(g.h, g.s, g.v);
+                const hex = toHex(rgb);
+                guessSwatch.style.backgroundColor = hex;
+                guessHexTag.textContent = hex;
+                const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b);
+                guessHexTag.style.color = luminance > 140 ? '#111' : '#fff';
+                guessHexTag.style.background = luminance > 140 ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.45)';
+                updateSliderBackgrounds();
+            }
+
+            function currentGuess() {
+                return {
+                    h: parseInt(sliderH.value, 10),
+                    s: parseInt(sliderS.value, 10),
+                    v: parseInt(sliderB.value, 10)
+                };
+            }
+
+            [sliderH, sliderS, sliderB].forEach(s => {
+                s.addEventListener('input', updateGuessPreview);
+            });
+
+            // ---------- Memorize ----------
+            function startMemorizePhase() {
+                phase = 'memorize';
+                showScreen('memorize');
+                updateHeaderStats();
+                roundBadge.textContent = 'Round ' + (roundIndex + 1) + '/' + effectiveRounds();
+                target = randomTarget();
+                const rgb = hsvToRgb(target.h, target.s, target.v);
+                targetSwatch.style.backgroundColor = toHex(rgb);
+
+                const memorizeMs = effectiveMemorizeMs();
+                const start = performance.now();
+                let lastSecond = -1;
+                cancelAnimationFrame(rafId);
+
+                function tick(now) {
+                    const elapsed = now - start;
+                    const remainingMs = Math.max(memorizeMs - elapsed, 0);
+                    const pct = Math.min(elapsed / memorizeMs, 1);
+                    countdownRing.setAttribute('stroke-dashoffset', COUNTDOWN_RING_CIRC * pct);
+
+                    const secLeft = Math.ceil(remainingMs / 1000);
+                    countdownNum.textContent = secLeft > 0 ? secLeft : '0';
+                    if (secLeft !== lastSecond && secLeft <= 5 && secLeft >= 0) {
+                        lastSecond = secLeft;
+                        if (secLeft > 0) playTick(secLeft <= 2);
+                    }
+
+                    if (pct < 1) {
+                        rafId = requestAnimationFrame(tick);
+                    } else {
+                        goToGuessPhase();
+                    }
+                }
+                countdownRing.setAttribute('stroke-dashoffset', 0);
+                countdownNum.textContent = String(Math.ceil(memorizeMs / 1000));
+                rafId = requestAnimationFrame(tick);
+            }
+
+            // ---------- Guess ----------
+            function goToGuessPhase() {
+                phase = 'guess';
+                playWhoosh();
+                showScreen('guess');
+
+                const start = randomStartGuess();
+                sliderH.value = start.h;
+                sliderS.value = start.s;
+                sliderB.value = start.v;
+                updateGuessPreview();
+            }
+
+            function submitGuess() {
+                if (phase !== 'guess') return;
+                const guess = currentGuess();
+                const guessRgb = hsvToRgb(guess.h, guess.s, guess.v);
+                const targetRgb = hsvToRgb(target.h, target.s, target.v);
+
+                const de = deltaE(targetRgb, guessRgb);
+                const score = Math.max(0, Math.min(100, Math.round(100 - de)));
+
+                sessionScores.push(score);
+                if (score > bestSingle) {
+                    bestSingle = score;
+                    try { localStorage.setItem('huecall_best', String(bestSingle)); } catch (e) {}
+                }
+                statBest.textContent = bestSingle;
+                updateHeaderStats();
+
+                showResult(targetRgb, guessRgb, score);
+            }
+
+            submitGuessBtn.addEventListener('click', () => { playClick();
+                submitGuess(); });
+
+            function scoreMessage(score) {
+                if (score >= 95) return 'Perfect eye.';
+                if (score >= 85) return 'Very close.';
+                if (score >= 70) return 'Solid round.';
+                if (score >= 50) return 'Room for improvement.';
+                if (score >= 25) return 'Way off.';
+                return 'That was a guess.';
+            }
+
+            function spawnConfetti(layer, count) {
+                layer.innerHTML = '';
+                const colors = ['#f5b400', '#ffd76a', '#1fb865', '#ff9d3d'];
+                for (let i = 0; i < count; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'confetti-p';
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = 40 + Math.random() * 55;
+                    const tx = Math.cos(angle) * dist;
+                    const ty = Math.sin(angle) * dist;
+                    p.style.setProperty('--tx', tx.toFixed(1) + 'px');
+                    p.style.setProperty('--ty', ty.toFixed(1) + 'px');
+                    p.style.setProperty('--rot', (Math.random() * 360).toFixed(0) + 'deg');
+                    p.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    p.style.animationDelay = (Math.random() * 0.08).toFixed(2) + 's';
+                    layer.appendChild(p);
+                }
+                setTimeout(() => { layer.innerHTML = ''; }, 1200);
+            }
+
+            function showResult(targetRgb, guessRgb, score) {
+                phase = 'result';
+                showScreen('result');
+
+                const targetHex = toHex(targetRgb);
+                const guessHex = toHex(guessRgb);
+                resultTargetSwatch.style.backgroundColor = targetHex;
+                resultGuessSwatch.style.backgroundColor = guessHex;
+                resultTargetHex.textContent = targetHex;
+                resultGuessHex.textContent = guessHex;
+                scoreTitle.textContent = scoreMessage(score);
+                scoreSub.textContent = 'out of 100';
+
+                stampSlot.innerHTML = '';
+                mainCard.classList.remove('shake');
+                if (score >= 95) {
+                    const s = document.createElement('div');
+                    s.className = 'stamp perfect';
+                    s.textContent = '✓ Perfect';
+                    stampSlot.appendChild(s);
+                    spawnConfetti(confettiLayer, 16);
+                    playPerfectFanfare();
+                } else if (score <= 15) {
+                    const s = document.createElement('div');
+                    s.className = 'stamp fail';
+                    s.textContent = '✕ Fail';
+                    stampSlot.appendChild(s);
+                    requestAnimationFrame(() => mainCard.classList.add('shake'));
+                    setTimeout(() => mainCard.classList.remove('shake'), 450);
+                    playFailBuzz();
+                }
+
+                scoreRing.style.stroke = score >= 70 ? 'var(--good)' : (score >= 40 ? 'var(--accent)' : 'var(--bad)');
+                scoreRing.setAttribute('stroke-dashoffset', SCORE_RING_CIRC);
+                scoreNum.textContent = '0';
+
+                requestAnimationFrame(() => {
+                    scoreRing.style.transition = 'stroke-dashoffset 0.6s cubic-bezier(.2,.8,.2,1)';
+                    scoreRing.setAttribute('stroke-dashoffset', SCORE_RING_CIRC * (1 - score / 100));
+                });
+
+                const dur = 500;
+                const startT = performance.now();
+
+                function anim(now) {
+                    const p = Math.min((now - startT) / dur, 1);
+                    scoreNum.textContent = Math.round(score * p);
+                    if (p < 1) requestAnimationFrame(anim);
+                }
+                requestAnimationFrame(anim);
+
+                if (score < 95) playResultChime(score);
+
+                nextRoundBtn.textContent = (roundIndex + 1 >= effectiveRounds()) ? 'View Results →' : 'Next Round →';
+            }
+
+            function nextRound() {
+                if (roundIndex + 1 >= effectiveRounds()) {
+                    showSummary();
+                    return;
+                }
+                roundIndex += 1;
+                scoreRing.style.transition = 'none';
+                startMemorizePhase();
+            }
+
+            nextRoundBtn.addEventListener('click', () => { playClick();
+                nextRound(); });
+
+            // ---------- Summary ----------
+            function tierMessage(avg) {
+                if (avg >= 90) return 'Exceptional. Seriously impressive.';
+                if (avg >= 75) return 'Strong eye.';
+                if (avg >= 55) return 'Solid, but room to grow.';
+                if (avg >= 35) return 'Your eye needs calibration.';
+                return 'This score should not exist.';
+            }
+
+            function showSummary() {
+                phase = 'summary';
+                showScreen('summary');
+
+                const avg = Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length);
+                summaryTitle.textContent = tierMessage(avg);
+                summarySub.textContent = 'Avg over ' + sessionScores.length + ' round' + (sessionScores.length === 1 ?
+                    '' : 's');
+                summaryRing.style.stroke = avg >= 70 ? 'var(--good)' : (avg >= 40 ? 'var(--accent)' : 'var(--bad)');
+                summaryRing.style.transition = 'none';
+                summaryRing.setAttribute('stroke-dashoffset', SUMMARY_RING_CIRC);
+                summaryNum.textContent = '0';
+
+                requestAnimationFrame(() => {
+                    summaryRing.style.transition = 'stroke-dashoffset 0.7s cubic-bezier(.2,.8,.2,1)';
+                    summaryRing.setAttribute('stroke-dashoffset', SUMMARY_RING_CIRC * (1 - avg / 100));
+                });
+
+                const dur = 600;
+                const startT = performance.now();
+
+                function anim(now) {
+                    const p = Math.min((now - startT) / dur, 1);
+                    summaryNum.textContent = Math.round(avg * p);
+                    if (p < 1) requestAnimationFrame(anim);
+                }
+                requestAnimationFrame(anim);
+
+                roundDots.innerHTML = '';
+                sessionScores.forEach(s => {
+                    const seg = document.createElement('div');
+                    seg.className = 'seg';
+                    seg.style.background = s >= 70 ? 'var(--good)' : (s >= 40 ? 'var(--accent)' : 'var(--bad)');
+                    roundDots.appendChild(seg);
+                });
+
+                const isNewRecord = avg > bestAvg;
+                if (isNewRecord) {
+                    bestAvg = avg;
+                    try { localStorage.setItem('huecall_bestavg', String(bestAvg)); } catch (e) {}
+                    newRecordBadge.style.display = 'flex';
+                    recordChip.style.display = 'flex';
+                    recordVal.textContent = bestAvg;
+                } else {
+                    newRecordBadge.style.display = 'none';
+                }
+
+                saveHistoryEntry(avg);
+
+                if (avg >= 95) {
+                    spawnConfetti(summaryConfetti, 22);
+                    playPerfectFanfare();
+                } else if (avg <= 15) {
+                    requestAnimationFrame(() => mainCard.classList.add('shake'));
+                    setTimeout(() => mainCard.classList.remove('shake'), 450);
+                    playFailBuzz();
+                } else {
+                    playResultChime(avg);
+                }
+            }
+
+            // ---------- Share ----------
+            function buildShareCopy(avg) {
+                const url = 'https://sidequestfun.com/?score=' + avg;
+                const text = 'I just found the a secret mini game and scored ' + avg + '/100 🎯 Can you beat that? ' + url;
+                return { text, url };
+            }
+
+            shareBtn.addEventListener('click', () => {
+                playClick();
+                const avg = Math.round(sessionScores.reduce((a, b) => a + b, 0) / sessionScores.length);
+                const { text, url } = buildShareCopy(avg);
+                whatsappShareBtn.href = 'https://wa.me/?text=' + encodeURIComponent(text);
+                shareLinkPreview.textContent = url;
+                shareLinkPreview.dataset.text = text;
+                openModal('share');
+            });
+
+            copyLinkBtn.addEventListener('click', async () => {
+                playClick();
+                const text = shareLinkPreview.dataset.text || shareLinkPreview.textContent;
+                try {
+                    await navigator.clipboard.writeText(text);
+                    showToast('Copied to clipboard ✓');
+                } catch (e) {
+                    showToast(text);
+                }
+            });
+
+            restartBtn.addEventListener('click', () => {
+                playClick();
+                resetSession();
+                scoreRing.style.transition = 'none';
+                startMemorizePhase();
+            });
+
+            backToStartBtn.addEventListener('click', () => {
+                playClick();
+                resetSession();
+                phase = 'start';
+                showScreen('start');
+            });
+
+            quitBtn.addEventListener('click', () => {
+                if (phase === 'memorize' || phase === 'guess' || phase === 'result') {
+                    playClick();
+                    openModal('confirmQuit');
+                    return;
+                }
+                playClick();
+                doQuit();
+            });
+
+            startBtn.addEventListener('click', () => {
+                unlockAudio();
+                playClick();
+                resetSession();
+                startMemorizePhase();
+            });
+
+            window.addEventListener('keydown', (e) => {
+                if (e.code === 'Escape') {
+                    if (modalOverlay.classList.contains('open')) {
+                        if (!paneConfirmQuit.classList.contains('active')) closeModal();
+                        return;
+                    }
+                    if (phase !== 'start') quitBtn.click();
+                    return;
+                }
+                if (e.code !== 'Space') return;
+                if (modalOverlay.classList.contains('open')) return;
+                e.preventDefault();
+                if (phase === 'start') { unlockAudio();
+                    playClick();
+                    resetSession();
+                    startMemorizePhase(); } else if (phase === 'guess') submitGuess();
+                else if (phase === 'result') nextRound();
+                else if (phase === 'summary') restartBtn.click();
+            });
+
+            // init
+            showScreen('start');
+            setTimeout(updateSliderBackgrounds, 50);
+        })();
+    <\/script>
+
+</body>
+</html></script>
+
+    <script>
+        // ==================== BONUS: COLOR CHALLENGE (added, fully isolated) ====================
+        (function() {
+            var bonusBtn = document.getElementById('bonus-game-btn');
+            var bonusModal = document.getElementById('colorgame-modal');
+            var bonusClose = document.getElementById('close-colorgame-modal');
+            var bonusIframe = document.getElementById('colorgame-iframe');
+            var bonusSource = document.getElementById('colorgame-source');
+            var bonusLoaded = false;
+
+            function loadBonusGame() {
+                if (bonusLoaded || !bonusIframe || !bonusSource) return;
+                var html = bonusSource.textContent.replace(/<\\\/script>/gi, '<\/script>');
+                bonusIframe.srcdoc = html;
+                bonusLoaded = true;
+            }
+
+            function openBonusModal() {
+                loadBonusGame();
+                document.body.classList.add('modal-open');
+                if (bonusModal) bonusModal.style.display = 'flex';
+            }
+
+            function closeBonusModal() {
+                document.body.classList.remove('modal-open');
+                if (bonusModal) bonusModal.style.display = 'none';
+            }
+
+            if (bonusBtn) bonusBtn.addEventListener('click', openBonusModal);
+            if (bonusClose) bonusClose.addEventListener('click', closeBonusModal);
+            if (bonusModal) {
+                bonusModal.addEventListener('click', function(event) {
+                    if (event.target === bonusModal) closeBonusModal();
+                });
+            }
+            window.addEventListener('keydown', function(e) {
+                if (e.code === 'Escape' && bonusModal && bonusModal.style.display === 'flex') {
+                    closeBonusModal();
+                }
+            });
+        })();
+    </script>
+
     <!-- Cloudflare Web Analytics -->
     <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0aed4efa70ba4514a5634996eb71a8cc"}'></script>
 </body>
